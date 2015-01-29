@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099CC"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/swf1"/>
+
+    <TextView android:text="@string/welcome_text"
+        android:textColor="#fefefe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:textSize="17dp"
+        android:textIsSelectable="false"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/subtitle_text" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+
+        <Button
+            android:text="@string/sign_in"
+            android:id="@+id/signIn_button"
+            android:textSize="15dp"
+            android:textColor="#caffffff"
+            android:textAllCaps="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:drawableLeft="@android:drawable/ic_menu_myplaces"
+            android:background="#33B5E5" />
+
+        <Button
+            android:text="@string/create_account"
+            android:id="@+id/register_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:drawableLeft="@android:drawable/ic_menu_add"
+            android:textSize="15dp"
+            android:textAllCaps="false"
+            android:background="#33B5E5"
+            android:textColor="#caffffff" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
