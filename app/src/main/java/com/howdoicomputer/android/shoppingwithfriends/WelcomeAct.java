@@ -22,10 +22,11 @@ import com.firebase.client.ValueEventListener;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * @author Yoel Ivan (yivan3@gatech.edu)
+ */
 public class WelcomeAct extends ActionBarActivity {
     private static Firebase accDB;
 
@@ -44,15 +45,16 @@ public class WelcomeAct extends ActionBarActivity {
 
     //TODO: This really need clean up *sigh*
     public void auth(View v) {
-        final AccountInformation info = new AccountInformation(((AutoCompleteTextView) findViewById(R.id.frag_login_usrName_text)).getText().toString(), "", ((EditText) findViewById(R.id.frag_login_password_text)).getText().toString());
 
-        accDB.addValueEventListener(new ValueEventListener() {
+        accDB.addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 Map<String, String> accMap = (Map<String, String>) ((Map<String, Object>) snapshot.getValue()).get("userAccount");
-                info.setEmail(accMap.get(info.getUid()));
+                AutoCompleteTextView usrName = (AutoCompleteTextView) findViewById(R.id.frag_login_usrName_text);
+                EditText pass = (EditText) findViewById(R.id.frag_login_password_text);
 
-                accDB.authWithPassword(info.getEmail(), info.getPassword(), new Firebase.AuthResultHandler() {
+                accDB.authWithPassword(accMap.get(usrName.getText().toString()), pass.getText().toString(), new Firebase.AuthResultHandler() {
                     @Override
                     public void onAuthenticated(AuthData authData) {
                         Toast.makeText(getApplicationContext(), "User ID: " + authData.getUid() + ", Provider: " + authData.getProvider(),
@@ -73,37 +75,62 @@ public class WelcomeAct extends ActionBarActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+                Toast.makeText(getApplicationContext(), "The read failed: " + firebaseError.getMessage(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void reg(View v) {
-        AutoCompleteTextView usrName = (AutoCompleteTextView) findViewById(R.id.frag_reg_usrName_text);
-        AutoCompleteTextView email = (AutoCompleteTextView) findViewById(R.id.frag_reg_email_text);
-        EditText pass = (EditText) findViewById(R.id.frag_reg_pass1_text);
-        EditText passConfirmed = (EditText) findViewById(R.id.frag_reg_pass2_text);
+        final AutoCompleteTextView usrName = (AutoCompleteTextView) findViewById(R.id.frag_reg_usrName_text);
+        final AutoCompleteTextView email = (AutoCompleteTextView) findViewById(R.id.frag_reg_email_text);
+        final EditText pass = (EditText) findViewById(R.id.frag_reg_pass1_text);
+        final EditText passConfirmed = (EditText) findViewById(R.id.frag_reg_pass2_text);
 
-        // check if both password fields are identical
-        if (pass.getText().toString().equals(passConfirmed.getText().toString())) {
-            final Map<String, Object> userInfo = new HashMap<String, Object>();
-            userInfo.put(usrName.getText().toString(), email.getText().toString());
+        accDB.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                final Map<String, String> accMap = (Map<String, String>) ((Map<String, Object>) snapshot.getValue()).get("userAccount");
 
-            accDB.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
-                @Override
-                public void onSuccess() {
-                    accDB.child("userAccount").setValue(userInfo);
-                    Toast.makeText(getApplicationContext(), "Success",
-                            Toast.LENGTH_LONG).show();
+                if (accMap.containsKey(usrName.getText().toString())) { // username taken
+
+                    Toast.makeText(getApplicationContext(), "username has been taken",
+                            Toast.LENGTH_SHORT).show();
+                } else if (pass.getText().toString().equals(passConfirmed.getText().toString())) { // check if both password fields are identical
+                    accMap.put(usrName.getText().toString(), email.getText().toString());
+
+                    accDB.createUser(email.getText().toString(), pass.getText().toString(), new Firebase.ResultHandler() {
+                        @Override
+                        public void onSuccess() {
+                            accDB.child("userAccount").setValue(accMap);
+                            Toast.makeText(getApplicationContext(), "Success",
+                                    Toast.LENGTH_SHORT).show();
+
+                            // clean up
+                            usrName.setText("");
+                            email.setText("");
+                            pass.setText("");
+                            passConfirmed.setText("");
+                        }
+
+                        @Override
+                        public void onError(FirebaseError firebaseError) {
+                            Toast.makeText(getApplicationContext(), firebaseError.toString(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "password does not match",
+                            Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                @Override
-                public void onError(FirebaseError firebaseError) {
-                    Toast.makeText(getApplicationContext(), firebaseError.toString(),
-                            Toast.LENGTH_LONG).show();
-                }
-            });
-        }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                Toast.makeText(getApplicationContext(), "The read failed: " + firebaseError.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void saveToken(String token) {
