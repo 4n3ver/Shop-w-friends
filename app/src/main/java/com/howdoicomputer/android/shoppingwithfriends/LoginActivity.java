@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity {
     private Button mLoginButton;
-    private Button mCreateAccButton;
+    private Button mCancelLogin;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -32,16 +32,16 @@ public class LoginActivity extends Activity {
                 if (usrNameText.getText().toString().equals("user") && passwordText.getText().toString().equals("pass")) {
                     startActivity(i);
                 } else {
-                    Toast.makeText(LoginActivity.this, R.string.invalid_pass, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, R.string.invalidPass_toast, Toast.LENGTH_LONG).show();
                 }
             }
         });
-        mCreateAccButton = (Button)findViewById(R.id.createAcc_button);
-        mCreateAccButton.setOnClickListener(new View.OnClickListener() {
+        mCancelLogin = (Button)findViewById(R.id.cancelLogin_button);
+        mCancelLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Start LoginActivity
-                Intent i = new Intent(LoginActivity.this, AppActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
             }
         });

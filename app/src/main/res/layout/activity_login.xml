@@ -8,10 +8,11 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
     <Button
-        android:text="Sign In with"
+        android:text="Sign In"
+        android:gravity="center_vertical"
         android:textColor="#fefefe"
         android:background="#3b5998"
-        android:drawableRight="@drawable/ic_fb_swf"
+        android:drawableLeft="@drawable/ic_fb_swf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -65,8 +66,8 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Create account"
-            android:id="@+id/createAcc_button"/>
+            android:hint="Cancel"
+            android:id="@+id/cancelLogin_button"/>
 
 
     </LinearLayout>
