@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#0099CC"
-    android:layout_centerHorizontal="true"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentLogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:layout_centerHorizontal="true"
+    android:background="#0099CC"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.WelcomeAct">
 
     <Button
         android:text="Sign In"
@@ -15,37 +17,40 @@
         android:drawableLeft="@drawable/ic_fb_swf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="15dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:background="#d8337799"
         android:layout_margin="24dp"
+        android:background="#d8337799"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="20dp">
 
-        <EditText
-            android:id="@+id/usrName_text"
+        <AutoCompleteTextView
+            android:id="@+id/frag_login_usrName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:singleLine="true"
             android:hint="User name"
-            android:textColorHint="#b1fefefe"/>
-
-        <EditText
-            android:id="@+id/password_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Password"
-            android:textColorHint="#b1fefefe"/>
+            android:textColorHint="#b1fefefe" />
 
-     </LinearLayout>
+        <EditText
+            android:id="@+id/frag_login_password_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:imeActionLabel="Log in"
+            android:imeOptions="actionUnspecified"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="#b1fefefe" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,13 +59,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:hint="Log in"
             android:maxLines="1"
             android:singleLine="true"
-            android:hint="Log in"
-            android:id="@+id/login_button"/>
-
+            android:onClick="auth"/>
+        
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,7 +74,6 @@
             android:singleLine="true"
             android:hint="Cancel"
             android:id="@+id/cancelLogin_button"/>
-
 
     </LinearLayout>
 
@@ -78,6 +83,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="100dp"
-        android:src="@drawable/swf1"/>
+        android:src="@drawable/swf1" />
 
 </LinearLayout>
