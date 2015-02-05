@@ -4,20 +4,29 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.view.View;
+
+import com.firebase.client.Firebase;
 
 
 public class AppActivity extends ActionBarActivity {
-
-    private Button mSignInButton;
-    private Button mRegisterButton;
+    private static Firebase mAccDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //TODO: this activity created twice somehow..
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
+        mAccDatabase = new Firebase("https://crackling-heat-6364.firebaseio.com/");
     }
 
+    /**
+     * Unauthenticate from Firebase and from providers where necessary.
+     */
+    public void logout(View v) {
+        mAccDatabase.unauth();
+        finish();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

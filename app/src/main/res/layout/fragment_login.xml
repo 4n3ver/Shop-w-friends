@@ -10,15 +10,15 @@
     tools:context="com.howdoicomputer.android.shoppingwithfriends.WelcomeAct">
 
     <Button
-        android:text="Sign In"
-        android:gravity="center_vertical"
-        android:textColor="#fefefe"
-        android:background="#3b5998"
-        android:drawableLeft="@drawable/ic_fb_swf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:background="#3b5998"
+        android:drawableLeft="@drawable/ic_fb_swf"
+        android:gravity="center_vertical"
+        android:text="Sign In"
+        android:textColor="#fefefe" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,16 +64,17 @@
             android:layout_height="wrap_content"
             android:hint="Log in"
             android:maxLines="1"
-            android:singleLine="true"
-            android:onClick="auth"/>
-        
+            android:onClick="auth"
+            android:singleLine="true" />
+
         <Button
+            android:id="@+id/cancelLogin_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:singleLine="true"
             android:hint="Cancel"
-            android:id="@+id/cancelLogin_button"/>
+            android:maxLines="1"
+            android:onClick="cancel"
+            android:singleLine="true" />
 
     </LinearLayout>
 
