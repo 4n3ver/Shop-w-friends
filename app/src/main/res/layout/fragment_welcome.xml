@@ -1,6 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:id="@+id/fragmentWelcome"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099CC"
@@ -10,21 +11,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.WelcomeAct">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.act.WelcomeAct">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/swf1" />
+        android:src="@drawable/swf1"/>
 
-    <TextView 
-        android:text="@string/welcome_text"
-        android:textColor="#fefefe"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:textSize="17dp"
+        android:text="@string/welcome_text"
+        android:textColor="#fefefe"
         android:textIsSelectable="false"
+        android:textSize="17dp"
         android:textStyle="bold"
         />
 
@@ -32,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="@string/subtitle_text" />
+        android:text="@string/subtitle_text"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -43,32 +44,31 @@
 
 
         <Button
-            android:text="@string/sign_in"
             android:id="@+id/signIn_button"
-            android:textSize="15dp"
-            android:textColor="#caffffff"
-            android:textAllCaps="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
             android:drawableLeft="@android:drawable/ic_menu_myplaces"
-            android:onClick="loginClicked" />
+            android:onClick="loginClicked"
+            android:padding="10dp"
+            android:text="@string/sign_in"
+            android:textAllCaps="false"
+            android:textColor="#caffffff"
+            android:textSize="15dp"/>
 
         <Button
-            android:text="@string/create_account"
             android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
+            android:background="#33B5E5"
             android:drawableLeft="@android:drawable/ic_menu_add"
             android:onClick="registerClicked"
+            android:padding="10dp"
+            android:text="@string/create_account"
             android:textAllCaps="false"
-            android:background="#33B5E5"
-            android:textSize="15dp"
-            android:textColor="#caffffff" />
-
+            android:textColor="#caffffff"
+            android:textSize="15dp"/>
 
 
     </LinearLayout>

@@ -1,0 +1,75 @@
+package com.howdoicomputer.android.shoppingwithfriends.model;
+
+/**
+ * {@link LoginModel} provides a way for presenter that handle login and the data/model to interact.
+ *
+ * @author Yoel Ivan
+ * @version %I%, %G%
+ */
+public interface LoginModel {
+
+    /**
+     * Check if the passed <code>userName</code> already registered.
+     *
+     * @param userName {@link String} representation of the <code>userName</code>
+     * @return <code>true</code> if the passed <code>userName</code> already registered and
+     * <code>false</code> otherwise
+     */
+    public boolean userIsRegistered(String userName);
+
+    /**
+     * Check whether a user has been authenticated on this client.
+     *
+     * @param listener
+     * @return
+     */
+    public Account checkAuthentication(final AuthenticationStateListener listener);
+
+    /**
+     * Attempt to log in into the system using passed arguments.
+     *
+     * @param userName {@link String} representation of the user name
+     * @param password {@link String} representation of the password
+     * @param listener
+     * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
+     */
+    public Account login(String userName, String password,
+                         final AuthenticationStateListener listener);
+
+    /**
+     * Attempt to create new account.
+     *
+     * @param userName {@link String} representation of the user name
+     * @param email    {@link String} representation of the email
+     * @param password {@link String} representation of the password
+     * @param listener
+     * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
+     */
+    public void register(String userName, String email, String password,
+                         final RegisterStateListener listener);
+
+    /**
+     * {@link AuthenticationStateListener} provides a way for the presenter to be notified on
+     * authentication state change.
+     */
+    public interface AuthenticationStateListener {
+
+        /**
+         * This method will be called by the model upon authenticated.
+         */
+        public void onAuthenticated();
+    }
+
+    /**
+     * {@link RegisterStateListener} provides a way for the presenter to be notified on
+     * register state change.
+     */
+    public interface RegisterStateListener {
+
+        /**
+         * This method will be called by the model upon registration success.
+         */
+        public void onSuccess();
+    }
+
+}
