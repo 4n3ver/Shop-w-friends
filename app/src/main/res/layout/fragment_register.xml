@@ -1,13 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
     android:id="@+id/fragmentRegister"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:background="#0099CC"
     android:orientation="vertical"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.WelcomeAct">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.act.WelcomeAct">
 
     <Button
         android:layout_width="wrap_content"
@@ -17,7 +18,7 @@
         android:background="#3b5998"
         android:drawableRight="@drawable/ic_fb_swf"
         android:text="Sign up with"
-        android:textColor="#fefefe" />
+        android:textColor="#fefefe"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +36,7 @@
             android:hint="User name"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="#b1fefefe" />
+            android:textColorHint="#b1fefefe"/>
 
         <AutoCompleteTextView
             android:id="@+id/frag_reg_email_text"
@@ -45,7 +46,7 @@
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="#b1fefefe" />
+            android:textColorHint="#b1fefefe"/>
 
         <EditText
             android:id="@+id/frag_reg_pass1_text"
@@ -57,7 +58,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="#b1fefefe" />
+            android:textColorHint="#b1fefefe"/>
 
         <EditText
             android:id="@+id/frag_reg_pass2_text"
@@ -69,7 +70,7 @@
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:textColorHint="#b1fefefe" />
+            android:textColorHint="#b1fefefe"/>
 
     </LinearLayout>
 
@@ -86,7 +87,16 @@
             android:hint="Sign up"
             android:maxLines="1"
             android:onClick="reg"
-            android:singleLine="true" />
+            android:singleLine="true"/>
+
+        <Button
+            android:id="@+id/cancelRegister_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Cancel"
+            android:maxLines="1"
+            android:onClick="cancel"
+            android:singleLine="true"/>
 
 
     </LinearLayout>
@@ -97,6 +107,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="100dp"
-        android:src="@drawable/swf1" />
+        android:src="@drawable/swf1"/>
 
 </LinearLayout>

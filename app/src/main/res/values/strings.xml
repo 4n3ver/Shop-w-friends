@@ -2,14 +2,13 @@
 <resources>
 
     <string name="app_name">ShoppingWithFriends</string>
-    <string name="welcome_text">Sing in to Shop/w/Friends</string>
+    <string name="welcome_text">Sign in to ShopWithFriends</string>
     <string name="subtitle_text">Save your favorite items and share</string>
     <string name="action_settings">Settings</string>
     <string name="create_account">Create Account</string>
+    <string name="cancelLogin_button">Cancel</string>
     <string name="sign_in">Sign In</string>
-    <string name="invalid_pass">The username or password you entered is invalid</string>
-    <string name="title_activity_welcome">WelcomeAct</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="invalidPass_toast">The username or password you entered is invalid</string>
+
 
 </resources>
