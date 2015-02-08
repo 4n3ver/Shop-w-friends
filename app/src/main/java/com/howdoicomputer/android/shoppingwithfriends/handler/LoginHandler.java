@@ -1,6 +1,7 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
 import com.firebase.client.FirebaseException;
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.LoginModel;
 import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
@@ -77,6 +78,7 @@ public class LoginHandler {
                         login(usrName, pass);
                     }
                 });
+
             } catch (FirebaseException e) {
                 throw e;
             }
