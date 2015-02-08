@@ -10,5 +10,8 @@
     <string name="sign_in">Sign In</string>
     <string name="invalidPass_toast">The username or password you entered is invalid</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

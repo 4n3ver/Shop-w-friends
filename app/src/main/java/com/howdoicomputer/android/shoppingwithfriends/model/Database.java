@@ -9,7 +9,7 @@ import com.firebase.client.ValueEventListener;
 import java.util.Map;
 
 /**
- * Created by Yoel Ivan on 2/6/2015.
+ * {@link Database} where all cool data hang...
  *
  * @author Yoel Ivan
  * @version %I%, %G%
@@ -38,10 +38,14 @@ public class Database implements LoginModel, MainModel {
      * Return email associated with <code>userName</code> passed.
      *
      * @param userName userName of the email owner
-     * @return {@link String} representation of email if the <code>userName</code> registered, or
-     * <code>null</code> otherwise
+     * @return {@link String} representation of email if the <code>userName</code> registered
+     * @throws IllegalArgumentException if <code>userName</code> is not registered
      */
     public String getEmail(String userName) {
+        if (!userIsRegistered(userName)) {
+            throw new IllegalArgumentException("User is not registered");
+        }
+
         return accMap.get(userName);
     }
 
@@ -70,25 +74,21 @@ public class Database implements LoginModel, MainModel {
     public Account login(String userName, String password,
                          final AuthenticationStateListener listener) {
         String email = this.getEmail(userName);
-        if (email == null) {    // check whether username exists
-            throw new IllegalArgumentException("Username does not exist");
-        } else {
-            mAccDatabase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
+        mAccDatabase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
 
-                @Override
-                public void onAuthenticated(AuthData authData) {
-                    if (authData != null) {
-                        listener.onAuthenticated();
-                    }
+            @Override
+            public void onAuthenticated(AuthData authData) {
+                if (authData != null) {
+                    listener.onAuthenticated();
                 }
+            }
 
-                @Override
-                public void onAuthenticationError(FirebaseError firebaseError) {
-                    throw firebaseError.toException();
-                }
-            });
-            return null;
-        }
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                listener.onError(new DatabaseError(firebaseError));
+            }
+        });
+        return null;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class Database implements LoginModel, MainModel {
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                throw firebaseError.toException();
+                listener.onError(new DatabaseError(firebaseError));
             }
         });
         accMap.put(userName, email);
@@ -113,4 +113,5 @@ public class Database implements LoginModel, MainModel {
     public void logout() {
         mAccDatabase.unauth();
     }
+
 }

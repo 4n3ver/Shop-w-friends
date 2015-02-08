@@ -1,0 +1,19 @@
+<LinearLayout
+    android:id="@+id/fragmentSplash"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:gravity="center"
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.WelcomeAct"
+    tools:ignore="MergeRootFrame">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/swf1"/>
+</LinearLayout>
+

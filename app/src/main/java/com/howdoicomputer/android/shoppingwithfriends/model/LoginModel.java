@@ -20,8 +20,8 @@ public interface LoginModel {
     /**
      * Check whether a user has been authenticated on this client.
      *
-     * @param listener
-     * @return
+     * @param listener object contained information on what to do when certain event triggered
+     * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
     public Account checkAuthentication(final AuthenticationStateListener listener);
 
@@ -30,7 +30,7 @@ public interface LoginModel {
      *
      * @param userName {@link String} representation of the user name
      * @param password {@link String} representation of the password
-     * @param listener
+     * @param listener object contained information on what to do when certain event triggered
      * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
     public Account login(String userName, String password,
@@ -42,7 +42,7 @@ public interface LoginModel {
      * @param userName {@link String} representation of the user name
      * @param email    {@link String} representation of the email
      * @param password {@link String} representation of the password
-     * @param listener
+     * @param listener object contained information on what to do when certain event triggered
      * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
     public void register(String userName, String email, String password,
@@ -58,6 +58,13 @@ public interface LoginModel {
          * This method will be called by the model upon authenticated.
          */
         public void onAuthenticated();
+
+        /**
+         * This method will be called by the model upon authentication error.
+         *
+         * @param error exception thrown upon error
+         */
+        public void onError(DatabaseError error);
     }
 
     /**
@@ -70,6 +77,13 @@ public interface LoginModel {
          * This method will be called by the model upon registration success.
          */
         public void onSuccess();
+
+        /**
+         * This method will be called by the model upon registration error.
+         *
+         * @param error exception thrown upon error
+         */
+        public void onError(DatabaseError error);
     }
 
 }
