@@ -2,6 +2,7 @@ package com.howdoicomputer.android.shoppingwithfriends.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
@@ -173,6 +175,8 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
      * @param v reference to the cancel button object
      */
     public void cancel(View v) {
+        ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(v.getWindowToken(), 0);
         getSupportFragmentManager().popBackStackImmediate();
     }
 
