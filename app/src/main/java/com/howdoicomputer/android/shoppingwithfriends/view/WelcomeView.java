@@ -1,5 +1,7 @@
 package com.howdoicomputer.android.shoppingwithfriends.view;
 
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+
 /**
  * {@link WelcomeView} provides a way for presenter that handle login and the GUI to interact.
  *
@@ -11,9 +13,7 @@ public interface WelcomeView {
     /**
      * This method is to be called by presenter on authenticated.
      */
-    public void onAuthenticated();
-
-    public void showWelcomeScreen();
+    public void onAuthenticated(Account acc);
 
     /**
      * Show error dialog to user.

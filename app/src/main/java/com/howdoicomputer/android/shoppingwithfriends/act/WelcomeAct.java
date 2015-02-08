@@ -17,6 +17,7 @@ import android.widget.EditText;
 import com.firebase.client.Firebase;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
 
 /**
@@ -28,17 +29,13 @@ import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
 public class WelcomeAct extends ActionBarActivity implements WelcomeView {
     private LoginHandler loginHandler;
     private ProgressDialog mConnProgressDialog;
-    private Bundle mSavedInstanceState;
+    private View mSplash;
+    private boolean isAuthenticated = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(com.howdoicomputer.android.shoppingwithfriends.R.layout.activity_welcome);
-        if (mSavedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.welcomeFragmentContainer, new SplashFragment()).commit();
-        }
-
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState); setContentView(R.layout.activity_welcome);
+        mSplash = findViewById(R.id.splash);
 
         /* setup the progress dialog that is displayed later when connecting to the server */
         mConnProgressDialog = new ProgressDialog(this); mConnProgressDialog.setCancelable(false);
@@ -48,6 +45,16 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         loginHandler.checkAuthentication(); // check whether user has logged in before
 
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSplash.setVisibility(View.GONE);
+                if (savedInstanceState == null && !isAuthenticated) {
+                    getSupportFragmentManager().beginTransaction()
+                            .add(R.id.welcomeFragmentContainer, new WelcomeFragment()).commit();
+                }
+            }
+        }, 2000);
     }
 
     @Override
@@ -113,26 +120,10 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
     }
 
     @Override
-    public void onAuthenticated() {
-        Intent mainApp = new Intent(); mainApp.setClass(getApplicationContext(), AppActivity.class);
-        startActivity(mainApp); finish();
-    }
-
-    @Override
-    public void showWelcomeScreen() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Fragment loginFragment = new WelcomeFragment();
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-                transaction.replace(
-                        com.howdoicomputer.android.shoppingwithfriends.R.id
-                                .welcomeFragmentContainer,
-                        loginFragment); transaction.commit();
-            }
-        }, 2000);
-
+    public void onAuthenticated(Account acc) {
+        isAuthenticated = true; Intent mainApp = new Intent();
+        mainApp.setClass(getApplicationContext(), AppActivity.class); startActivity(mainApp);
+        finish();
     }
 
     /*
@@ -194,9 +185,7 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         Fragment loginFragment = new LoginFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(
-                com.howdoicomputer.android.shoppingwithfriends.R.id.welcomeFragmentContainer,
-                loginFragment);
+        transaction.replace(R.id.welcomeFragmentContainer, loginFragment);
         transaction.addToBackStack(null);    // let user navigate back to previous fragment
 
         transaction.commit();
@@ -211,9 +200,7 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         Fragment registerFragment = new RegisterFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(
-                com.howdoicomputer.android.shoppingwithfriends.R.id.welcomeFragmentContainer,
-                registerFragment);
+        transaction.replace(R.id.welcomeFragmentContainer, registerFragment);
         transaction.addToBackStack(null);    // let user navigate back to previous fragment
 
         transaction.commit();
@@ -228,19 +215,6 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
     /**
      * generated from template
      */
-    public static class SplashFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_splash, container, false);
-        }
-    }
-
-    /**
-     * generated from template
-     */
     public static class WelcomeFragment extends Fragment {
 
         @Override
@@ -248,9 +222,8 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
                                  Bundle savedInstanceState) {
 
             /* change the R.layout.* argument to reuse the code */
-            View rootView = inflater.inflate(
-                    com.howdoicomputer.android.shoppingwithfriends.R.layout.fragment_welcome,
-                    container, false); return rootView;
+            View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
+            return rootView;
         }
     }
 
@@ -262,9 +235,8 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater
-                    .inflate(com.howdoicomputer.android.shoppingwithfriends.R.layout.fragment_login,
-                             container, false); return rootView;
+            View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+            return rootView;
         }
 
     }
@@ -277,9 +249,8 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(
-                    com.howdoicomputer.android.shoppingwithfriends.R.layout.fragment_register,
-                    container, false); return rootView;
+            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
+            return rootView;
         }
 
     }

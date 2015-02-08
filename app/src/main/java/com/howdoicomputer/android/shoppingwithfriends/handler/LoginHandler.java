@@ -1,5 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.DatabaseError;
 import com.howdoicomputer.android.shoppingwithfriends.model.LoginModel;
@@ -31,7 +32,7 @@ public class LoginHandler {
      * Check whether a user has been authenticated on this client.
      */
     public void checkAuthentication() {
-        db.checkAuthentication(new AuthenticationStateListener()); view.showWelcomeScreen();
+        db.checkAuthentication(new AuthenticationStateListener());
     }
 
     /**
@@ -99,8 +100,8 @@ public class LoginHandler {
      */
     private class AuthenticationStateListener implements LoginModel.AuthenticationStateListener {
         @Override
-        public void onAuthenticated() {
-            view.onAuthenticated();
+        public void onAuthenticated(Account acc) {
+            view.onAuthenticated(acc);
         }
 
         @Override

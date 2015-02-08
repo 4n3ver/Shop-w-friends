@@ -56,30 +56,29 @@ public class Database implements LoginModel, MainModel {
 
 
     @Override
-    public Account checkAuthentication(final AuthenticationStateListener listener) {
+    public void checkAuthentication(final AuthenticationStateListener listener) {
 
         /* check if the user is authenticated with Firebase already */
         mAccDatabase.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-                    listener.onAuthenticated();
+                    listener.onAuthenticated(new Account());
                 }
             }
         });
-        return null;
     }
 
     @Override
-    public Account login(String userName, String password,
-                         final AuthenticationStateListener listener) {
+    public void login(String userName, String password,
+                      final AuthenticationStateListener listener) {
         String email = this.getEmail(userName);
         mAccDatabase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
 
             @Override
             public void onAuthenticated(AuthData authData) {
                 if (authData != null) {
-                    listener.onAuthenticated();
+                    listener.onAuthenticated(new Account());
                 }
             }
 
@@ -88,7 +87,6 @@ public class Database implements LoginModel, MainModel {
                 listener.onError(new DatabaseError(firebaseError));
             }
         });
-        return null;
     }
 
     @Override
@@ -97,16 +95,14 @@ public class Database implements LoginModel, MainModel {
         mAccDatabase.createUser(email, password, new Firebase.ResultHandler() {
             @Override
             public void onSuccess() {
-                mAccDatabase.child("userAccount").setValue(accMap);
-                listener.onSuccess();
+                mAccDatabase.child("userAccount").setValue(accMap); listener.onSuccess();
             }
 
             @Override
             public void onError(FirebaseError firebaseError) {
                 listener.onError(new DatabaseError(firebaseError));
             }
-        });
-        accMap.put(userName, email);
+        }); accMap.put(userName, email);
     }
 
     @Override
