@@ -13,11 +13,14 @@
         <activity
             android:name=".act.AppActivity"
             android:label="@string/app_name"
-            android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".act.WelcomeAct"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:theme="@style/NoBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
