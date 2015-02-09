@@ -11,17 +11,11 @@ import java.io.*;
 public class Account implements Serializable {
     private String usrName;
     private String email;
-    private String password;
 
-    public Account(String usrName, String email, String password) {
+    public Account(String usrName, String email) {
         this.usrName = usrName;
         this.email = email;
-        this.password = password;
         confirmEmail();
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public void setEmail(String email) {
