@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User name"
+            android:imeOptions="actionNext"
             android:maxLines="1"
             android:singleLine="true"
             android:textColorHint="#b1fefefe"/>
@@ -45,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:imeActionLabel="Log in"
-            android:imeOptions="actionUnspecified"
+            android:imeActionLabel="Sign in"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
@@ -64,9 +65,8 @@
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Log in"
+            android:hint="Sign in"
             android:maxLines="1"
-            android:onClick="auth"
             android:singleLine="true"/>
 
         <Button

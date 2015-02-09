@@ -35,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="User name"
+            android:imeOptions="actionNext"
             android:maxLines="1"
             android:singleLine="true"
             android:textColorHint="#b1fefefe"/>
@@ -44,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email address"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
@@ -54,8 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:imeActionLabel="Log in"
-            android:imeOptions="actionUnspecified"
+            android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
@@ -66,8 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Confirm password"
-            android:imeActionLabel="Log in"
-            android:imeOptions="actionUnspecified"
+            android:imeActionLabel="Sign up"
+            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
@@ -87,7 +88,6 @@
             android:layout_height="wrap_content"
             android:hint="Sign up"
             android:maxLines="1"
-            android:onClick="reg"
             android:singleLine="true"/>
 
         <Button

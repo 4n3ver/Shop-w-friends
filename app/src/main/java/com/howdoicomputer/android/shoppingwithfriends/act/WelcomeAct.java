@@ -135,41 +135,6 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
      */
 
     /**
-     * Create new account and launch the {@link AppActivity}.
-     *
-     * @param v reference to the login button object on <layout>fragment_register</layout>
-     */
-    public void reg(View v) {
-        AutoCompleteTextView usrName = (AutoCompleteTextView) findViewById(
-                R.id.frag_reg_usrName_text);
-        AutoCompleteTextView email = (AutoCompleteTextView) findViewById(R.id.frag_reg_email_text);
-        EditText pass = (EditText) findViewById(R.id.frag_reg_pass1_text);
-        EditText passConfirmed = (EditText) findViewById(R.id.frag_reg_pass2_text);
-
-        try {
-
-            loginHandler.register(usrName.getText().toString(), email.getText().toString(),
-                                  pass.getText().toString(), passConfirmed.getText().toString());
-        } catch (Exception e) {
-
-            showErrorDialog(e.toString());
-        }
-    }
-
-    /**
-     * Authenticate with user provided username and password.
-     *
-     * @param v reference to the login button object on <layout>fragment_login</layout>
-     */
-    public void auth(View v) {
-        AutoCompleteTextView loginUserName = (AutoCompleteTextView) findViewById(
-                R.id.frag_login_usrName_text);
-        EditText loginPassword = (EditText) findViewById(R.id.frag_login_password_text);
-
-        loginHandler.login(loginUserName.getText().toString(), loginPassword.getText().toString());
-    }
-
-    /**
      * Go back to previous fragment.
      *
      * @param v reference to the cancel button object
@@ -229,33 +194,5 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
             View rootView = inflater.inflate(R.layout.fragment_welcome, container, false);
             return rootView;
         }
-    }
-
-    /**
-     * generated from template
-     */
-    public static class LoginFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_login, container, false);
-            return rootView;
-        }
-
-    }
-
-    /**
-     * generated from template
-     */
-    public static class RegisterFragment extends Fragment {
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_register, container, false);
-            return rootView;
-        }
-
     }
 }
