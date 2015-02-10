@@ -18,13 +18,14 @@ public class Admin extends Account implements Serializable {
         super(usrName, email);
     }
 
-    public static void writeToFile (Admin account) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("Admin.bin"));
-        objectOutputStream.writeObject(account);
+    public static void writeToFile(Admin account) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                new FileOutputStream("Admin.bin")); objectOutputStream.writeObject(account);
     }
 
     public static void readFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("Admin.bin")));
+        ObjectInputStream objectInputStream = new ObjectInputStream(
+                new FileInputStream(("Admin.bin")));
         Admin account = (Admin) objectInputStream.readObject();
     }
 }

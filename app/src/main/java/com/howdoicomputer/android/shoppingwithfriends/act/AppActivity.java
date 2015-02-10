@@ -19,8 +19,7 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        handler = new MainHandler(this);
-        super.onCreate(savedInstanceState);
+        handler = new MainHandler(this); super.onCreate(savedInstanceState);
         setContentView(com.howdoicomputer.android.shoppingwithfriends.R.layout.activity_app);
     }
 
@@ -61,8 +60,6 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                              .position(new LatLng(0, 0))
-                              .title("Marker"));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }

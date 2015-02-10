@@ -16,17 +16,17 @@ public class User extends Account implements Serializable {
     private Friendlist friendlist;
 
     public User(String usrName, String email) {
-        super(usrName, email);
-        this.friendlist = new Friendlist();
+        super(usrName, email); this.friendlist = new Friendlist();
     }
 
-    public static void writeToFile (User account) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("User.bin"));
-        objectOutputStream.writeObject(account);
+    public static void writeToFile(User account) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+                new FileOutputStream("User.bin")); objectOutputStream.writeObject(account);
     }
 
     public static void readFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("User.bin")));
+        ObjectInputStream objectInputStream = new ObjectInputStream(
+                new FileInputStream(("User.bin")));
         User account = (User) objectInputStream.readObject();
     }
 

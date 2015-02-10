@@ -63,7 +63,7 @@ public class Database implements LoginModel, MainModel {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-                    listener.onAuthenticated(new Account());
+                    listener.onAuthenticated(new Account(null, null));
                 }
             }
         });
@@ -78,7 +78,7 @@ public class Database implements LoginModel, MainModel {
             @Override
             public void onAuthenticated(AuthData authData) {
                 if (authData != null) {
-                    listener.onAuthenticated(new Account());
+                    listener.onAuthenticated(new Account(null, null));
                 }
             }
 
