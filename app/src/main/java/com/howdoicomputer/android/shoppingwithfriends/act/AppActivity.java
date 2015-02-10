@@ -6,11 +6,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
 import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
 
 
-public class AppActivity extends ActionBarActivity implements MainView {
+public class AppActivity extends ActionBarActivity implements MainView, OnMapReadyCallback {
     private MainHandler handler;
 
     @Override
@@ -53,5 +57,12 @@ public class AppActivity extends ActionBarActivity implements MainView {
     @Override
     public void onLoggedOut() {
         finish();
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                              .position(new LatLng(0, 0))
+                              .title("Marker"));
     }
 }
