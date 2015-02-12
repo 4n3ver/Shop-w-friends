@@ -1,5 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.act;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -19,7 +20,8 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        handler = new MainHandler(this); super.onCreate(savedInstanceState);
+        handler = new MainHandler(this);
+        super.onCreate(savedInstanceState);
         setContentView(com.howdoicomputer.android.shoppingwithfriends.R.layout.activity_app);
     }
 
@@ -55,7 +57,11 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
 
     @Override
     public void onLoggedOut() {
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), WelcomeAct.class);
+        startActivity(intent);
         finish();
+
     }
 
     @Override

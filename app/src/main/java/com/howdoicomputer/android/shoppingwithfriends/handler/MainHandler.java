@@ -30,5 +30,6 @@ public class MainHandler {
     public void logout() {
         db.logout();
         view.onLoggedOut();
+
     }
 }
