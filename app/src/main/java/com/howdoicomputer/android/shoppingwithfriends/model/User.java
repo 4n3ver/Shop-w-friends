@@ -17,9 +17,19 @@ public class User extends Account implements Serializable {
 
     public User(String usrName, String email) {
         super(usrName, email);
+        this.usrName = usrName;
+        this.email = email;
         this.friendlist = new Friendlist();
     }
-
+    public String getUsrName() {
+        return usrName;
+    }
+    public Friendlist getFriendlist() {
+        return friendlist;
+    }
+    public String getEmail() {
+        return email;
+    }
     public static void writeToFile (User account) throws IOException {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("User.bin"));
         objectOutputStream.writeObject(account);
