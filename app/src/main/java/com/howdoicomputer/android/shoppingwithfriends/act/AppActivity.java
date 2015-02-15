@@ -10,17 +10,23 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.Database;
 import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
 
 
 public class AppActivity extends ActionBarActivity implements MainView, OnMapReadyCallback {
     private MainHandler handler;
+    private Account currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        handler = new MainHandler(this);
         super.onCreate(savedInstanceState);
+        handler = new MainHandler(this);
+        currentUser = new Gson().fromJson(getIntent().getExtras().getString("Account"),
+                Account.class);
         setContentView(com.howdoicomputer.android.shoppingwithfriends.R.layout.activity_app);
     }
 
@@ -34,8 +40,8 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater()
-                .inflate(com.howdoicomputer.android.shoppingwithfriends.R.menu.menu_main, menu);
+        getMenuInflater().inflate(com.howdoicomputer.android.shoppingwithfriends.R.menu.menu_main,
+                menu);
         return true;
     }
 
@@ -56,13 +62,12 @@ public class AppActivity extends ActionBarActivity implements MainView, OnMapRea
 
     @Override
     public void onLoggedOut() {
+        Database.destroyInstance();
         finish();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                              .position(new LatLng(0, 0))
-                              .title("Marker"));
+        googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 }

@@ -9,32 +9,20 @@ package com.howdoicomputer.android.shoppingwithfriends.model;
 public interface LoginModel {
 
     /**
-     * Check if the passed <code>userName</code> already registered.
-     *
-     * @param userName {@link String} representation of the <code>userName</code>
-     * @return <code>true</code> if the passed <code>userName</code> already registered and
-     * <code>false</code> otherwise
-     */
-    public boolean userIsRegistered(String userName);
-
-    /**
      * Check whether a user has been authenticated on this client.
      *
-     * @param listener
-     * @return
+     * @param listener object contained information on what to do when certain event triggered
      */
-    public Account checkAuthentication(final AuthenticationStateListener listener);
+    public void checkAuthentication(final AuthenticationStateListener listener);
 
     /**
      * Attempt to log in into the system using passed arguments.
      *
      * @param userName {@link String} representation of the user name
      * @param password {@link String} representation of the password
-     * @param listener
-     * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
+     * @param listener object contained information on what to do when certain event triggered
      */
-    public Account login(String userName, String password,
-                         final AuthenticationStateListener listener);
+    public void login(String userName, String password, final AuthenticationStateListener listener);
 
     /**
      * Attempt to create new account.
@@ -42,10 +30,10 @@ public interface LoginModel {
      * @param userName {@link String} representation of the user name
      * @param email    {@link String} representation of the email
      * @param password {@link String} representation of the password
-     * @param listener
+     * @param listener object contained information on what to do when certain event triggered
      * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
-    public void register(String userName, String email, String password,
+    public void register(String name, String userName, String email, String password,
                          final RegisterStateListener listener);
 
     /**
@@ -57,7 +45,14 @@ public interface LoginModel {
         /**
          * This method will be called by the model upon authenticated.
          */
-        public void onAuthenticated();
+        public void onAuthenticated(Account acc);
+
+        /**
+         * This method will be called by the model upon authentication error.
+         *
+         * @param error exception thrown upon error
+         */
+        public void onError(DatabaseError error);
     }
 
     /**
@@ -70,6 +65,13 @@ public interface LoginModel {
          * This method will be called by the model upon registration success.
          */
         public void onSuccess();
+
+        /**
+         * This method will be called by the model upon registration error.
+         *
+         * @param error exception thrown upon error
+         */
+        public void onError(DatabaseError error);
     }
 
 }

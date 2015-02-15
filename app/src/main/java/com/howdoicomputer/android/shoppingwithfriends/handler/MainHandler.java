@@ -12,7 +12,7 @@ import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
  */
 public class MainHandler {
     private static MainModel db;
-    private MainView view;
+    private        MainView  view;
 
     /**
      * Construct {@link MainHandler} object.
@@ -20,7 +20,7 @@ public class MainHandler {
      * @param view reference to the implementing GUI
      */
     public MainHandler(MainView view) {
-        db = new Database();
+        db = Database.getInstace();
         this.view = view;
     }
 
@@ -30,5 +30,6 @@ public class MainHandler {
     public void logout() {
         db.logout();
         view.onLoggedOut();
+
     }
 }

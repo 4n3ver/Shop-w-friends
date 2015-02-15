@@ -11,32 +11,23 @@ import java.io.Serializable;
  * Created by Ricardomacias on 2/7/2015.
  */
 public class User extends Account implements Serializable {
-    private String usrName;
-    private String email;
     private Friendlist friendlist;
 
-    public User(String usrName, String email) {
-        super(usrName, email);
-        this.usrName = usrName;
-        this.email = email;
+
+    public User(String name, String usrName, String email) {
+        super(name, usrName, email);
         this.friendlist = new Friendlist();
     }
-    public String getUsrName() {
-        return usrName;
-    }
-    public Friendlist getFriendlist() {
-        return friendlist;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public static void writeToFile (User account) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("User.bin"));
+
+    public static void writeToFile(User account) throws IOException {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(
+                "User.bin"));
         objectOutputStream.writeObject(account);
     }
 
     public static void readFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(("User.bin")));
+        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(
+                ("User.bin")));
         User account = (User) objectInputStream.readObject();
     }
 
