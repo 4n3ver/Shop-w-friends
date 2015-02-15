@@ -11,11 +11,9 @@ import java.io.Serializable;
  * Created by Ricardomacias on 2/7/2015.
  */
 public class Admin extends Account implements Serializable {
-    private String usrName;
-    private String email;
 
-    public Admin(String usrName, String email) {
-        super(usrName, email);
+    public Admin(String name, String usrName, String email) {
+        super(name, usrName, email);
     }
 
     public static void writeToFile(Admin account) throws IOException {

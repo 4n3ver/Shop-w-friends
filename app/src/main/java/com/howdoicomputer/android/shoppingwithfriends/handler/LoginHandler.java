@@ -15,8 +15,8 @@ import org.apache.commons.validator.routines.EmailValidator;
  * @version %I%, %G%
  */
 public class LoginHandler {
-    private static LoginModel db;
-    private WelcomeView view;
+    private static LoginModel  db;
+    private        WelcomeView view;
 
     /**
      * Construct {@link LoginHandler} object.
@@ -24,7 +24,7 @@ public class LoginHandler {
      * @param view reference to the implementing GUI
      */
     public LoginHandler(WelcomeView view) {
-        db = new Database();
+        db = Database.getInstace();
         this.view = view;
     }
 
@@ -42,13 +42,16 @@ public class LoginHandler {
      * @param password {@link String} representation of password
      */
     public void login(final String usrName, final String password) {
-        boolean error = false; if (password.length() == 0) {
-            view.loginPasswordError("This field is required"); error = true;
-        } if (usrName.length() == 0) {
-            view.loginUserNameError("This field is required"); error = true;
-        } else if (!db.userIsRegistered(usrName)) {
-            view.showErrorDialog("Username does not exist"); error = true;
-        } if (!error) {
+        boolean error = false;
+        if (password.length() == 0) {
+            view.loginPasswordError("This field is required");
+            error = true;
+        }
+        if (usrName.length() == 0) {
+            view.loginUserNameError("This field is required");
+            error = true;
+        }
+        if (!error) {
             view.showProgressDialog("Logging in", "Please wait...");
             db.login(usrName, password, new AuthenticationStateListener());
             view.hideProgressDialog();
@@ -63,25 +66,34 @@ public class LoginHandler {
      * @param pass     user provided <code>pass</code>
      * @param passConf user provided <code>passConf</code>
      */
-    public void register(final String usrName, final String email, final String pass,
-                         final String passConf) {
-        EmailValidator emailValidator = EmailValidator.getInstance(); boolean error = false;
+    public void register(final String name, final String usrName, final String email,
+            final String pass, final String passConf) {
+        EmailValidator emailValidator = EmailValidator.getInstance();
+        boolean error = false;
         if (!pass.equals(passConf)) { // check if both password fields are identical
             view.registerPasswordError("Password does not match");
-            view.registerConfirmPasswordError("Password does not match"); error = true;
-        } if (pass.length() < 6) {
+            view.registerConfirmPasswordError("Password does not match");
+            error = true;
+        }
+        if (pass.length() < 6) {
             view.registerPasswordError("Password has to be longer than 6 characters");
             view.registerConfirmPasswordError("Password has to be longer than 6 characters");
             error = true;
-        } if (!emailValidator.isValid(email)) {
+        }
+        if (!emailValidator.isValid(email)) {
             view.registerEmailAddressError("Invalid email");
-        } if (usrName.length() == 0) {
-            view.registerUserNameError("This field is required"); error = true;
-        } else if (db.userIsRegistered(usrName)) { // username taken
-            view.showErrorDialog("Username has been taken"); error = true;
-        } if (!error) {
+        }
+        if (usrName.length() == 0) {
+            view.registerUserNameError("This field is required");
+            error = true;
+        }
+        if (name.length() == 0) {
+            view.showErrorDialog("This field is required");
+            error = true;
+        }
+        if (!error) {
             view.showProgressDialog("Registering", "Please wait...");
-            db.register(usrName, email, pass, new LoginModel.RegisterStateListener() {
+            db.register(name, usrName, email, pass, new LoginModel.RegisterStateListener() {
                 @Override
                 public void onSuccess() {
                     login(usrName, pass);
@@ -89,9 +101,16 @@ public class LoginHandler {
 
                 @Override
                 public void onError(DatabaseError error) {
-                    view.showErrorDialog(error.toString());
+                    if (error.getCode() == DatabaseError.USERNAME_TAKEN) {
+                        view.showErrorDialog("Username has been taken");
+                    } else if (error.getCode() == DatabaseError.EMAIL_TAKEN) {
+                        view.showErrorDialog("Email has been registered");
+                    } else {
+                        view.showErrorDialog(error.toString());
+                    }
                 }
-            }); view.hideProgressDialog();
+            });
+            view.hideProgressDialog();
         }
     }
 
@@ -108,6 +127,8 @@ public class LoginHandler {
         public void onError(DatabaseError error) {
             if (error.getCode() == error.INVALID_PASSWORD) {
                 view.showErrorDialog("Invalid password");
+            } else if (error.getCode() == error.USER_DOES_NOT_EXIST) {
+                view.showErrorDialog("Username does not exist");
             } else {
                 view.showErrorDialog(error.toString());
             }

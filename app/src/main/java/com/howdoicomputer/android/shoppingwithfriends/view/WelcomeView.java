@@ -22,8 +22,17 @@ public interface WelcomeView {
      */
     public void showErrorDialog(String message);
 
+    /**
+     * Show progress dialog to user
+     *
+     * @param title   {@link String} of title to be shown to user
+     * @param message {@link String} of message to be shown to user
+     */
     public void showProgressDialog(String title, String message);
 
+    /**
+     * Hide progress dialog if any
+     */
     public void hideProgressDialog();
 
     public void loginUserNameError(String message);

@@ -31,6 +31,16 @@
         android:padding="20dp">
 
         <AutoCompleteTextView
+            android:id="@+id/frag_reg_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Name"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColorHint="#b1fefefe"/>
+
+        <AutoCompleteTextView
             android:id="@+id/frag_reg_usrName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

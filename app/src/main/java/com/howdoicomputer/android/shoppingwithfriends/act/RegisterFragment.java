@@ -19,19 +19,21 @@ import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
  * Created by Yoel Ivan on 2/8/2015.
  */
 public class RegisterFragment extends Fragment {
-    private static LoginHandler handler;
+    private LoginHandler         handler;
+    private AutoCompleteTextView name;
     private AutoCompleteTextView userName;
     private AutoCompleteTextView email;
-    private EditText password;
-    private EditText passwordConfirm;
-    private Button register;
-    private Button cancel;
+    private EditText             password;
+    private EditText             passwordConfirm;
+    private Button               register;
+    private Button               cancel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
+        name = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_name_text);
         userName = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_usrName_text);
         email = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_email_text);
         password = (EditText) rootView.findViewById(R.id.frag_reg_pass1_text);
@@ -52,8 +54,10 @@ public class RegisterFragment extends Fragment {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
                      || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
                     && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    onRegisterButtonClick(); return true;
-                } return false;
+                    onRegisterButtonClick();
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -62,13 +66,16 @@ public class RegisterFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity); if (!(activity instanceof WelcomeView)) {
+        super.onAttach(activity);
+        if (!(activity instanceof WelcomeView)) {
             throw new IllegalArgumentException("not an instance of WelcomeView");
-        } handler = new LoginHandler((WelcomeView) activity);
+        }
+        handler = new LoginHandler((WelcomeView) activity);
     }
 
     private void onRegisterButtonClick() {
-        handler.register(userName.getText().toString(), email.getText().toString(),
+        handler.register(name.getText().toString(), userName.getText().toString(),
+                email.getText().toString(),
                          password.getText().toString(), passwordConfirm.getText().toString());
     }
 

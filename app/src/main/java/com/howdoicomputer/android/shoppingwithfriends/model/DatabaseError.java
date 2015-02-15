@@ -7,6 +7,8 @@ import com.firebase.client.FirebaseError;
  */
 
 public class DatabaseError extends FirebaseError {
+    public static final int USERNAME_TAKEN     = 0x26262626;
+    public static final int USERNAME_NOT_EXIST = 0x62626262;
 
     public DatabaseError(int code, String message) {
         super(code, message);

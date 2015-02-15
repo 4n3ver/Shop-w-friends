@@ -9,15 +9,6 @@ package com.howdoicomputer.android.shoppingwithfriends.model;
 public interface LoginModel {
 
     /**
-     * Check if the passed <code>userName</code> already registered.
-     *
-     * @param userName {@link String} representation of the <code>userName</code>
-     * @return <code>true</code> if the passed <code>userName</code> already registered and
-     * <code>false</code> otherwise
-     */
-    public boolean userIsRegistered(String userName);
-
-    /**
      * Check whether a user has been authenticated on this client.
      *
      * @param listener object contained information on what to do when certain event triggered
@@ -42,7 +33,7 @@ public interface LoginModel {
      * @param listener object contained information on what to do when certain event triggered
      * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
-    public void register(String userName, String email, String password,
+    public void register(String name, String userName, String email, String password,
                          final RegisterStateListener listener);
 
     /**
