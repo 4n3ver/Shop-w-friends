@@ -1,40 +1,39 @@
 package com.howdoicomputer.android.shoppingwithfriends.model;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 /**
- * Created by Yoel Ivan on 2/6/2015. In Progress I guess?
- *
- * @author Yoel Ivan
+ * @author Ricardo Macias
  * @version %I%, %G%
  */
-public class Account implements Serializable {
+public class Account implements Comparable<Account> {
+
+    private String name;
     private String usrName;
     private String email;
 
-    public Account(String usrName, String email) {
-        this.usrName = usrName; this.email = email;
-        //confirmEmail();
+    public Account() {}
+
+    public Account(String name, String usrName, String email) {
+        this.name = name;
+        this.usrName = usrName;
+        this.email = email;
+        confirmEmail();
     }
 
-    public static void writeToFile(Account account) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-                new FileOutputStream("Account.bin")); objectOutputStream.writeObject(account);
+    public String getUsrName() {
+        return usrName;
     }
 
-    public static void readFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(
-                new FileInputStream(("Account.bin")));
-        Account account = (Account) objectInputStream.readObject();
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
-        this.email = email; confirmEmail();
+        this.email = email;
+        confirmEmail();
+    }
+
+    public String getName() {
+        return name;
     }
 
     //This expression checks if the account is registered with a valid email
@@ -42,5 +41,10 @@ public class Account implements Serializable {
         if (!email.matches("^([A-Za-z][\\w\\-\\.]*)@([A-Za-z][\\w\\-\\.]*)\\.(com|org|net|edu)$")) {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public int compareTo(Account another) {
+        return this.usrName.compareTo(another.usrName);
     }
 }
