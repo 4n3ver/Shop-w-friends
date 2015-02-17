@@ -2,25 +2,27 @@ package com.howdoicomputer.android.shoppingwithfriends.model;
 
 /**
  * @author Ricardo Macias
+ * @author Yoel Ivan
  * @version %I%, %G%
  */
+
 public class Account implements Comparable<Account> {
 
     private String name;
-    private String usrName;
+    private String userName;
     private String email;
 
     public Account() {}
 
-    public Account(String name, String usrName, String email) {
+    public Account(String name, String userName, String email) {
         this.name = name;
-        this.usrName = usrName;
+        this.userName = userName;
         this.email = email;
-        confirmEmail();
+        //confirmEmail();
     }
 
-    public String getUsrName() {
-        return usrName;
+    public String getUserName() {
+        return userName;
     }
 
     public String getEmail() {
@@ -45,6 +47,16 @@ public class Account implements Comparable<Account> {
 
     @Override
     public int compareTo(Account another) {
-        return this.usrName.compareTo(another.usrName);
+        return this.userName.compareTo(another.userName);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+
+        /* this was intended to compare Account based on their username */
+        if (other instanceof Account) {
+            return this.userName.equals(((Account) other).userName);
+        }
+        throw new IllegalArgumentException("Not instance of Account");
     }
 }

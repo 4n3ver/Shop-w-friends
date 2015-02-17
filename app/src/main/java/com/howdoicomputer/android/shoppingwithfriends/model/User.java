@@ -1,34 +1,39 @@
 package com.howdoicomputer.android.shoppingwithfriends.model;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 /**
  * Created by Ricardomacias on 2/7/2015.
  */
-public class User extends Account implements Serializable {
-    private Friendlist friendlist;
+public class User extends Account implements Friend {
+    private FriendList friendlist;
+    private int        salesReported;
+    private int        rating;
+
+    public User() {
+        super();
+        this.friendlist = new FriendList();
+        this.salesReported = 0;
+        this.rating = 0;
+    }
 
 
     public User(String name, String usrName, String email) {
         super(name, usrName, email);
-        this.friendlist = new Friendlist();
+        this.friendlist = new FriendList();
+        this.salesReported = 0;
+        this.rating = 0;
     }
 
-    public static void writeToFile(User account) throws IOException {
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(
-                "User.bin"));
-        objectOutputStream.writeObject(account);
+    @Override
+    public int getSalesReported() {
+        return salesReported;
     }
 
-    public static void readFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(
-                ("User.bin")));
-        User account = (User) objectInputStream.readObject();
+    @Override
+    public int getRating() {
+        return rating;
     }
 
+    public FriendList getFriendlist() {
+        return friendlist;
+    }
 }

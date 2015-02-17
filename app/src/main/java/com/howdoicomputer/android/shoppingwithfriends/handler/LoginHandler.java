@@ -15,8 +15,8 @@ import org.apache.commons.validator.routines.EmailValidator;
  * @version %I%, %G%
  */
 public class LoginHandler {
-    private static LoginModel  db;
-    private        WelcomeView view;
+    private LoginModel  db;
+    private WelcomeView view;
 
     /**
      * Construct {@link LoginHandler} object.
@@ -82,19 +82,21 @@ public class LoginHandler {
         }
         if (!emailValidator.isValid(email)) {
             view.registerEmailAddressError("Invalid email");
+            error = true;
         }
         if (usrName.length() == 0) {
             view.registerUserNameError("This field is required");
             error = true;
         }
         if (name.length() == 0) {
-            view.showErrorDialog("This field is required");
+            view.registerNameError("This field is required");
             error = true;
         }
         if (!error) {
             view.showProgressDialog("Registering", "Please wait...");
-            db.register(name, usrName, email, pass, new LoginModel.RegisterStateListener() {
-                @Override
+            db.register(name, usrName, email.toLowerCase(), pass,
+                    new LoginModel.RegisterStateListener() {
+                        @Override
                 public void onSuccess() {
                     login(usrName, pass);
                 }
@@ -125,9 +127,9 @@ public class LoginHandler {
 
         @Override
         public void onError(DatabaseError error) {
-            if (error.getCode() == error.INVALID_PASSWORD) {
+            if (error.getCode() == DatabaseError.INVALID_PASSWORD) {
                 view.showErrorDialog("Invalid password");
-            } else if (error.getCode() == error.USER_DOES_NOT_EXIST) {
+            } else if (error.getCode() == DatabaseError.USERNAME_NOT_EXIST) {
                 view.showErrorDialog("Username does not exist");
             } else {
                 view.showErrorDialog(error.toString());

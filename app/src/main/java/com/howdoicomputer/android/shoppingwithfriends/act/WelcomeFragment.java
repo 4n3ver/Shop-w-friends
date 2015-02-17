@@ -1,6 +1,5 @@
 package com.howdoicomputer.android.shoppingwithfriends.act;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
-import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
 
 public class WelcomeFragment extends Fragment {
-    private WelcomeAct container;
-    private Button     toLoginButton;
-    private Button     toRegisterButton;
+    private Button toLoginButton;
+    private Button toRegisterButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,22 +39,14 @@ public class WelcomeFragment extends Fragment {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (!(activity instanceof WelcomeView)) {
-            throw new IllegalArgumentException("not an instance of WelcomeView");
-        }
-        container = (WelcomeAct) activity;
-    }
-
     /**
      * Replace current fragment with new fragment.
      *
      * @param newFrag new fragment to be shown
      */
     public void swapFragmrent(Fragment newFrag) {
-        FragmentTransaction transaction = container.getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager()
+                .beginTransaction();
 
         transaction.replace(R.id.welcomeFragmentContainer, newFrag);
         transaction.addToBackStack(null);    // let user navigate back to previous fragment

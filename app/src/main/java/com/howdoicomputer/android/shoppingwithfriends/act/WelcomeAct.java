@@ -27,9 +27,10 @@ import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
  * @version %I%, %G%
  */
 public class WelcomeAct extends ActionBarActivity implements WelcomeView {
-    private LoginHandler   loginHandler;
-    private ProgressDialog mConnProgressDialog;
-    private View           mSplash;
+    private LoginHandler        loginHandler;
+    private ProgressDialog      mConnProgressDialog;
+    private AlertDialog.Builder mErrorDialog;
+    private View                mSplash;
 
     private boolean isAuthenticated = false;
 
@@ -58,13 +59,16 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         /* setup the progress dialog that is displayed later when connecting to the server */
         mConnProgressDialog = new ProgressDialog(this);
         mConnProgressDialog.setCancelable(false);
+
+        /* setup the error dialog that is displayed later when input error detected */
+        mErrorDialog = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                .setPositiveButton(android.R.string.ok, null).setIcon(
+                        android.R.drawable.ic_dialog_alert);
     }
 
     @Override
     public void showErrorDialog(String message) {
-        new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT).setTitle("Error")
-                .setMessage(message).setPositiveButton(android.R.string.ok, null).setIcon(
-                android.R.drawable.ic_dialog_alert).show();
+        mErrorDialog.setTitle("Error").setMessage(message).show();
     }
 
     @Override
@@ -128,6 +132,13 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         EditText passConfirmed = (EditText) findViewById(R.id.frag_reg_pass2_text);
         passConfirmed.setError(message);
         passConfirmed.requestFocus();
+    }
+
+    @Override
+    public void registerNameError(String message) {
+        AutoCompleteTextView name = (AutoCompleteTextView) findViewById(R.id.frag_reg_name_text);
+        name.setError(message);
+        name.requestFocus();
     }
 
     @Override
