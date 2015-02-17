@@ -5,15 +5,15 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.google.gson.Gson;
 
 /**
  * {@link Database} where all cool data hang...
  *
- *
  * @author Yoel Ivan
  * @version %I%, %G%
  */
-public class Database implements LoginModel, MainModel {
+public class Database implements LoginModel, MainModel, FriendListModel {
     private static Database singletonInstance;
 
     private Firebase mAccDatabase;
@@ -53,26 +53,32 @@ public class Database implements LoginModel, MainModel {
                     mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot snapshot) {
-                            final String userName = snapshot.child("userEmail").child(
+                            String userName = snapshot.child("userEmail").child(
                                     ((String) authData.getProviderData().get("email")).replaceAll(
                                             "\\.", ",")).getValue(String.class);
-                            mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                            fetchAccountInfo(userName, new AccountStateListener() {
                                 @Override
-                                public void onDataChange(DataSnapshot snapshot) {
-                                    listener.onAuthenticated(snapshot.child("userAccount").child(
-                                            userName).getValue(Account.class));
+                                public void onFound(Account account) {
+                                    listener.onAuthenticated(account);
                                 }
 
                                 @Override
-                                public void onCancelled(FirebaseError firebaseError) {
-                                    throw firebaseError.toException();
+                                public void onNotFound() {
+                                    listener.onError(new DatabaseError(Integer.MAX_VALUE,
+                                            "WTF...!!"));
+                                }
+
+                                @Override
+                                public void onError(DatabaseError error) {
+                                    listener.onError(error);
                                 }
                             });
                         }
 
                         @Override
                         public void onCancelled(FirebaseError firebaseError) {
-                            throw firebaseError.toException();
+                            listener.onError(new DatabaseError(firebaseError));
                         }
                     });
                 }
@@ -84,77 +90,74 @@ public class Database implements LoginModel, MainModel {
     public void login(final String userName, final String password,
             final AuthenticationStateListener listener) {
 
-        mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        fetchAccountInfo(userName, new AccountStateListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                final Account acc = snapshot.child("userAccount").child(userName).getValue(
-                        Account.class);
-                if (acc != null) {
-                    mAccDatabase.authWithPassword(acc.getEmail(), password,
-                            new Firebase.AuthResultHandler() {
+            public void onFound(final Account account) {
+                mAccDatabase.authWithPassword(account.getEmail(), password,
+                        new Firebase.AuthResultHandler() {
 
-                                @Override
-                                public void onAuthenticated(AuthData authData) {
-                                    if (authData != null) {
-                                        listener.onAuthenticated(acc);
-                                    }
+                            @Override
+                            public void onAuthenticated(AuthData authData) {
+                                if (authData != null) {
+                                    listener.onAuthenticated(account);
                                 }
+                            }
 
-                                @Override
-                                public void onAuthenticationError(FirebaseError firebaseError) {
-                                    listener.onError(new DatabaseError(firebaseError));
-                                }
-                            });
-                } else {
-                    listener.onError(new DatabaseError(DatabaseError.USERNAME_NOT_EXIST,
-                            "Username does not exist"));
-                }
+                            @Override
+                            public void onAuthenticationError(FirebaseError firebaseError) {
+                                listener.onError(new DatabaseError(firebaseError));
+                            }
+                        });
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                throw firebaseError.toException();
+            public void onNotFound() {
+                listener.onError(new DatabaseError(DatabaseError.USERNAME_NOT_EXIST,
+                        "Username does not exist"));
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                listener.onError(error);
             }
         });
-
 
     }
 
     @Override
     public void register(final String name, final String userName, final String email,
             final String password, final RegisterStateListener listener) {
-        mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        fetchAccountInfo(userName, new AccountStateListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (!snapshot.child("userAccount").hasChild(userName)) {
-                    mAccDatabase.createUser(email, password, new Firebase.ResultHandler() {
-                        @Override
-                        public void onSuccess() {
-                            mAccDatabase.child("userAccount").child(userName).setValue(new Account(
-                                    name, userName, email));
-                            mAccDatabase.child("userEmail").child(email.replaceAll("\\.", ","))
-                                    .setValue(userName);
-                            listener.onSuccess();
-                        }
-
-                        @Override
-                        public void onError(FirebaseError firebaseError) {
-                            listener.onError(new DatabaseError(firebaseError));
-                        }
-                    });
-                } else {
-                    listener.onError(new DatabaseError(DatabaseError.USERNAME_TAKEN,
-                            "Username has been taken"));
-                }
+            public void onFound(Account account) {
+                listener.onError(new DatabaseError(DatabaseError.USERNAME_TAKEN,
+                        "Username has been taken"));
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                throw firebaseError.toException();
+            public void onNotFound() {
+                mAccDatabase.createUser(email, password, new Firebase.ResultHandler() {
+                    @Override
+                    public void onSuccess() {
+                        mAccDatabase.child("userAccount").child(userName).setValue(
+                                new Gson().toJson(new User(name, userName, email), User.class));
+                        mAccDatabase.child("userEmail").child(email.replaceAll("\\.", ","))
+                                .setValue(userName);
+                        listener.onSuccess();
+                    }
+
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        listener.onError(new DatabaseError(firebaseError));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(DatabaseError error) {
+                listener.onError(error);
             }
         });
-
-
     }
 
     @Override
@@ -168,8 +171,28 @@ public class Database implements LoginModel, MainModel {
      * @param userName user name of the {@link Account} to be fetched
      * @param listener target listener where the {@link Account} need to be send
      */
-    private void fetchAccount(final String userName, final AuthenticationStateListener listener) {
+    public void fetchAccountInfo(final String userName, final AccountStateListener listener) {
+        mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.child("userAccount").hasChild(userName)) {
+                    listener.onFound(new Gson().fromJson(snapshot.child("userAccount").child(
+                            userName).getValue(String.class), User.class));
+                } else {
+                    listener.onNotFound();
+                }
+            }
 
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                listener.onError(new DatabaseError(firebaseError));
+            }
+        });
+    }
+
+    public void updateAccount(Account account) {
+        mAccDatabase.child("userAccount").child(account.getUserName()).setValue(new Gson().toJson(
+                account, User.class));
     }
 
 }

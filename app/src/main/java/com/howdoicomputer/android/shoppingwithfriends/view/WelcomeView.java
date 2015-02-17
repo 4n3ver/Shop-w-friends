@@ -39,6 +39,8 @@ public interface WelcomeView {
 
     public void loginPasswordError(String message);
 
+    public void registerNameError(String message);
+
     public void registerUserNameError(String message);
 
     public void registerEmailAddressError(String message);
