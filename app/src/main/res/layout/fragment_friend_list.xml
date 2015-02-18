@@ -5,18 +5,25 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context=".act.FriendListFragment">
+
+    <Button
+        android:id="@+id/temporary_add"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:text="Add"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/friend_list"
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical">
-
-
-    </android.support.v7.widget.RecyclerView>
+        android:scrollbars="vertical"/>
 </LinearLayout>
 
 

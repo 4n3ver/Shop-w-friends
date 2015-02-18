@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.database;
 
 import com.firebase.client.AuthData;
 import com.firebase.client.DataSnapshot;
@@ -6,6 +6,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.User;
 
 /**
  * {@link Database} where all cool data hang...
@@ -14,6 +16,8 @@ import com.google.gson.Gson;
  * @version %I%, %G%
  */
 public class Database implements LoginModel, MainModel, FriendListModel {
+
+    /* singleton instance */
     private static Database singletonInstance;
 
     private Firebase mAccDatabase;
@@ -165,12 +169,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
         mAccDatabase.unauth();
     }
 
-    /**
-     * Send {@link Account} for <code>userName</code> and send it to <code>listener</code>.
-     *
-     * @param userName user name of the {@link Account} to be fetched
-     * @param listener target listener where the {@link Account} need to be send
-     */
+    @Override
     public void fetchAccountInfo(final String userName, final AccountStateListener listener) {
         mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -190,6 +189,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
         });
     }
 
+    @Override
     public void updateAccount(Account account) {
         mAccDatabase.child("userAccount").child(account.getUserName()).setValue(new Gson().toJson(
                 account, User.class));

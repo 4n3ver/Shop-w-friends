@@ -15,8 +15,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.Database;
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
 
 
@@ -78,7 +79,7 @@ public class AppActivity extends ActionBarActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == com.howdoicomputer.android.shoppingwithfriends.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -89,6 +90,11 @@ public class AppActivity extends ActionBarActivity
     public void onLoggedOut() {
         Database.destroyInstance();
         finish();
+    }
+
+    @Override
+    public void onAccountChanged(Account changedAccount) {
+        currentUser = (User) changedAccount;
     }
 
     @Override

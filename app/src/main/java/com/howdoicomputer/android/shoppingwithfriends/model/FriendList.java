@@ -31,31 +31,17 @@ public class FriendList {
     }
 
     /**
-     * Required public getter for database.
-     *
-     * @return list of friend
-     */
-    public ArrayList<User> getList() {
-        return list;
-    }
-
-    /**
      * @param other
      * @return
      */
     public boolean addFriend(User other) {
-        int insertionIndex = 0;
-        boolean done = false;
-        for (int i = 0; i < list.size() && !done; i++) {
-            if (list.get(i).equals(other)) {
-                return false;
-            } else if (list.get(i).getName().compareTo(other.getName()) >= 0) {
-                insertionIndex = i;
-                done = true;
-            }
+        int insertionIndex = indexOf(other.getName());
+        if (insertionIndex < 0) {
+            list.add(-(insertionIndex + 1), other);
+            return true;
+        } else {
+            return false;
         }
-        list.add(insertionIndex, other);
-        return true;
     }
 
     /**
@@ -66,27 +52,54 @@ public class FriendList {
      * <code>false</code> otherwise
      */
     public boolean isFriendWith(String userName) {
-        return indexOf(userName) >= 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserName().equals(userName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Remove user with given user name from the friend list.
      *
      * @param userName user name of user that need to be removed from the list
+     * @return <code>true</code> if the list is changed as the result of the operation,
+     * <code>false</code> otherwise.
      */
-    public void removeFriend(String userName) {
-        list.remove(indexOf(userName));
+    public boolean removeFriend(String userName) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUserName().equals(userName)) {
+                list.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param index
+     * @return
+     */
+    public User get(int index) {
+        return list.get(index);
+    }
+
+    /**
+     * @return
+     */
+    public int friendCount() {
+        return list.size();
     }
 
     /**
      * Perform binary search on the friend list.
      *
-     * @param userName user name which index is to be found
+     * @param name name of user which index is to be found
      * @return see {@link Collections}
      */
-    private int indexOf(String userName) {
-        return Collections.binarySearch(list, new User(null, userName, null),
-                new Comparator<User>() {
+    private int indexOf(String name) {
+        return Collections.binarySearch(list, new User(name, null, null), new Comparator<User>() {
                     @Override
                     public int compare(User lhs, User rhs) {
                         return lhs.getName().compareTo(rhs.getName());

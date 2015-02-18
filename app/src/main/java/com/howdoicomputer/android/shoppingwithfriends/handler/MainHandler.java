@@ -1,7 +1,7 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Database;
-import com.howdoicomputer.android.shoppingwithfriends.model.MainModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.MainModel;
 import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
 
 /**

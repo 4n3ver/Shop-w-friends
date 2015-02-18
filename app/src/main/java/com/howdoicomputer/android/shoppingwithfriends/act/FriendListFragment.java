@@ -14,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
@@ -39,6 +40,9 @@ public class FriendListFragment extends Fragment {
     private User                          currentUser;
     private FriendListHandler             handler;
     private OnFragmentInteractionListener mListener;
+    private AlertDialog.Builder addFriendDialog;
+    private Button              addFriendButton;
+
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -76,7 +80,7 @@ public class FriendListFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new FriendListAdapter(currentUser.getFriendlist().getList());
+        mAdapter = new FriendListAdapter(currentUser.getFriendlist(), handler);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -98,7 +102,15 @@ public class FriendListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
 
-        showAddFriendDialog();
+        addFriendButton = (Button) rootView.findViewById(R.id.temporary_add);
+
+        addFriendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddFriendDialog();
+            }
+        });
+
         return rootView;
     }
 
@@ -144,23 +156,28 @@ public class FriendListFragment extends Fragment {
     }
 
     public void showAddFriendDialog() {
-        final View addFriendDialogView = getLayoutInflater(null).inflate(R.layout.dialog_add_friend,
-                null);
+        if (addFriendDialog == null) {
+            final View addFriendDialogView = getLayoutInflater(null).inflate(
+                    R.layout.dialog_add_friend, null);
 
-        new AlertDialog.Builder(getActivity()).setTitle("Enter your friend username").setView(
-                addFriendDialogView).setPositiveButton("Add",
-                new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(getActivity()).setTitle("Enter your friend username").setView(
+                    addFriendDialogView).setPositiveButton("Add",
+                    new DialogInterface.OnClickListener() {
 
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        AutoCompleteTextView friendUserName
-                                = (AutoCompleteTextView) addFriendDialogView.findViewById(
-                                R.id.add_friend_dialog_text);
-                        handler.add(friendUserName.getText().toString());
-                        mAdapter.notifyDataSetChanged();
-                    }
-                }).setNegativeButton("Cancel", null).show();
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            AutoCompleteTextView friendUserName
+                                    = (AutoCompleteTextView) addFriendDialogView.findViewById(
+                                    R.id.add_friend_dialog_text);
+                            handler.add(friendUserName.getText().toString());
+                            mAdapter.notifyDataSetChanged();
 
+                            //mRecyclerView.invalidate();
+                        }
+                    }).setNegativeButton("Cancel", null).show();
+        } else {
+            addFriendDialog.show();
+        }
     }
 
     /**
