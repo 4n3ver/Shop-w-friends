@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
@@ -36,7 +37,6 @@ public class FriendListFragment extends Fragment {
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-
     private User                          currentUser;
     private FriendListHandler             handler;
     private OnFragmentInteractionListener mListener;
@@ -102,15 +102,6 @@ public class FriendListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
 
-        addFriendButton = (Button) rootView.findViewById(R.id.temporary_add);
-
-        addFriendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showAddFriendDialog();
-            }
-        });
-
         return rootView;
     }
 
@@ -137,7 +128,19 @@ public class FriendListFragment extends Fragment {
         .getComponentName()));
         */
     }
+    /* override this method to respond to the action bar
 
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //respond to add menu item
+            case R.id.menu_item_addFriend:
+                showAddFriendDialog();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

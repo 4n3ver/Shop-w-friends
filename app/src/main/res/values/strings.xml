@@ -9,6 +9,7 @@
     <string name="cancelLogin_button">Cancel</string>
     <string name="sign_in">Sign In</string>
     <string name="invalidPass_toast">The username or password you entered is invalid</string>
+    <string name="add_friend">Add</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

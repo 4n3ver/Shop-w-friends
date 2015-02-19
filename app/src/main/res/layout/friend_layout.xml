@@ -5,51 +5,75 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_centerVertical="true"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="20dp"
+    android:background="#d8337799">
 
-<LinearLayout
+    <ImageView
+        android:id="@+id/friend_list_profile_pic"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/friend_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            tools:text="Name"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/profile_pic"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:scaleType="fitStart"
+        android:maxHeight="70dp"
+        android:maxWidth="70dp"
+        android:layout_gravity="center"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/friend_userName"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            tools:text="Username"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/friend_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                tools:text="Name"/>
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rating : "
-            tools:text="Rating : "/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/friend_rating"
+            <TextView
+                android:id="@+id/friend_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                tools:text="Username"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="Rating"/>
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating : "
+                tools:text="Rating : "/>
+
+            <TextView
+                android:id="@+id/friend_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Rating"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
+
