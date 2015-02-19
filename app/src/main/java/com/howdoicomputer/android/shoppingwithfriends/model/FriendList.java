@@ -27,7 +27,7 @@ public class FriendList {
      * Construct new {@link FriendList} instance.
      */
     public FriendList() {
-        list = new ArrayList<>();
+        list = new ArrayList<User>();
     }
 
     /**

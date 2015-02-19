@@ -10,9 +10,11 @@ public class User extends Account implements Friend {
 
 
     /**
-     * @param name
-     * @param usrName
-     * @param email
+     * Constructor for User object, initialized with desired
+     * traits.
+     * @param name: The name of the user
+     * @param usrName:The username of the user
+     * @param email: The email of the user
      */
     public User(String name, String usrName, String email) {
         super(name, usrName, email);
@@ -31,6 +33,10 @@ public class User extends Account implements Friend {
         return rating;
     }
 
+    /**
+     * Getter for the friendlist of the user
+     * @return friendlist
+     */
     public FriendList getFriendlist() {
         return friendlist;
     }
