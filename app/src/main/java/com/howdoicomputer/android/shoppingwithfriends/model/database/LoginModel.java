@@ -1,4 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.database;
+
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 
 /**
  * {@link LoginModel} provides a way for presenter that handle login and the data/model to interact.
@@ -34,7 +36,7 @@ public interface LoginModel {
      * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
     public void register(String name, String userName, String email, String password,
-                         final RegisterStateListener listener);
+            final RegisterStateListener listener);
 
     /**
      * {@link AuthenticationStateListener} provides a way for the presenter to be notified on

@@ -12,8 +12,6 @@ public class Account implements Comparable<Account> {
     private String userName;
     private String email;
 
-    public Account() {}
-
     public Account(String name, String userName, String email) {
         this.name = name;
         this.userName = userName;

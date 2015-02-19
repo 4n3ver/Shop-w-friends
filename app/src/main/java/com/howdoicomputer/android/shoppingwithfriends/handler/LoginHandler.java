@@ -1,9 +1,9 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
 import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.Database;
-import com.howdoicomputer.android.shoppingwithfriends.model.DatabaseError;
-import com.howdoicomputer.android.shoppingwithfriends.model.LoginModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.LoginModel;
 import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
 
 import org.apache.commons.validator.routines.EmailValidator;
@@ -97,21 +97,21 @@ public class LoginHandler {
             db.register(name, usrName, email.toLowerCase(), pass,
                     new LoginModel.RegisterStateListener() {
                         @Override
-                public void onSuccess() {
-                    login(usrName, pass);
-                }
+                        public void onSuccess() {
+                            login(usrName, pass);
+                        }
 
-                @Override
-                public void onError(DatabaseError error) {
-                    if (error.getCode() == DatabaseError.USERNAME_TAKEN) {
-                        view.showErrorDialog("Username has been taken");
-                    } else if (error.getCode() == DatabaseError.EMAIL_TAKEN) {
-                        view.showErrorDialog("Email has been registered");
-                    } else {
-                        view.showErrorDialog(error.toString());
-                    }
-                }
-            });
+                        @Override
+                        public void onError(DatabaseError error) {
+                            if (error.getCode() == DatabaseError.USERNAME_TAKEN) {
+                                view.showErrorDialog("Username has been taken");
+                            } else if (error.getCode() == DatabaseError.EMAIL_TAKEN) {
+                                view.showErrorDialog("Email has been registered");
+                            } else {
+                                view.showErrorDialog(error.toString());
+                            }
+                        }
+                    });
             view.hideProgressDialog();
         }
     }

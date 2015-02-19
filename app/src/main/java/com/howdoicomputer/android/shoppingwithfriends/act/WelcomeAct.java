@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.Database;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
 
 /**
@@ -151,6 +151,14 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!isAuthenticated) {
+            Database.destroyInstance();
+        }
+    }
+
     /*
         ######################################
         ##      Button binded method        ##
@@ -166,13 +174,5 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(v.getWindowToken(), 0);
         getSupportFragmentManager().popBackStackImmediate();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!isAuthenticated) {
-            Database.destroyInstance();
-        }
     }
 }

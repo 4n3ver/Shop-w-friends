@@ -1,4 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.database;
+
+import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 
 /**
  * {@link AccountStateListener} provides a way for the presenter to find an account
