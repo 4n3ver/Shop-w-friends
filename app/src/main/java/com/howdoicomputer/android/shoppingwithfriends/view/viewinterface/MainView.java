@@ -1,6 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.view;
+package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
  * {@link MainView} provides a way for presenter that handle the main app and the GUI to interact.

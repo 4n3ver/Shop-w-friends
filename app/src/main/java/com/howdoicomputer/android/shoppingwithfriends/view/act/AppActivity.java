@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,10 +15,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
-import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 
 public class AppActivity extends ActionBarActivity

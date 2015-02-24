@@ -1,6 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.model.database;
+package com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
  * {@link MainModel} provides a way for presenter that handle the main app and the data/model to

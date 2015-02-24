@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".act.AppActivity"
+            android:name=".view.act.AppActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait">
@@ -29,7 +29,7 @@
         </activity>
 
         <activity
-            android:name=".act.WelcomeAct"
+            android:name=".view.act.WelcomeAct"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
@@ -50,7 +50,7 @@
             android:value="AIzaSyAxGcsPw05dk8bmW7MDMpD4oVHZxnhGz9Y"/>
 
         <activity
-            android:name=".act.SearchFriendResultAct"
+            android:name=".view.act.SearchFriendResultAct"
             android:label="@string/title_activity_search_friend_result"
             android:launchMode="singleTop">
             <meta-data

@@ -1,6 +1,7 @@
-package com.howdoicomputer.android.shoppingwithfriends.model.database;
+package com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
 
 /**
  * {@link AccountStateListener} provides a way for the presenter to find an account

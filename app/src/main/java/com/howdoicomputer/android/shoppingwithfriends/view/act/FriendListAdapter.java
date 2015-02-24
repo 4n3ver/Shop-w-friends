@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.FriendList;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FriendViewHolder> {
     private FriendList        mDataset;

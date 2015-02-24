@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.act.WelcomeAct"
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.act.WelcomeAct"
     tools:ignore="MergeRootFrame">
 
     <ImageView

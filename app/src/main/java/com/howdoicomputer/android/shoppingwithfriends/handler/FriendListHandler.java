@@ -1,12 +1,12 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
-import com.howdoicomputer.android.shoppingwithfriends.model.database.AccountStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.AccountStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
-import com.howdoicomputer.android.shoppingwithfriends.model.database.FriendListModel;
-import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.FriendListModel;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 /**
  * Created by Yoel Ivan on 2/15/2015.

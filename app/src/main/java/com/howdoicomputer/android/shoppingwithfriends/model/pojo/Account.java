@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 /**
  * @author Ricardo Macias

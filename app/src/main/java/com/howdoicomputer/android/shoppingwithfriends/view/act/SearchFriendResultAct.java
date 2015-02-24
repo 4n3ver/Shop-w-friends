@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
 import android.app.SearchManager;

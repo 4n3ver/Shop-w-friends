@@ -9,7 +9,7 @@
     android:background="#0099CC"
     android:orientation="vertical"
     android:paddingTop="16dp"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.WelcomeAct">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.WelcomeAct">
 
 <Button
         android:layout_width="wrap_content"

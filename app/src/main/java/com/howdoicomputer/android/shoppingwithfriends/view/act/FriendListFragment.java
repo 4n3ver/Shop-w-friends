@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,8 +20,8 @@ import android.widget.Button;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
-import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 /**
  * A simple {@link Fragment} subclass.
