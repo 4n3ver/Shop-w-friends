@@ -11,6 +11,7 @@ import java.util.Date;
  * Work in Progress
  */
 public class Item implements Comparable {
+    //instance variables
     private int likes;
     private double price;
     private Location location;
