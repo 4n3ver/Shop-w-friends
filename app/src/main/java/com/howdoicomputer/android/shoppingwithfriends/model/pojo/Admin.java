@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

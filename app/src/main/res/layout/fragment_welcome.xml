@@ -12,7 +12,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
 
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.act.WelcomeAct">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.act.WelcomeAct">
 
     <ImageView
         android:layout_width="wrap_content"

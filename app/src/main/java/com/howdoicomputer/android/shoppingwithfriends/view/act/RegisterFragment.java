@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
-import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.WelcomeView;
 
 /**
  * Created by Yoel Ivan on 2/8/2015.

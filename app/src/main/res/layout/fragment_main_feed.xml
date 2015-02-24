@@ -8,7 +8,7 @@
     android:background="#0099CC"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.MainFeedFragment">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.MainFeedFragment">
 
     <TextView
         android:id="@+id/textView"

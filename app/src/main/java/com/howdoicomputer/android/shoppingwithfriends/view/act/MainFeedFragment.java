@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
 import android.net.Uri;
@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 /**
  * A simple {@link Fragment} subclass.
