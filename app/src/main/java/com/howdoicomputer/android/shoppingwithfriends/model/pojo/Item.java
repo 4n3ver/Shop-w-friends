@@ -11,7 +11,7 @@ import java.util.Date;
  * Work in Progress
  */
 public class Item {
-    private int likes;
+    private int    likes;
     private double price;
     private Location location;
     private String time;
@@ -19,8 +19,9 @@ public class Item {
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
+     *
      * @param price: price of the item
-     * @param loc: location of the item
+     * @param loc:   location of the item
      */
     public Item(double price, Location loc) {
         this.likes = 0;
@@ -33,6 +34,7 @@ public class Item {
 
     /**
      * Getter for the current location of the item.
+     *
      * @return location
      */
     public Location getLocation() {
@@ -41,6 +43,7 @@ public class Item {
 
     /**
      * Getter for the price of the item
+     *
      * @return price
      */
     public double getPrice() {
@@ -56,6 +59,7 @@ public class Item {
 
     /**
      * Getter for the likes of the item.
+     *
      * @return likes, the amount of current likes the product has
      */
     public int getLikes() {

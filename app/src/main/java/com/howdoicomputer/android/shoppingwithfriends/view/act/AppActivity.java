@@ -1,7 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,13 +26,13 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainVie
 
 
 public class AppActivity extends ActionBarActivity
-        implements MainView, OnMapReadyCallback, AppStateListener, 
-         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements MainView, OnMapReadyCallback, AppStateListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private MainHandler handler;
-    private User        currentUser;
+    private MainHandler     handler;
+    private User            currentUser;
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
+    private Location        mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +52,10 @@ public class AppActivity extends ActionBarActivity
      * current location of the user.
      */
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
     }
+
     /**
      * Unauthenticate from Firebase and from providers where necessary.
      */
@@ -134,18 +130,19 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
     }
 
     /**
      * returns last known location of application
+     *
      * @return location
      */
     public Location getLocation() {
         return mLastLocation;
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 
