@@ -1,7 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,12 +11,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link MainFeedFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link MainFeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
@@ -27,7 +25,7 @@ public class MainFeedFragment extends Fragment {
 
     private User currentUser;
 
-    private OnFragmentInteractionListener mListener;
+    private AppStateListener mListener;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -70,21 +68,13 @@ public class MainFeedFragment extends Fragment {
         return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (AppStateListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(
-                    activity.toString() + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(activity.toString() + " must implement AppStateListener");
         }
     }
 
@@ -93,20 +83,4 @@ public class MainFeedFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
-
 }

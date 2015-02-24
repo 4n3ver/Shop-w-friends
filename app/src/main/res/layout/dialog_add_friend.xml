@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="User name"
+        android:imeActionLabel="Add"
+        android:imeOptions="actionDone"
         android:maxLines="1"
         android:singleLine="true"
         android:textColorHint="#b1fefefe"/>

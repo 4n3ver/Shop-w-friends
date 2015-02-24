@@ -52,8 +52,8 @@ public class RegisterFragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
-                     || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
-                    && event.getAction() == KeyEvent.ACTION_DOWN) {
+                             || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
                     onRegisterButtonClick();
                     return true;
                 }
@@ -75,8 +75,8 @@ public class RegisterFragment extends Fragment {
 
     private void onRegisterButtonClick() {
         handler.register(name.getText().toString(), userName.getText().toString(),
-                email.getText().toString(),
-                         password.getText().toString(), passwordConfirm.getText().toString());
+                email.getText().toString(), password.getText().toString(),
+                passwordConfirm.getText().toString());
     }
 
 }

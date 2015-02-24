@@ -3,11 +3,11 @@ package com.howdoicomputer.android.shoppingwithfriends.view.act;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,34 +15,33 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
-import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.FriendListView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link FriendListFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  * Use the {@link FriendListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends Fragment implements FriendListView {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CURRENTUSER_PARAM = "currentUSer";
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private User                          currentUser;
-    private FriendListHandler             handler;
-    private OnFragmentInteractionListener mListener;
-    private AlertDialog.Builder addFriendDialog;
-    private Button              addFriendButton;
+    private User              currentUser;
+    private FriendListHandler handler;
+    private AppStateListener  mListener;
 
+    private AlertDialog.Builder addFriendDialog;
+    private AlertDialog shownAddFriendDialog;
+    private View        addFriendDialogView;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -93,7 +92,7 @@ public class FriendListFragment extends Fragment {
             currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
                     User.class);
         }
-        handler = new FriendListHandler((MainView) getActivity(), currentUser);
+        handler = new FriendListHandler(this, currentUser);
     }
 
     @Override
@@ -103,13 +102,6 @@ public class FriendListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
 
         return rootView;
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -128,9 +120,8 @@ public class FriendListFragment extends Fragment {
         .getComponentName()));
         */
     }
-    /* override this method to respond to the action bar
 
-     */
+    /* override this method to respond to the action bar */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -141,14 +132,14 @@ public class FriendListFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (AppStateListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(
-                    activity.toString() + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(activity.toString() + " must implement AppStateListener");
         }
     }
 
@@ -158,45 +149,55 @@ public class FriendListFragment extends Fragment {
         mListener = null;
     }
 
-    public void showAddFriendDialog() {
+    private void showAddFriendDialog() {
         if (addFriendDialog == null) {
-            final View addFriendDialogView = getLayoutInflater(null).inflate(
-                    R.layout.dialog_add_friend, null);
+            addFriendDialogView = getLayoutInflater(null).inflate(R.layout.dialog_add_friend, null);
+            final AutoCompleteTextView friendUserName = (AutoCompleteTextView) addFriendDialogView
+                    .findViewById(R.id.add_friend_dialog_text);
 
-            new AlertDialog.Builder(getActivity()).setTitle("Enter your friend username").setView(
-                    addFriendDialogView).setPositiveButton("Add",
-                    new DialogInterface.OnClickListener() {
+            addFriendDialog = new AlertDialog.Builder(getActivity()).setTitle(
+                    "Enter your friend username").setView(addFriendDialogView).setPositiveButton(
+                    "Add", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            AutoCompleteTextView friendUserName
-                                    = (AutoCompleteTextView) addFriendDialogView.findViewById(
-                                    R.id.add_friend_dialog_text);
                             handler.add(friendUserName.getText().toString());
-                            mAdapter.notifyDataSetChanged();
-
-                            //mRecyclerView.invalidate();
+                            friendUserName.setText("");
                         }
-                    }).setNegativeButton("Cancel", null).show();
-        } else {
-            addFriendDialog.show();
+
+                    }).setNegativeButton("Cancel", null).setOnKeyListener(
+                    new DialogInterface.OnKeyListener() {
+
+                        @Override
+                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                            if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                         || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                         || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                    && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                if (shownAddFriendDialog != null) {
+                                    shownAddFriendDialog.dismiss();
+                                }
+                                handler.add(friendUserName.getText().toString());
+                                friendUserName.setText("");
+                                return true;
+                            }
+                            return false;
+                        }
+
+                    });
+        } else if (addFriendDialogView != null && addFriendDialogView.getParent() != null) {
+            ((ViewGroup) addFriendDialogView.getParent()).removeView(addFriendDialogView);
         }
+        shownAddFriendDialog = addFriendDialog.show();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+    @Override
+    public AppStateListener getAppStateListener() {
+        return mListener;
     }
 
-
+    @Override
+    public void refreshView() {
+        mAdapter.notifyDataSetChanged();
+    }
 }

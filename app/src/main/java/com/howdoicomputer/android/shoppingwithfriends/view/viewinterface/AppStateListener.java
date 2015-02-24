@@ -7,4 +7,6 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
  */
 public interface AppStateListener {
     void onAccountChanged(Account changedAccount);
+
+    void onLoggedOut();
 }

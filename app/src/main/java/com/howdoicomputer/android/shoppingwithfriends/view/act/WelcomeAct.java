@@ -16,8 +16,8 @@ import com.firebase.client.Firebase;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.WelcomeView;
 
 /**

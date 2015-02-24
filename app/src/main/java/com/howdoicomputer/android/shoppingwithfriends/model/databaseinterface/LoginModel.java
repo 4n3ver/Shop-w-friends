@@ -1,7 +1,7 @@
 package com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
  * {@link LoginModel} provides a way for presenter that handle login and the data/model to interact.

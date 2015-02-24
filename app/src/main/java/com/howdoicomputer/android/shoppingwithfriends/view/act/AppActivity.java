@@ -1,6 +1,5 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -15,15 +14,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
+import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
-import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 
 public class AppActivity extends ActionBarActivity
-        implements MainView, OnMapReadyCallback, FriendListFragment.OnFragmentInteractionListener,
-        MainFeedFragment.OnFragmentInteractionListener {
+        implements MainView, OnMapReadyCallback, AppStateListener {
 
     private MainHandler handler;
     private User        currentUser;
@@ -49,11 +48,9 @@ public class AppActivity extends ActionBarActivity
 
     public void friendList(View v) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
         transaction.replace(R.id.mainFragmentContainer, FriendListFragment.newInstance(
                 currentUser));
         transaction.addToBackStack(null);    // let user navigate back to previous fragment
-
         transaction.commit();
     }
 
@@ -93,6 +90,16 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
+    public AppStateListener getAppStateListener() {
+        return this;
+    }
+
+    @Override
+    public void refreshView() {
+
+    }
+
+    @Override
     public void onAccountChanged(Account changedAccount) {
         currentUser = (User) changedAccount;
     }
@@ -102,8 +109,4 @@ public class AppActivity extends ActionBarActivity
         googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }
