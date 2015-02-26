@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Item implements Comparable {
     //instance variables
+    private boolean itemOfInterest;
     private int likes;
     private double price;
     private Location location;
@@ -90,6 +91,21 @@ public class Item implements Comparable {
      */
     public String getTime() {
         return time;
+    }
+
+    /**
+     * sets this item as an item of interest
+     */
+    public void setItemOfInterest() {
+        itemOfInterest = true;
+    }
+
+    /**
+     * checks if this item is an item of interest
+     * @return itemOfInterest
+     */
+    public boolean isItemOfInterest() {
+        return itemOfInterest;
     }
     @Override
     public int compareTo(Object another) {
