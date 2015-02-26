@@ -1,6 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.view;
+package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
  * {@link WelcomeView} provides a way for presenter that handle login and the GUI to interact.

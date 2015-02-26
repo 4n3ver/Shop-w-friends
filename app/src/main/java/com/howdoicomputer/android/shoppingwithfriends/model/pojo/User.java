@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 /**
  * Created by Ricardomacias on 2/7/2015.
@@ -12,9 +12,10 @@ public class User extends Account implements Friend {
     /**
      * Constructor for User object, initialized with desired
      * traits.
-     * @param name: The name of the user
+     *
+     * @param name:       The name of the user
      * @param usrName:The username of the user
-     * @param email: The email of the user
+     * @param email:      The email of the user
      */
     public User(String name, String usrName, String email) {
         super(name, usrName, email);
@@ -35,6 +36,7 @@ public class User extends Account implements Friend {
 
     /**
      * Getter for the friendlist of the user
+     *
      * @return friendlist
      */
     public FriendList getFriendlist() {

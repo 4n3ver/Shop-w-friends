@@ -1,8 +1,8 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
-import com.howdoicomputer.android.shoppingwithfriends.model.database.MainModel;
-import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 /**
  * {@link MainHandler} handles event from main app GUI and process related data from the model.
@@ -29,7 +29,6 @@ public class MainHandler {
      */
     public void logout() {
         db.logout();
-        view.onLoggedOut();
-
+        view.getAppStateListener().onLoggedOut();
     }
 }

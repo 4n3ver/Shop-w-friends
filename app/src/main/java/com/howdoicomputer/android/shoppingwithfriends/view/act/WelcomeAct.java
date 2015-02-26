@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -16,9 +16,9 @@ import com.firebase.client.Firebase;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
-import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.WelcomeView;
 
 /**
  * {@link WelcomeAct} Activity that are responsible for user registration and authentication.

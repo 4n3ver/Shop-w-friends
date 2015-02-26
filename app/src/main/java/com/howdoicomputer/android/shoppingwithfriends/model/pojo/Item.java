@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 import android.location.Location;
 
@@ -21,6 +21,7 @@ public class Item implements Comparable {
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
+     *
      * @param price: price of the item
      * @param loc: location of the item
      */
@@ -35,6 +36,7 @@ public class Item implements Comparable {
 
     /**
      * Getter for the current location of the item.
+     *
      * @return location
      */
     public Location getLocation() {
@@ -43,6 +45,7 @@ public class Item implements Comparable {
 
     /**
      * Getter for the price of the item
+     *
      * @return price
      */
     public double getPrice() {
@@ -58,6 +61,7 @@ public class Item implements Comparable {
 
     /**
      * Getter for the likes of the item.
+     *
      * @return likes, the amount of current likes the product has
      */
     public int getLikes() {

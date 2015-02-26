@@ -1,7 +1,6 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,20 +18,21 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
-import com.howdoicomputer.android.shoppingwithfriends.view.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 
 public class AppActivity extends ActionBarActivity
-        implements MainView, OnMapReadyCallback, FriendListFragment.OnFragmentInteractionListener,
-        MainFeedFragment.OnFragmentInteractionListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        implements MainView, OnMapReadyCallback, AppStateListener,
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private MainHandler handler;
-    private User        currentUser;
+    private MainHandler     handler;
+    private User            currentUser;
     private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
+    private Location        mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +52,10 @@ public class AppActivity extends ActionBarActivity
      * current location of the user.
      */
     protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
     }
+
     /**
      * Unauthenticate from Firebase and from providers where necessary.
      */
@@ -112,6 +109,16 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
+    public AppStateListener getAppStateListener() {
+        return this;
+    }
+
+    @Override
+    public void refreshView() {
+
+    }
+
+    @Override
     public void onAccountChanged(Account changedAccount) {
         currentUser = (User) changedAccount;
     }
@@ -122,24 +129,20 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
-    @Override
     public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                mGoogleApiClient);
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 
     }
 
     /**
      * returns last known location of application
+     *
      * @return location
      */
     public Location getLocation() {
         return mLastLocation;
     }
+
     @Override
     public void onConnectionSuspended(int i) {
 

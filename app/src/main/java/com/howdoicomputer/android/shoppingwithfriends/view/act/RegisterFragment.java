@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,42 +13,48 @@ import android.widget.EditText;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.LoginHandler;
-import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.WelcomeView;
 
 /**
- * generated from template
+ * Created by Yoel Ivan on 2/8/2015.
  */
-public class LoginFragment extends Fragment {
+public class RegisterFragment extends Fragment {
     private LoginHandler         handler;
+    private AutoCompleteTextView name;
     private AutoCompleteTextView userName;
+    private AutoCompleteTextView email;
     private EditText             password;
-    private Button               login;
+    private EditText             passwordConfirm;
+    private Button               register;
     private Button               cancel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_register, container, false);
 
-        userName = (AutoCompleteTextView) rootView.findViewById(R.id.frag_login_usrName_text);
-        password = (EditText) rootView.findViewById(R.id.frag_login_password_text);
-        login = (Button) rootView.findViewById(R.id.login_button);
-        cancel = (Button) rootView.findViewById(R.id.cancelLogin_button);
+        name = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_name_text);
+        userName = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_usrName_text);
+        email = (AutoCompleteTextView) rootView.findViewById(R.id.frag_reg_email_text);
+        password = (EditText) rootView.findViewById(R.id.frag_reg_pass1_text);
+        passwordConfirm = (EditText) rootView.findViewById(R.id.frag_reg_pass2_text);
+        register = (Button) rootView.findViewById(R.id.reg_button);
+        cancel = (Button) rootView.findViewById(R.id.cancelRegister_button);
 
-        login.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLoginButtonClick();
+                onRegisterButtonClick();
             }
         });
 
-        password.setOnKeyListener(new View.OnKeyListener() {
+        passwordConfirm.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((keyCode == KeyEvent.KEYCODE_ENTER || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
                              || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
                         && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    onLoginButtonClick();
+                    onRegisterButtonClick();
                     return true;
                 }
                 return false;
@@ -67,7 +73,10 @@ public class LoginFragment extends Fragment {
         handler = new LoginHandler((WelcomeView) activity);
     }
 
-    public void onLoginButtonClick() {
-        handler.login(userName.getText().toString(), password.getText().toString());
+    private void onRegisterButtonClick() {
+        handler.register(name.getText().toString(), userName.getText().toString(),
+                email.getText().toString(), password.getText().toString(),
+                passwordConfirm.getText().toString());
     }
+
 }

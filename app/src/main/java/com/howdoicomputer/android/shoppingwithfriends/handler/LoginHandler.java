@@ -1,10 +1,10 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
-import com.howdoicomputer.android.shoppingwithfriends.model.database.LoginModel;
-import com.howdoicomputer.android.shoppingwithfriends.view.WelcomeView;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.LoginModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.WelcomeView;
 
 import org.apache.commons.validator.routines.EmailValidator;
 

@@ -6,8 +6,12 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
-import com.howdoicomputer.android.shoppingwithfriends.model.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.AccountStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.FriendListModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.LoginModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 /**
  * {@link Database} where all cool data hang...

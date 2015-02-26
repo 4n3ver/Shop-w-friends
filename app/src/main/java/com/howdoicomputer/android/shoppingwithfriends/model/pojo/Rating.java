@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 /**
  * Created by Ricardomacias on 2/7/2015.
@@ -9,7 +9,6 @@ public class Rating {
     private int rated;
 
     /**
-     *
      * Constructor for Rating object, initialized an empty
      * rating and amount of rates.
      */
@@ -22,8 +21,9 @@ public class Rating {
      * Dynamically calculates rating according to how many
      * other users have rated the profile, and what their
      * rating was.
+     *
      * @param starCount:The amount of stars the user is being rated at
-     *                 one point in time.
+     *                      one point in time.
      */
     public void rate(int starCount) {
         rated++;
@@ -32,6 +32,7 @@ public class Rating {
 
     /**
      * getter for the starCount
+     *
      * @return StarCount, amount of stars the user has.
      */
     public int getStarCount() {

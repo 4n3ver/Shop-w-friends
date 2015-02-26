@@ -8,10 +8,10 @@
 
     android:background="#0099CC"
     android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.act.WelcomeAct">
+    android:paddingTop="16dp"
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.WelcomeAct">
 
-<Button
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

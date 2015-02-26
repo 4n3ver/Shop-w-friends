@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 /**
  * Created by Ricardomacias on 2/7/2015.
@@ -100,10 +100,10 @@ public class FriendList {
      */
     private int indexOf(String name) {
         return Collections.binarySearch(list, new User(name, null, null), new Comparator<User>() {
-                    @Override
-                    public int compare(User lhs, User rhs) {
-                        return lhs.getName().compareTo(rhs.getName());
-                    }
-                });
+            @Override
+            public int compare(User lhs, User rhs) {
+                return lhs.getName().compareTo(rhs.getName());
+            }
+        });
     }
 }

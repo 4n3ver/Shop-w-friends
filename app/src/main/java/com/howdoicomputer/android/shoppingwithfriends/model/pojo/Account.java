@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.model;
+package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 /**
  * @author Ricardo Macias
@@ -11,6 +11,7 @@ public class Account implements Comparable<Account> {
     private String name;
     private String userName;
     private String email;
+
     /**
      * Construct new {@link Account} instance.
      */
@@ -22,6 +23,7 @@ public class Account implements Comparable<Account> {
 
     /**
      * Getter that returns the username of the account.
+     *
      * @return userName
      */
     public String getUserName() {
@@ -30,6 +32,7 @@ public class Account implements Comparable<Account> {
 
     /**
      * Getter that returns the email of the account
+     *
      * @return email
      */
     public String getEmail() {
@@ -38,6 +41,7 @@ public class Account implements Comparable<Account> {
 
     /**
      * Setter that modifies the email of the account
+     *
      * @param email: The new desired email
      */
     public void setEmail(String email) {
@@ -46,6 +50,7 @@ public class Account implements Comparable<Account> {
 
     /**
      * Getter that returns the name of the Account Holder
+     *
      * @return name
      */
     public String getName() {
