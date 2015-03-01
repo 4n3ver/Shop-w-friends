@@ -51,6 +51,11 @@ public interface LoginModel {
         public void onAuthenticated(Account acc);
 
         /**
+         * This method will be called by model if no account is authenticated yet.
+         */
+        public void onNotAuthenticated();
+
+        /**
          * This method will be called by the model upon authentication error.
          *
          * @param error exception thrown upon error

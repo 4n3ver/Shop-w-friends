@@ -41,7 +41,15 @@ public class LoginHandler {
      * @param usrName  {@link String} representation of username
      * @param password {@link String} representation of password
      */
-    public void login(final String usrName, final String password) {
+    public void login(String usrName, String password) {
+        if (checkLoginInput(usrName, password)) {
+            view.showProgressDialog("Logging in", "Please wait...");
+            db.login(usrName, password, new AuthenticationStateListener());
+
+        }
+    }
+
+    private boolean checkLoginInput(String usrName, String password) {
         boolean error = false;
         if (password.length() == 0) {
             view.loginPasswordError("This field is required");
@@ -51,11 +59,7 @@ public class LoginHandler {
             view.loginUserNameError("This field is required");
             error = true;
         }
-        if (!error) {
-            view.showProgressDialog("Logging in", "Please wait...");
-            db.login(usrName, password, new AuthenticationStateListener());
-            view.hideProgressDialog();
-        }
+        return !error;
     }
 
     /**
@@ -66,9 +70,36 @@ public class LoginHandler {
      * @param pass     user provided <code>pass</code>
      * @param passConf user provided <code>passConf</code>
      */
-    public void register(final String name, final String usrName, final String email,
-            final String pass, final String passConf) {
-        EmailValidator emailValidator = EmailValidator.getInstance();
+    public void register(String name, final String usrName, String email, final String pass,
+            String passConf) {
+        if (checkRegisterInput(name, usrName, email, pass, passConf)) {
+            view.showProgressDialog("Registering", "Please wait...");
+            db.register(name, usrName, email.toLowerCase(), pass,
+                    new LoginModel.RegisterStateListener() {
+
+                        @Override
+                        public void onSuccess() {
+                            login(usrName, pass);
+                            view.hideProgressDialog();
+                        }
+
+                        @Override
+                        public void onError(DatabaseError error) {
+                            view.hideProgressDialog();
+                            if (error.getCode() == DatabaseError.USERNAME_TAKEN) {
+                                view.showErrorDialog("Username has been taken");
+                            } else if (error.getCode() == DatabaseError.EMAIL_TAKEN) {
+                                view.showErrorDialog("Email has been registered");
+                            } else {
+                                view.showErrorDialog(error.toString());
+                            }
+                        }
+                    });
+        }
+    }
+
+    private boolean checkRegisterInput(String name, String usrName, String email, String pass,
+            String passConf) {
         boolean error = false;
         if (!pass.equals(passConf)) { // check if both password fields are identical
             view.registerPasswordError("Password does not match");
@@ -80,7 +111,7 @@ public class LoginHandler {
             view.registerConfirmPasswordError("Password has to be longer than 6 characters");
             error = true;
         }
-        if (!emailValidator.isValid(email)) {
+        if (!EmailValidator.getInstance().isValid(email)) {
             view.registerEmailAddressError("Invalid email");
             error = true;
         }
@@ -92,28 +123,7 @@ public class LoginHandler {
             view.registerNameError("This field is required");
             error = true;
         }
-        if (!error) {
-            view.showProgressDialog("Registering", "Please wait...");
-            db.register(name, usrName, email.toLowerCase(), pass,
-                    new LoginModel.RegisterStateListener() {
-                        @Override
-                        public void onSuccess() {
-                            login(usrName, pass);
-                        }
-
-                        @Override
-                        public void onError(DatabaseError error) {
-                            if (error.getCode() == DatabaseError.USERNAME_TAKEN) {
-                                view.showErrorDialog("Username has been taken");
-                            } else if (error.getCode() == DatabaseError.EMAIL_TAKEN) {
-                                view.showErrorDialog("Email has been registered");
-                            } else {
-                                view.showErrorDialog(error.toString());
-                            }
-                        }
-                    });
-            view.hideProgressDialog();
-        }
+        return !error;
     }
 
     /**
@@ -123,10 +133,17 @@ public class LoginHandler {
         @Override
         public void onAuthenticated(Account acc) {
             view.onAuthenticated(acc);
+            view.hideProgressDialog();
+        }
+
+        @Override
+        public void onNotAuthenticated() {
+            view.showWelcome();
         }
 
         @Override
         public void onError(DatabaseError error) {
+            view.hideProgressDialog();
             if (error.getCode() == DatabaseError.INVALID_PASSWORD) {
                 view.showErrorDialog("Invalid password");
             } else if (error.getCode() == DatabaseError.USERNAME_NOT_EXIST) {

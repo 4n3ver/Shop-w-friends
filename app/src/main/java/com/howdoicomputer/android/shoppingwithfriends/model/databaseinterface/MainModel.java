@@ -17,7 +17,7 @@ public interface MainModel {
      * @param userName user name of the {@link Account} to be fetched
      * @param listener target listener where the {@link Account} need to be send
      */
-    public void fetchAccountInfo(String userName, AccountStateListener listener);
+    public void fetchAccountInfo(String userName, FetchAccountResultListener listener);
 
     /**
      * @param account

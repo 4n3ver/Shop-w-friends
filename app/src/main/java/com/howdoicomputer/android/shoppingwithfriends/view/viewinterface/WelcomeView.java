@@ -48,4 +48,6 @@ public interface WelcomeView {
     public void registerPasswordError(String message);
 
     public void registerConfirmPasswordError(String message);
+
+    public void showWelcome();
 }

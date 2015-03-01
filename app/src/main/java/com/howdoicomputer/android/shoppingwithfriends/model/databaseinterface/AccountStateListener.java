@@ -4,23 +4,11 @@ import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseErr
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
- * {@link AccountStateListener} provides a way for the presenter to find an account
+ * Created by Yoel Ivan on 2/28/2015.
  */
 public interface AccountStateListener {
-    /**
-     * This method will be called by the model upon account found.
-     */
-    void onFound(Account account);
 
-    /**
-     * This method will be called by the model if account not exist.
-     */
-    void onNotFound();
+    void onError(DatabaseError databaseError);
 
-    /**
-     * This method will be called by the model on error.
-     *
-     * @param error exception thrown upon error
-     */
-    void onError(DatabaseError error);
+    void onAccountChanged(Account account);
 }

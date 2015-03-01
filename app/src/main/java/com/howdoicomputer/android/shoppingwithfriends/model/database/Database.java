@@ -7,10 +7,13 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.AccountStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface
+        .FetchAccountResultListener;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.FriendListModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.LoginModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 /**
@@ -65,7 +68,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
                                     ((String) authData.getProviderData().get("email")).replaceAll(
                                             "\\.", ",")).getValue(String.class);
 
-                            fetchAccountInfo(userName, new AccountStateListener() {
+                            fetchAccountInfo(userName, new FetchAccountResultListener() {
                                 @Override
                                 public void onFound(Account account) {
                                     listener.onAuthenticated(account);
@@ -89,6 +92,8 @@ public class Database implements LoginModel, MainModel, FriendListModel {
                             listener.onError(new DatabaseError(firebaseError));
                         }
                     });
+                } else {
+                    listener.onNotAuthenticated();
                 }
             }
         });
@@ -98,7 +103,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
     public void login(final String userName, final String password,
             final AuthenticationStateListener listener) {
 
-        fetchAccountInfo(userName, new AccountStateListener() {
+        fetchAccountInfo(userName, new FetchAccountResultListener() {
             @Override
             public void onFound(final Account account) {
                 mAccDatabase.authWithPassword(account.getEmail(), password,
@@ -135,7 +140,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
     @Override
     public void register(final String name, final String userName, final String email,
             final String password, final RegisterStateListener listener) {
-        fetchAccountInfo(userName, new AccountStateListener() {
+        fetchAccountInfo(userName, new FetchAccountResultListener() {
             @Override
             public void onFound(Account account) {
                 listener.onError(new DatabaseError(DatabaseError.USERNAME_TAKEN,
@@ -174,13 +179,13 @@ public class Database implements LoginModel, MainModel, FriendListModel {
     }
 
     @Override
-    public void fetchAccountInfo(final String userName, final AccountStateListener listener) {
-        mAccDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void fetchAccountInfo(final String userName, final FetchAccountResultListener listener) {
+        mAccDatabase.child("userAccount").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.child("userAccount").hasChild(userName)) {
-                    listener.onFound(new Gson().fromJson(snapshot.child("userAccount").child(
-                            userName).getValue(String.class), User.class));
+                if (snapshot.hasChild(userName)) {
+                    listener.onFound(new Gson().fromJson(snapshot.child(userName).getValue(
+                            String.class), User.class));
                 } else {
                     listener.onNotFound();
                 }
@@ -199,4 +204,23 @@ public class Database implements LoginModel, MainModel, FriendListModel {
                 account, User.class));
     }
 
+    @Override
+    public void fetchFriendAccountInfo(FriendList friendList, final AccountStateListener listener) {
+        for (User friend : friendList) {
+            mAccDatabase.child("userAccount").child(friend.getUserName()).addValueEventListener(
+                    new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            listener.onAccountChanged(new Gson().fromJson(dataSnapshot.getValue(
+                                    String.class), User.class));
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError error) {
+                            listener.onError(new DatabaseError(error));
+                        }
+                    });
+        }
+    }
 }

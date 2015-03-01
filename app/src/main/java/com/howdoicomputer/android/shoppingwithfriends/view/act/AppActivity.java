@@ -1,7 +1,10 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -23,16 +26,19 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
 
 public class AppActivity extends ActionBarActivity
-        implements MainView, OnMapReadyCallback, AppStateListener,
+        implements MainView, OnMapReadyCallback, AppStateListener, ViewObjectUtil,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private MainHandler     handler;
-    private User            currentUser;
-    private GoogleApiClient mGoogleApiClient;
-    private Location        mLastLocation;
+    private MainHandler         handler;
+    private User                currentUser;
+    private ProgressDialog      mConnProgressDialog;
+    private AlertDialog.Builder mErrorDialog;
+    private GoogleApiClient     mGoogleApiClient;
+    private Location            mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,16 @@ public class AppActivity extends ActionBarActivity
         setContentView(R.layout.activity_app);
         handler = new MainHandler(this);
         currentUser = new Gson().fromJson(getIntent().getExtras().getString("Account"), User.class);
+
+        /* setup the progress dialog that is displayed later when connecting to the server */
+        mConnProgressDialog = new ProgressDialog(this);
+        mConnProgressDialog.setCancelable(false);
+
+        /* setup the error dialog that is displayed later when input error detected */
+        mErrorDialog = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                .setPositiveButton(android.R.string.ok, null).setIcon(
+                        android.R.drawable.ic_dialog_alert);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
                     MainFeedFragment.newInstance(currentUser)).commit();
@@ -114,6 +130,11 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
+    public ViewObjectUtil getObjectUtil() {
+        return this;
+    }
+
+    @Override
     public void refreshView() {
 
     }
@@ -151,5 +172,33 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+
+    @Override
+    public void showErrorDialog(final String message) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mErrorDialog.setTitle("Error").setMessage(message).show();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void showProgressDialog(final String title, final String message) {
+        mConnProgressDialog.setTitle(title);
+        mConnProgressDialog.setMessage(message);
+        mConnProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mConnProgressDialog.hide();
+            }
+        }, 500);
     }
 }

@@ -9,5 +9,9 @@ package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 public interface MainView {
     public AppStateListener getAppStateListener();
 
+    public ViewObjectUtil getObjectUtil();
+
     public void refreshView();
+
+
 }

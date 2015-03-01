@@ -22,6 +22,7 @@ import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.FriendListView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,13 +36,14 @@ public class FriendListFragment extends Fragment implements FriendListView {
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private User              currentUser;
-    private FriendListHandler handler;
-    private AppStateListener  mListener;
+    private User                 currentUser;
+    private FriendListHandler    handler;
+    private AppStateListener     mListener;
 
     private AlertDialog.Builder addFriendDialog;
-    private AlertDialog shownAddFriendDialog;
-    private View        addFriendDialogView;
+    private AlertDialog         shownAddFriendDialog;
+    private View                addFriendDialogView;
+    private ViewObjectUtil      mUtil;
 
     public FriendListFragment() {
         // Required empty public constructor
@@ -138,8 +140,10 @@ public class FriendListFragment extends Fragment implements FriendListView {
         super.onAttach(activity);
         try {
             mListener = (AppStateListener) activity;
+            mUtil = (ViewObjectUtil) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement AppStateListener");
+            throw new ClassCastException(
+                    activity.toString() + " must implement AppStateListener & ViewObjectUtil");
         }
     }
 
@@ -194,6 +198,11 @@ public class FriendListFragment extends Fragment implements FriendListView {
     @Override
     public AppStateListener getAppStateListener() {
         return mListener;
+    }
+
+    @Override
+    public ViewObjectUtil getObjectUtil() {
+        return mUtil;
     }
 
     @Override
