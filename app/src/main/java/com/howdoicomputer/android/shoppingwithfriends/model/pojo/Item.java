@@ -10,25 +10,27 @@ import java.util.Date;
  * Created by Ricardomacias on 2/7/2015.
  * Work in Progress
  */
-public class Item {
-    private int    likes;
+public class Item implements Comparable {
+    //instance variables
+    private int likes;
     private double price;
     private Location location;
     private String time;
+    private Date date;
 
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
      *
      * @param price: price of the item
-     * @param loc:   location of the item
+     * @param loc: location of the item
      */
     public Item(double price, Location loc) {
         this.likes = 0;
         this.price = price;
         location = loc;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
+        date = new Date();
         time = dateFormat.format(date);
     }
 
@@ -71,5 +73,26 @@ public class Item {
      */
     public void incrementLikes() {
         likes++;
+    }
+
+    /**
+     * getter for the date this item was created
+     * @return date, the date this item was created
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * getter for the date & time this item was created,
+     * in string format.
+     * @return time
+     */
+    public String getTime() {
+        return time;
+    }
+    @Override
+    public int compareTo(Object another) {
+        return date.compareTo(((Item)another).getDate());
     }
 }
