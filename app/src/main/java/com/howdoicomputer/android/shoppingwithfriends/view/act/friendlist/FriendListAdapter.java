@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.view.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act.friendlist;
 
 import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;

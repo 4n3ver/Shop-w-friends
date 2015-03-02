@@ -16,10 +16,13 @@ public interface AppStateListener {
      *
      * @param changedAccount {@link Account} object which state changed
      */
-    void onAccountChanged(Account changedAccount);
+    public void onAccountChanged(Account changedAccount);
 
     /**
-     * Thismethod is to be called when user logging out.
+     * This method is to be called when user logging out.
      */
-    void onLoggedOut();
+    public void onLoggedOut();
+
+    public Account getLatestAccount();
+
 }

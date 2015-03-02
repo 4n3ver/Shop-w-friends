@@ -205,22 +205,27 @@ public class Database implements LoginModel, MainModel, FriendListModel {
     }
 
     @Override
-    public void fetchFriendAccountInfo(FriendList friendList, final AccountStateListener listener) {
-        for (User friend : friendList) {
-            mAccDatabase.child("userAccount").child(friend.getUserName()).addValueEventListener(
-                    new ValueEventListener() {
+    public void fetchFriendAccountInfo(final FriendList friendList,
+            final AccountStateListener listener) {
+        new Thread(new Runnable() {
+            public void run() {
+                for (User friend : friendList) {
+                    mAccDatabase.child("userAccount").child(friend.getUserName())
+                            .addValueEventListener(new ValueEventListener() {
 
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            listener.onAccountChanged(new Gson().fromJson(dataSnapshot.getValue(
-                                    String.class), User.class));
-                        }
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    listener.onAccountChanged(new Gson().fromJson(
+                                            dataSnapshot.getValue(String.class), User.class));
+                                }
 
-                        @Override
-                        public void onCancelled(FirebaseError error) {
-                            listener.onError(new DatabaseError(error));
-                        }
-                    });
-        }
+                                @Override
+                                public void onCancelled(FirebaseError error) {
+                                    listener.onError(new DatabaseError(error));
+                                }
+                            });
+                }
+            }
+        }).start();
     }
 }

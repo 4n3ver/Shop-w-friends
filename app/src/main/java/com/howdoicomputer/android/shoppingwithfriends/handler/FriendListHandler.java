@@ -25,7 +25,7 @@ public class FriendListHandler {
         db.fetchFriendAccountInfo(currentUser.getFriendlist(), new AccountStateListener() {
             @Override
             public void onError(DatabaseError databaseError) {
-                view.getObjectUtil().showErrorDialog(databaseError.toString());
+                view.getUiUtil().showErrorDialog(databaseError.toString());
             }
 
             @Override
@@ -40,35 +40,35 @@ public class FriendListHandler {
         if (userName.length() == 0) {
             // ignore if no input
         } else {
-            view.getObjectUtil().showProgressDialog("Searching for " + userName, "Please wait");
+            view.getUiUtil().showProgressDialog("Searching for " + userName, "Please wait");
             db.fetchAccountInfo(userName, new FetchAccountResultListener() {
                 @Override
                 public void onFound(Account account) {
-                    view.getObjectUtil().hideProgressDialog();
+                    view.getUiUtil().hideProgressDialog();
                     if (currentUser.compareTo(account) == 0) {
-                        view.getObjectUtil().showErrorDialog("You can't be friend with yourself");
+                        view.getUiUtil().showErrorDialog("You can't be friend with yourself");
                     } else if (account instanceof User) {
                         if (currentUser.getFriendlist().add((User) account)) {
                             updateAll();
                         } else {
-                            view.getObjectUtil().showErrorDialog(
+                            view.getUiUtil().showErrorDialog(
                                     account.getName() + " is already your friend");
                         }
                     } else {
-                        view.getObjectUtil().showErrorDialog("WOAH!!! WHAT HAPPENED?!!?");
+                        view.getUiUtil().showErrorDialog("WOAH!!! WHAT HAPPENED?!!?");
                     }
                 }
 
                 @Override
                 public void onNotFound() {
-                    view.getObjectUtil().hideProgressDialog();
-                    view.getObjectUtil().showErrorDialog(userName + " not found");
+                    view.getUiUtil().hideProgressDialog();
+                    view.getUiUtil().showErrorDialog(userName + " not found");
                 }
 
                 @Override
                 public void onError(DatabaseError error) {
-                    view.getObjectUtil().hideProgressDialog();
-                    view.getObjectUtil().showErrorDialog(error.toString());
+                    view.getUiUtil().hideProgressDialog();
+                    view.getUiUtil().showErrorDialog(error.toString());
                 }
             });
         }

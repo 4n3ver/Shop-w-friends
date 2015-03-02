@@ -45,7 +45,6 @@ public class LoginHandler {
         if (checkLoginInput(usrName, password)) {
             view.showProgressDialog("Logging in", "Please wait...");
             db.login(usrName, password, new AuthenticationStateListener());
-
         }
     }
 

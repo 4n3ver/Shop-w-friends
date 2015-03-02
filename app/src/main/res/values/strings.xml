@@ -16,6 +16,8 @@
     <string name="title_activity_search_friend_result">SearchFriendResultAct</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
 
 
 </resources>
