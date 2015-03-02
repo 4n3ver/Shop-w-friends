@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#FFEEEEEE"
+              android:orientation="vertical"
+              tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.navigationdrawer.NavDrawerFragment">
+
+    <FrameLayout
+        android:id="@+id/containerDrawerImage"
+        android:layout_width="320dp"
+        android:layout_height="160dp"
+
+        android:background="#FF95CF8E">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="48dp"
+            android:adjustViewBounds="true"
+            android:src="@drawable/random"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/helloName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NAME!!!!!!"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+            <TextView
+                android:id="@+id/helloEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EMAILLLL!!!!!!"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/drawer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/containerDrawerImage"/>
+
+    <FrameLayout
+        android:id="@+id/overlayFrame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/overlayImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+</LinearLayout>

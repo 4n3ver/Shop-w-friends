@@ -1,13 +1,17 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.os.Handler;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -17,33 +21,59 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
-import com.howdoicomputer.android.shoppingwithfriends.handler.MainHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.act.navigationdrawer.NavDrawerFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
 
 public class AppActivity extends ActionBarActivity
-        implements MainView, OnMapReadyCallback, AppStateListener,
+        implements MainView, OnMapReadyCallback, AppStateListener, ViewObjectUtil,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private MainHandler     handler;
-    private User            currentUser;
-    private GoogleApiClient mGoogleApiClient;
-    private Location        mLastLocation;
+    private User                currentUser;
+    private ProgressDialog      mConnProgressDialog;
+    private AlertDialog.Builder mErrorDialog;
+    private GoogleApiClient     mGoogleApiClient;
+    private Location            mLastLocation;
+    private Toolbar           actionBar;
+    private NavDrawerFragment navigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
-        handler = new MainHandler(this);
+        Firebase.setAndroidContext(getApplicationContext());
+
         currentUser = new Gson().fromJson(getIntent().getExtras().getString("Account"), User.class);
+
+        actionBar = (Toolbar) findViewById(R.id.mainActBar);
+        setSupportActionBar(actionBar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        navigationBar = (NavDrawerFragment) getSupportFragmentManager().findFragmentById(
+                R.id.fragmentNavBar);
+
+        navigationBar.setUp(R.id.fragmentNavBar, (DrawerLayout) findViewById(
+                R.id.nav_drawer_layout), actionBar);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
                     MainFeedFragment.newInstance(currentUser)).commit();
         }
+
+        /* setup the progress dialog that is displayed later when connecting to the server */
+        mConnProgressDialog = new ProgressDialog(this);
+        mConnProgressDialog.setCancelable(false);
+
+        /* setup the error dialog that is displayed later when input error detected */
+        mErrorDialog = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+                .setPositiveButton(android.R.string.ok, null).setIcon(
+                        android.R.drawable.ic_dialog_alert);
+
         buildGoogleApiClient();
     }
 
@@ -54,23 +84,6 @@ public class AppActivity extends ActionBarActivity
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-    }
-
-    /**
-     * Unauthenticate from Firebase and from providers where necessary.
-     */
-    public void logout(View v) {
-        handler.logout();
-    }
-
-    public void friendList(View v) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-
-        transaction.replace(R.id.mainFragmentContainer, FriendListFragment.newInstance(
-                currentUser));
-        transaction.addToBackStack(null);    // let user navigate back to previous fragment
-
-        transaction.commit();
     }
 
     @Override
@@ -104,8 +117,12 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onLoggedOut() {
-        Database.destroyInstance();
         finish();
+    }
+
+    @Override
+    public Account getLatestAccount() {
+        return currentUser;
     }
 
     @Override
@@ -114,8 +131,18 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
+    public ViewObjectUtil getUiUtil() {
+        return this;
+    }
+
+    @Override
     public void refreshView() {
 
+    }
+
+    @Override
+    public void updateAccount(Account acc) {
+        currentUser = (User) acc;
     }
 
     @Override
@@ -131,7 +158,6 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void onConnected(Bundle bundle) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
     }
 
     /**
@@ -151,5 +177,39 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+
+    @Override
+    public void showErrorDialog(final String message) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mErrorDialog.setTitle("Error").setMessage(message).show();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void showProgressDialog(final String title, final String message) {
+        mConnProgressDialog.setTitle(title);
+        mConnProgressDialog.setMessage(message);
+        mConnProgressDialog.show();
+    }
+
+    @Override
+    public void hideProgressDialog() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mConnProgressDialog.hide();
+            }
+        }, 500);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigationBar.onBackPressed();
     }
 }

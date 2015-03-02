@@ -33,28 +33,18 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
     private View                mSplash;
 
     private boolean isAuthenticated = false;
+    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_welcome);
         mSplash = findViewById(R.id.splash);
 
         Firebase.setAndroidContext(getApplicationContext());
         loginHandler = new LoginHandler(this);
         loginHandler.checkAuthentication(); // check whether user has logged in before
-
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mSplash.setVisibility(View.GONE);
-                if (savedInstanceState == null && !isAuthenticated) {
-                    getSupportFragmentManager().beginTransaction().add(
-                            R.id.welcomeFragmentContainer, new WelcomeFragment()).commit();
-                }
-            }
-        }, 2000);
 
         /* setup the progress dialog that is displayed later when connecting to the server */
         mConnProgressDialog = new ProgressDialog(this);
@@ -67,8 +57,13 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
     }
 
     @Override
-    public void showErrorDialog(String message) {
-        mErrorDialog.setTitle("Error").setMessage(message).show();
+    public void showErrorDialog(final String message) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mErrorDialog.setTitle("Error").setMessage(message).show();
+            }
+        }, 500);
     }
 
     @Override
@@ -85,7 +80,7 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
             public void run() {
                 mConnProgressDialog.hide();
             }
-        }, 2000);
+        }, 500);
     }
 
     @Override
@@ -109,7 +104,6 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
                 R.id.frag_reg_usrName_text);
         usrName.setError(message);
         usrName.requestFocus();
-
     }
 
     @Override
@@ -132,6 +126,20 @@ public class WelcomeAct extends ActionBarActivity implements WelcomeView {
         EditText passConfirmed = (EditText) findViewById(R.id.frag_reg_pass2_text);
         passConfirmed.setError(message);
         passConfirmed.requestFocus();
+    }
+
+    @Override
+    public void showWelcome() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mSplash.setVisibility(View.GONE);
+                if (savedInstanceState == null && !isAuthenticated) {
+                    getSupportFragmentManager().beginTransaction().add(
+                            R.id.welcomeFragmentContainer, new WelcomeFragment()).commit();
+                }
+            }
+        }, 2000);
     }
 
     @Override

@@ -10,27 +10,5 @@
     android:orientation="vertical"
     tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.MainFeedFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
-
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="logout"
-        android:src="@drawable/error"
-        android:text="Log Out"/>
-
-    <Button
-        android:id="@+id/friendList_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:onClick="friendList"
-        android:text="Friend List"/>
 
 </LinearLayout>

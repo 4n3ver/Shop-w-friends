@@ -3,7 +3,7 @@ package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 /**
  * Created by Ricardomacias on 2/7/2015.
  */
-public class User extends Account implements Friend {
+public class User extends Account {
     private FriendList friendlist;
     private int        salesReported;
     private int        rating;
@@ -24,12 +24,10 @@ public class User extends Account implements Friend {
         this.rating = 0;
     }
 
-    @Override
     public int getSalesReported() {
         return salesReported;
     }
 
-    @Override
     public int getRating() {
         return rating;
     }
