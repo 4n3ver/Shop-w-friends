@@ -2,26 +2,24 @@ package com.howdoicomputer.android.shoppingwithfriends.handler;
 
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
-import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 
 /**
- * {@link MainHandler} handles event from main app GUI and process related data from the model.
+ * {@link NavigationHandler} handles event from main app GUI and process related data from the
+ * model.
  *
  * @author Yoel Ivan
  * @version %I%, %G%
  */
-public class MainHandler {
+public class NavigationHandler {
     private static MainModel db;
-    private        MainView  view;
 
     /**
-     * Construct {@link MainHandler} object.
+     * Construct {@link NavigationHandler} object.
      *
      * @param view reference to the implementing GUI
      */
-    public MainHandler(MainView view) {
+    public NavigationHandler() {
         db = Database.getInstace();
-        this.view = view;
     }
 
     /**
@@ -29,6 +27,6 @@ public class MainHandler {
      */
     public void logout() {
         db.logout();
-        view.getAppStateListener().onLoggedOut();
+        Database.destroyInstance();
     }
 }

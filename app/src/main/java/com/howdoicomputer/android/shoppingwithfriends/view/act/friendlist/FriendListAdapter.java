@@ -1,4 +1,4 @@
-package com.howdoicomputer.android.shoppingwithfriends.view.act;
+package com.howdoicomputer.android.shoppingwithfriends.view.act.friendlist;
 
 import android.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +13,24 @@ import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
+/**
+ * {@link FriendListAdapter} is a class to holds and manages data to be shown on
+ * {@link FriendListFragment}
+ *
+ * @author Yoel Ivan
+ * @version 1.5
+ */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FriendViewHolder> {
     private FriendList        mDataset;
     private FriendListHandler mHandler;
 
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    /**
+     * Creates {@link FriendListAdapter} object.
+     *
+     * @param dataSet set of data to be shown on the {@link RecyclerView}
+     * @param handler presenter than handles user friend list
+     */
     public FriendListAdapter(FriendList dataSet, FriendListHandler handler) {
         if (dataSet == null) {
             throw new IllegalArgumentException("data set is null");
@@ -61,7 +73,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
                 holder.detailedView.removeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mHandler.remove(friend.getUserName());
+                        mHandler.remove(friend);
                         holder.detailedView.dismissDetailedDialog();
                     }
                 });
@@ -86,6 +98,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
         DetailedViewHolder detailedView;
         private Button clickSpace;
 
+        /**
+         * Create an object to hold the view that display friend's basic data.
+         *
+         * @param itemView reference to the layout's {@link View}
+         */
         public FriendViewHolder(View itemView) {
             super(itemView);
             clickSpace = (Button) itemView.findViewById(R.id.friend_layout_clickspace);
@@ -96,10 +113,19 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
                     .inflate(R.layout.friend_detailed_layout, null));
         }
 
+        /**
+         * Attach a {@link View.OnClickListener} to the {@link FriendViewHolder}.
+         *
+         * @param clickListener {@link View.OnClickListener} object to be attached
+         */
         public void setOnClickListener(View.OnClickListener clickListener) {
             clickSpace.setOnClickListener(clickListener);
         }
 
+        /**
+         * {@link DetailedViewHolder} is an object to hold detailed view that display friend's
+         * detailed data.
+         */
         private class DetailedViewHolder {
             TextView name;
             TextView userName;
@@ -111,6 +137,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
             private AlertDialog.Builder detailedDialog;
             private AlertDialog         shownDialog;
 
+            /**
+             * Create an object to hold the detailed view that display friend's detailed data.
+             *
+             * @param detailedView reference to the layout's {@link View}
+             */
             private DetailedViewHolder(View detailedView) {
                 layout = detailedView;
                 name = (TextView) detailedView.findViewById(R.id.friend_detailed_name);
@@ -124,6 +155,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
                         detailedView);
             }
 
+            /**
+             * Show the dialog that holds the layout of the detailed view.
+             */
             public void showDetailedDialog() {
                 if (layout.getParent() != null) {
                     ((ViewGroup) layout.getParent()).removeView(layout);
@@ -131,6 +165,9 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
                 shownDialog = detailedDialog.show();
             }
 
+            /**
+             * Hide showed detailed dialog if any.
+             */
             public void dismissDetailedDialog() {
                 if (shownDialog != null) {
                     shownDialog.dismiss();

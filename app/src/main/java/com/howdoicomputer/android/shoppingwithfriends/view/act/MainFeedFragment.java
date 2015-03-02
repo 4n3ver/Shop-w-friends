@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,7 +21,7 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
  * Use the {@link MainFeedFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainFeedFragment extends Fragment {
+public class MainFeedFragment extends Fragment implements MainFeedView {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String CURRENTUSER_PARAM = "currentUser";
 
@@ -62,8 +64,6 @@ public class MainFeedFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main_feed, container, false);
 
-        ((TextView) rootView.findViewById(R.id.textView)).setText(
-                "Hello, " + currentUser.getName());
 
         return rootView;
     }
@@ -82,5 +82,25 @@ public class MainFeedFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public AppStateListener getAppStateListener() {
+        return null;
+    }
+
+    @Override
+    public ViewObjectUtil getUiUtil() {
+        return null;
+    }
+
+    @Override
+    public void refreshView() {
+
+    }
+
+    @Override
+    public void updateAccount(Account acc) {
+        currentUser = (User) acc;
     }
 }
