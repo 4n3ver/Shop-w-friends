@@ -152,6 +152,7 @@ public class FriendListFragment extends Fragment implements FriendListView {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        mUtil = null;
     }
 
     private void showAddFriendDialog() {

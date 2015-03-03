@@ -9,29 +9,37 @@ import java.util.Date;
 /**
  * Created by Ricardomacias on 2/7/2015.
  * Work in Progress
+ *
+ * @author Ricardo Macias
+ * @author Yoel Ivan
  */
-public class Item implements Comparable {
+public class Item implements Comparable<Item> {
+    private String  posterUserName;
+    private boolean isInterest;
+
     //instance variables
-    private int likes;
-    private double price;
+    private int      likes;
+    private double   price;
     private Location location;
-    private String time;
-    private Date date;
+    private String   time;
+    private Date     date;
 
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
      *
      * @param price: price of the item
-     * @param loc: location of the item
+     * @param loc:   location of the item
      */
-    public Item(double price, Location loc) {
+    public Item(String opUserName, double price, Location loc, boolean isInterest) {
+        this.posterUserName = opUserName;
         this.likes = 0;
         this.price = price;
         location = loc;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
         time = dateFormat.format(date);
+        this.isInterest = isInterest;
     }
 
     /**
@@ -77,6 +85,7 @@ public class Item implements Comparable {
 
     /**
      * getter for the date this item was created
+     *
      * @return date, the date this item was created
      */
     public Date getDate() {
@@ -86,13 +95,23 @@ public class Item implements Comparable {
     /**
      * getter for the date & time this item was created,
      * in string format.
+     *
      * @return time
      */
     public String getTime() {
         return time;
     }
+
+    public String getPosterUserName() {
+        return posterUserName;
+    }
+
+    public boolean isInterest() {
+        return isInterest;
+    }
+
     @Override
-    public int compareTo(Object another) {
-        return date.compareTo(((Item)another).getDate());
+    public int compareTo(Item another) {
+        return date.compareTo(another.getDate());
     }
 }

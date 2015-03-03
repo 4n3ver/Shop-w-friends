@@ -24,6 +24,7 @@ import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.navigationdrawer.NavDrawerFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
@@ -39,8 +40,8 @@ public class AppActivity extends ActionBarActivity
     private AlertDialog.Builder mErrorDialog;
     private GoogleApiClient     mGoogleApiClient;
     private Location            mLastLocation;
-    private Toolbar           actionBar;
-    private NavDrawerFragment navigationBar;
+    private Toolbar             actionBar;
+    private NavDrawerFragment   navigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +108,6 @@ public class AppActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

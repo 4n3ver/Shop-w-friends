@@ -14,6 +14,7 @@ import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.Lo
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 /**
@@ -227,5 +228,16 @@ public class Database implements LoginModel, MainModel, FriendListModel {
                 }
             }
         }).start();
+    }
+
+    public void pushItemPost(Item item) {
+        String itemType = "";
+        if (item.isInterest()) {
+            itemType = "userInterestItem";
+        } else {
+            itemType = "userReportedItem";
+        }
+        mAccDatabase.child(itemType).child(item.getPosterUserName()).push().setValue(
+                new Gson().toJson(item, Item.class));
     }
 }

@@ -21,8 +21,8 @@ import android.widget.TextView;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.NavigationHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
-import com.howdoicomputer.android.shoppingwithfriends.view.act.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.friendlist.FriendListFragment;
+import com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 
 import java.util.ArrayList;

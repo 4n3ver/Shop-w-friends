@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="actBar_paddingTop">24dp</dimen>
+    <dimen name="drawer_marginTop">48dp</dimen>
+</resources>
