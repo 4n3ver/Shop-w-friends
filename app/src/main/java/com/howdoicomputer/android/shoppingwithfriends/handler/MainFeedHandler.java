@@ -52,7 +52,7 @@ public class MainFeedHandler {
                 }
 
                 if (mFeed.addAll(feed)) {
-                    mFeed.removeAll(dataSet);
+                    dataSet.clear();
                     dataSet.addAll(mFeed);
                     view.refreshView();
                 }

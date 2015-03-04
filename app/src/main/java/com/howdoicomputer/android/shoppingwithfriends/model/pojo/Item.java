@@ -119,6 +119,6 @@ public class Item implements Comparable<Item> {
 
     @Override
     public int compareTo(Item another) {
-        return date.compareTo(another.getDate());
+        return another.getDate().compareTo(this.getDate());
     }
 }
