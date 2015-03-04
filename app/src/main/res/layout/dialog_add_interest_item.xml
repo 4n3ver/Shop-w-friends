@@ -116,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
                 android:hint="99"
+                android:inputType="number"
                 android:maxLines="1"/>
 
         </LinearLayout>

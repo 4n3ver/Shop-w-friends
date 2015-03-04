@@ -15,8 +15,9 @@ import android.widget.TextView;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainFeedHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
+
+import java.util.ArrayList;
 
 /**
  * {@link MainFeedAdapter} is a class to holds and manages data to be shown on
@@ -25,17 +26,17 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
  * @author Yoel Ivan
  */
 public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFeedViewHolder> {
-    private FriendList      mDataset;
+    private ArrayList<Item> mDataset;
     private MainFeedHandler mHandler;
 
 
     /**
      * Creates {@link MainFeedAdapter} object.
      *
-     * @param dataSet set of data to be shown on the {@link RecyclerView}
      * @param handler presenter than handles user friend list
      */
     public MainFeedAdapter(MainFeedHandler handler) {
+        mDataset = handler.getDataSet();
         mHandler = handler;
     }
 
@@ -44,7 +45,7 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
     public MainFeedAdapter.MainFeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_layout, parent,
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.feed_layout, parent,
                 false);
 
         // set the view's size, margins, paddings and layout parameters
@@ -57,29 +58,30 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
     public void onBindViewHolder(final MainFeedViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        final User friend = mDataset.get(position);
-        holder.name.setText(String.valueOf(friend.getName()));
-        holder.itemName.setText(String.valueOf(friend.getUserName()));
-        holder.price.setText(String.valueOf(friend.getRating()));
-        holder.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                holder.detailedView.name.setText(friend.getName());
-                holder.detailedView.userName.setText(friend.getUserName());
-                holder.detailedView.email.setText(friend.getEmail());
-                holder.detailedView.rating.setText("" + friend.getRating());
-                holder.detailedView.reportCount.setText("" + friend.getSalesReported());
-                holder.detailedView.showDetailedDialog();
-            }
-        });
+        final Item post = mDataset.get(position);
+        holder.name.setText(String.valueOf(post.getPosterUserName()));
+        holder.itemName.setText(String.valueOf(post.getItemName()));
+        holder.price.setText(String.valueOf(post.getPrice()));
+        //        holder.setOnClickListener(new View.OnClickListener() {
+        //
+        //            @Override
+        //            public void onClick(View v) {
+        //                holder.detailedView.name.setText(post.getName());
+        //                holder.detailedView.userName.setText(post.getUserName());
+        //                holder.detailedView.email.setText(post.getEmail());
+        //                holder.detailedView.rating.setText("" + post.getRating());
+        //                holder.detailedView.reportCount.setText("" + post.getSalesReported());
+        //                holder.detailedView.showDetailedDialog();
+        //            }
+        //        });
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 0;
+        return mDataset.size();
     } //TODO:CHANGe tHIS
+
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and

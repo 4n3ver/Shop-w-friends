@@ -17,5 +17,4 @@ public interface MainView {
 
     public void updateAccount(Account acc);
 
-
 }

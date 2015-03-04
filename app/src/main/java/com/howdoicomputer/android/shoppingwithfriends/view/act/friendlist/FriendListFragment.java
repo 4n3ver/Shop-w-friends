@@ -95,7 +95,7 @@ public class FriendListFragment extends Fragment implements FriendListView {
             currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
                     User.class);
         }
-        handler = new FriendListHandler(this, currentUser);
+        handler = new FriendListHandler(this);
     }
 
     @Override

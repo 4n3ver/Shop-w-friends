@@ -16,6 +16,7 @@ import java.util.Date;
 public class Item implements Comparable<Item> {
     private String  posterUserName;
     private boolean isInterest;
+    private String  itemName;
 
     //instance variables
     private int      likes;
@@ -31,7 +32,9 @@ public class Item implements Comparable<Item> {
      * @param price: price of the item
      * @param loc:   location of the item
      */
-    public Item(String opUserName, double price, Location loc, boolean isInterest) {
+    public Item(String itemName, String opUserName, double price, Location loc,
+            boolean isInterest) {
+        this.itemName = itemName;
         this.posterUserName = opUserName;
         this.likes = 0;
         this.price = price;
@@ -108,6 +111,10 @@ public class Item implements Comparable<Item> {
 
     public boolean isInterest() {
         return isInterest;
+    }
+
+    public String getItemName() {
+        return itemName;
     }
 
     @Override

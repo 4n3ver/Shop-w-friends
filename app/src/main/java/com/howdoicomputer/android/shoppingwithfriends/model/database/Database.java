@@ -11,11 +11,17 @@ import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface
         .FetchAccountResultListener;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.FriendListModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.LoginModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainFeedModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 /**
  * {@link Database} where all cool data hang...
@@ -23,14 +29,16 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
  * @author Yoel Ivan
  * @version %I%, %G%
  */
-public class Database implements LoginModel, MainModel, FriendListModel {
+public class Database implements LoginModel, MainModel, FriendListModel, MainFeedModel {
 
     /* singleton instance */
     private static Database singletonInstance;
 
     private Firebase mAccDatabase;
+    private Gson mGson;
 
     private Database() {
+        mGson = new Gson();
         mAccDatabase = new Firebase("https://crackling-heat-6364.firebaseio.com/");
     }
 
@@ -153,8 +161,8 @@ public class Database implements LoginModel, MainModel, FriendListModel {
                 mAccDatabase.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        mAccDatabase.child("userAccount").child(userName).setValue(
-                                new Gson().toJson(new User(name, userName, email), User.class));
+                        mAccDatabase.child("userAccount").child(userName).setValue(mGson.toJson(
+                                new User(name, userName, email), User.class));
                         mAccDatabase.child("userEmail").child(email.replaceAll("\\.", ","))
                                 .setValue(userName);
                         listener.onSuccess();
@@ -185,8 +193,8 @@ public class Database implements LoginModel, MainModel, FriendListModel {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot.hasChild(userName)) {
-                    listener.onFound(new Gson().fromJson(snapshot.child(userName).getValue(
-                            String.class), User.class));
+                    listener.onFound(mGson.fromJson(snapshot.child(userName).getValue(String.class),
+                            User.class));
                 } else {
                     listener.onNotFound();
                 }
@@ -201,7 +209,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
 
     @Override
     public void updateAccount(Account account) {
-        mAccDatabase.child("userAccount").child(account.getUserName()).setValue(new Gson().toJson(
+        mAccDatabase.child("userAccount").child(account.getUserName()).setValue(mGson.toJson(
                 account, User.class));
     }
 
@@ -216,8 +224,8 @@ public class Database implements LoginModel, MainModel, FriendListModel {
 
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    listener.onAccountChanged(new Gson().fromJson(
-                                            dataSnapshot.getValue(String.class), User.class));
+                                    listener.onAccountChanged(mGson.fromJson(dataSnapshot.getValue(
+                                            String.class), User.class));
                                 }
 
                                 @Override
@@ -230,6 +238,7 @@ public class Database implements LoginModel, MainModel, FriendListModel {
         }).start();
     }
 
+    @Override
     public void pushItemPost(Item item) {
         String itemType = "";
         if (item.isInterest()) {
@@ -237,7 +246,40 @@ public class Database implements LoginModel, MainModel, FriendListModel {
         } else {
             itemType = "userReportedItem";
         }
-        mAccDatabase.child(itemType).child(item.getPosterUserName()).push().setValue(
-                new Gson().toJson(item, Item.class));
+        mAccDatabase.child(itemType).child(item.getPosterUserName()).push().setValue(mGson.toJson(
+                item));
+    }
+
+    @Override
+    public void fetchFriendsItemOfInterest(final List<String> friendsUsernameList,
+            final FeedListener listener) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (String friendUsername : friendsUsernameList) {
+                    mAccDatabase.child("userInterestItem").child(friendUsername)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Map<String, String> snap = (Map<String, String>) dataSnapshot
+                                            .getValue();
+                                    if (snap != null) {
+                                        Collection<String> m = snap.values();
+                                        Collection<Item> set = new HashSet<Item>(m.size());
+                                        for (String item : m) {
+                                            set.add(mGson.fromJson(item, Item.class));
+                                        }
+                                        listener.onListFetched(set);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(FirebaseError error) {
+                                    listener.onError(new DatabaseError(error));
+                                }
+                            });
+                }
+            }
+        }).start();
     }
 }

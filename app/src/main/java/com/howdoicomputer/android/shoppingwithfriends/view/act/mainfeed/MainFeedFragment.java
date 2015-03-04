@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -73,7 +75,8 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
                     User.class);
         }
-        //handler = new MainFeedHandler(this, currentUser);
+        handler = new MainFeedHandler(this);
+        handler.fetchFeed();
     }
 
     @Override
@@ -92,7 +95,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        //mAdapter = new MainFeedAdapter(handler);
+        mAdapter = new MainFeedAdapter(handler);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -153,12 +156,26 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
         currentUser = (User) acc;
     }
 
+
     private void showAddItemInterestDialog() {
         if (addInterestItemDialog == null) {
             addItemInterestDialogView = getLayoutInflater(null).inflate(
                     R.layout.dialog_add_interest_item, null);
             final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemInterestDialogView
                     .findViewById(R.id.interest_item_name);
+            final EditText itemPrice = (EditText) addItemInterestDialogView.findViewById(
+                    R.id.interest_item_price);
+            ImageButton submit = (ImageButton) addItemInterestDialogView.findViewById(
+                    R.id.interest_submit);
+
+            submit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handler.postItemOfInterest(itemName.getText().toString(),
+                            currentUser.getUserName(), Double.parseDouble(
+                                    itemPrice.getText().toString()));
+                }
+            });
 
             addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle(
                     "Post item you want...").setView(addItemInterestDialogView).setOnKeyListener(
@@ -173,7 +190,9 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
                                 if (shownAddInterestItemDialog != null) {
                                     shownAddInterestItemDialog.dismiss();
                                 }
-                                //TODO:handler.add(itemName.getText().toString());
+                                handler.postItemOfInterest(itemName.getText().toString(),
+                                        currentUser.getUserName(), Double.parseDouble(
+                                                itemPrice.getText().toString()));
                                 itemName.setText("");
                                 return true;
                             }
