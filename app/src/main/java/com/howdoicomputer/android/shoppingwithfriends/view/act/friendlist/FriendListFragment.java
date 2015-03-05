@@ -19,7 +19,6 @@ import android.widget.AutoCompleteTextView;
 import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.FriendListView;
@@ -37,7 +36,6 @@ public class FriendListFragment extends Fragment implements FriendListView {
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private User                 currentUser;
     private FriendListHandler    handler;
     private AppStateListener     mListener;
 
@@ -54,14 +52,13 @@ public class FriendListFragment extends Fragment implements FriendListView {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param currentUser {@link User} of current user
      * @return A new instance of fragment FriendListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FriendListFragment newInstance(User currentUser) {
+    public static FriendListFragment newInstance() {
         FriendListFragment fragment = new FriendListFragment();
         Bundle args = new Bundle();
-        args.putString(CURRENTUSER_PARAM, new Gson().toJson(currentUser));
+        //        args.putString(CURRENTUSER_PARAM, new Gson().toJson(currentUser));
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +79,8 @@ public class FriendListFragment extends Fragment implements FriendListView {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new FriendListAdapter(currentUser.getFriendlist(), handler);
+        mAdapter = new FriendListAdapter(((User) mListener.getLatestAccount()).getFriendlist(),
+                handler);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -91,6 +89,7 @@ public class FriendListFragment extends Fragment implements FriendListView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        User currentUser = null;
         if (getArguments() != null) {
             currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
                     User.class);
@@ -212,8 +211,4 @@ public class FriendListFragment extends Fragment implements FriendListView {
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void updateAccount(Account acc) {
-        currentUser = (User) acc;
-    }
 }

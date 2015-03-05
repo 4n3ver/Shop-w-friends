@@ -24,13 +24,15 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.friendlist.FriendListFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.NavDrawerView;
+import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NavDrawerFragment extends Fragment {
+public class NavDrawerFragment extends Fragment implements NavDrawerView {
     private static final String PREF_FILE_NAME              = "navDrawerAware";
     private static final String KEY_USER_IS_AWARE_OF_DRAWER = "key_navDrawerAware";
     private TextView              mName;
@@ -42,7 +44,6 @@ public class NavDrawerFragment extends Fragment {
     private View                  containerView;
     private NavigationHandler     handler;
     private AppStateListener      mListener;
-    private User                  currentUser;
     private FragmentLocation      location;
     private FragmentLocation      lastLocation;
     private MainFeedFragment      mff;
@@ -122,6 +123,10 @@ public class NavDrawerFragment extends Fragment {
     }
 
     public void setUp(int fragmentID, DrawerLayout drawerLayout, final Toolbar actBar) {
+        mff = MainFeedFragment.newInstance();
+        getActivity().getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
+                mff).commit();
+
         location = FragmentLocation.MAIN_FEED;
         this.handler = new NavigationHandler();
         this.containerView = getActivity().findViewById(fragmentID);
@@ -132,11 +137,10 @@ public class NavDrawerFragment extends Fragment {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                currentUser = (User) mListener.getLatestAccount();
                 if (mName == null) {
                     mName = ((TextView) getActivity().findViewById(R.id.helloName));
                 }
-                mName.setText("Hello, " + currentUser.getName());
+                mName.setText("Hello, " + ((User) mListener.getLatestAccount()).getName());
                 actBar.setAlpha(1 - slideOffset / 2);
             }
 
@@ -195,9 +199,7 @@ public class NavDrawerFragment extends Fragment {
                                     FragmentTransaction transaction = getActivity()
                                             .getSupportFragmentManager().beginTransaction();
                                     if (mff == null) {
-                                        mff = MainFeedFragment.newInstance(currentUser);
-                                    } else {
-                                        mff.updateAccount(currentUser);
+                                        mff = MainFeedFragment.newInstance();
                                     }
                                     transaction.replace(R.id.mainFragmentContainer, mff);
                                     getActivity().getSupportFragmentManager().popBackStack();
@@ -224,9 +226,7 @@ public class NavDrawerFragment extends Fragment {
                             FragmentTransaction transaction = getActivity()
                                     .getSupportFragmentManager().beginTransaction();
                             if (flf == null) {
-                                flf = FriendListFragment.newInstance(currentUser);
-                            } else {
-                                flf.updateAccount(currentUser);
+                                flf = FriendListFragment.newInstance();
                             }
                             transaction.replace(R.id.mainFragmentContainer, flf);
                             getActivity().getSupportFragmentManager().popBackStack();
@@ -257,6 +257,21 @@ public class NavDrawerFragment extends Fragment {
         FragmentLocation temp = lastLocation;
         lastLocation = location;
         location = temp;
+    }
+
+    @Override
+    public AppStateListener getAppStateListener() {
+        return mListener;
+    }
+
+    @Override
+    public ViewObjectUtil getUiUtil() {
+        return null;
+    }
+
+    @Override
+    public void refreshView() {
+
     }
 
     private enum FragmentLocation {

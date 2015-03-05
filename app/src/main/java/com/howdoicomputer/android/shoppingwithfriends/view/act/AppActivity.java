@@ -24,7 +24,6 @@ import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
-import com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.navigationdrawer.NavDrawerFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
@@ -62,8 +61,9 @@ public class AppActivity extends ActionBarActivity
                 R.id.nav_drawer_layout), actionBar);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
-                    MainFeedFragment.newInstance(currentUser)).commit();
+            //            getSupportFragmentManager().beginTransaction().add(R.id
+            // .mainFragmentContainer,
+            //                    MainFeedFragment.newInstance(currentUser)).commit();
         }
 
         /* setup the progress dialog that is displayed later when connecting to the server */
@@ -135,11 +135,6 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void refreshView() {
 
-    }
-
-    @Override
-    public void updateAccount(Account acc) {
-        currentUser = (User) acc;
     }
 
     @Override

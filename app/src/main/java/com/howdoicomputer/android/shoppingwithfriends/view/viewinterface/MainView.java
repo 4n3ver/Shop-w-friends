@@ -1,7 +1,5 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
-
 /**
  * {@link MainView} provides a way for presenter that handle the main app and the GUI to interact.
  *
@@ -14,7 +12,5 @@ public interface MainView {
     public ViewObjectUtil getUiUtil();
 
     public void refreshView();
-
-    public void updateAccount(Account acc);
 
 }
