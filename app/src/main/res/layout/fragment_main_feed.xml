@@ -1,14 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     android:id="@+id/mainFragmentContainer"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099CC"
+    android:background="#FFFFFF"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.MainFeedFragment">
+    tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mainfeed_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:scrollbars="vertical"/>
 
-</LinearLayout>
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/add_post"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        fab:fab_addButtonColorNormal="@color/primary_dark"
+        fab:fab_addButtonColorPressed="@color/primary_accent"
+        fab:fab_icon="@drawable/ic_plus">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_post_interest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary_dark"
+            fab:fab_colorPressed="@color/primary_accent"
+            fab:fab_icon="@drawable/ic_shopping"
+            fab:fab_title="Action A"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_post_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/primary_dark"
+            fab:fab_colorPressed="@color/primary_accent"
+            fab:fab_icon="@drawable/ic_store"
+            fab:fab_title="Action with a very long name that won\'t fit on the screen"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</FrameLayout>

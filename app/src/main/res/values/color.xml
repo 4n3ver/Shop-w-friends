@@ -4,4 +4,7 @@
     <color name="purple">#6200EA</color>
     <color name="light_purple">#B39DDB</color>
 
+    <color name="primary">#3F51B5</color>
+    <color name="primary_dark">#303F9F</color>
+    <color name="primary_accent">#C5CAE9</color>
 </resources>

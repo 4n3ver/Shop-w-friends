@@ -78,7 +78,6 @@
             android:layout_height="wrap_content"
             android:hint="Confirm password"
             android:imeActionLabel="Sign up"
-            android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"

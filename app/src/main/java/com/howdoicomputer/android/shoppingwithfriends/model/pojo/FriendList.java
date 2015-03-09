@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * {@link FriendList} is meant to be a list of friend's user name.
@@ -84,6 +85,15 @@ public class FriendList implements Iterable<User> {
                 }
             }
         });
+    }
+
+    public List<String> getFriendsUserName() {
+        List<String> ret = new ArrayList<>(list.size());
+        for (User friend : list) {
+            ret.add(friend.getUserName());
+        }
+
+        return ret;
     }
 
     @Override

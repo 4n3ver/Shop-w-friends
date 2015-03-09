@@ -39,8 +39,8 @@ public class AppActivity extends ActionBarActivity
     private AlertDialog.Builder mErrorDialog;
     private GoogleApiClient     mGoogleApiClient;
     private Location            mLastLocation;
-    private Toolbar           actionBar;
-    private NavDrawerFragment navigationBar;
+    private Toolbar             actionBar;
+    private NavDrawerFragment   navigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +61,9 @@ public class AppActivity extends ActionBarActivity
                 R.id.nav_drawer_layout), actionBar);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
-                    MainFeedFragment.newInstance(currentUser)).commit();
+            //            getSupportFragmentManager().beginTransaction().add(R.id
+            // .mainFragmentContainer,
+            //                    MainFeedFragment.newInstance(currentUser)).commit();
         }
 
         /* setup the progress dialog that is displayed later when connecting to the server */
@@ -107,10 +108,6 @@ public class AppActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -138,11 +135,6 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void refreshView() {
 
-    }
-
-    @Override
-    public void updateAccount(Account acc) {
-        currentUser = (User) acc;
     }
 
     @Override

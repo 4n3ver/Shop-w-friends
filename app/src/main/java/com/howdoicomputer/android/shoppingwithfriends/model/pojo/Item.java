@@ -9,30 +9,40 @@ import java.util.Date;
 /**
  * Created by Ricardomacias on 2/7/2015.
  * Work in Progress
+ *
+ * @author Ricardo Macias
+ * @author Yoel Ivan
  */
-public class Item implements Comparable {
+public class Item implements Comparable<Item> {
+    private String  posterUserName;
+    private boolean isInterest;
+    private String  itemName;
+
     //instance variables
-    private boolean itemOfInterest;
-    private int likes;
-    private double price;
+    private int      likes;
+    private double   price;
     private Location location;
-    private String time;
-    private Date date;
+    private String   time;
+    private Date     date;
 
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
      *
      * @param price: price of the item
-     * @param loc: location of the item
+     * @param loc:   location of the item
      */
-    public Item(double price, Location loc) {
+    public Item(String itemName, String opUserName, double price, Location loc,
+            boolean isInterest) {
+        this.itemName = itemName;
+        this.posterUserName = opUserName;
         this.likes = 0;
         this.price = price;
         location = loc;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
         time = dateFormat.format(date);
+        this.isInterest = isInterest;
     }
 
     /**
@@ -78,6 +88,7 @@ public class Item implements Comparable {
 
     /**
      * getter for the date this item was created
+     *
      * @return date, the date this item was created
      */
     public Date getDate() {
@@ -87,28 +98,27 @@ public class Item implements Comparable {
     /**
      * getter for the date & time this item was created,
      * in string format.
+     *
      * @return time
      */
     public String getTime() {
         return time;
     }
 
-    /**
-     * sets this item as an item of interest
-     */
-    public void setItemOfInterest() {
-        itemOfInterest = true;
+    public String getPosterUserName() {
+        return posterUserName;
     }
 
-    /**
-     * checks if this item is an item of interest
-     * @return itemOfInterest
-     */
-    public boolean isItemOfInterest() {
-        return itemOfInterest;
+    public boolean isInterest() {
+        return isInterest;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
+
     @Override
-    public int compareTo(Object another) {
-        return date.compareTo(((Item)another).getDate());
+    public int compareTo(Item another) {
+        return another.getDate().compareTo(this.getDate());
     }
 }
