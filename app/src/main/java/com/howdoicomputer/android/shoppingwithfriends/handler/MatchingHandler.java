@@ -3,15 +3,16 @@ package com.howdoicomputer.android.shoppingwithfriends.handler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.HashSet;
-import java.util.Date;
 
 /**
- * MatchingHandler class
+ * {@link com.howdoicomputer.android.shoppingwithfriends.handler.MatchingHandler}
  * This class provides methods to filter a collection
  * Created by lovissa winyoto on 3/9/15.
+ * @author Lovissa Winyoto
  */
 public class MatchingHandler {
 
