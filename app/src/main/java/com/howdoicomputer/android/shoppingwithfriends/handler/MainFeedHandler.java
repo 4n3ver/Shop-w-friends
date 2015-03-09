@@ -37,7 +37,7 @@ public class MainFeedHandler {
     }
 
     public void fetchFeed() {
-        final Date aWeekAgo = new Date(System.currentTimeMillis() - 6048000);
+        final Date aWeekAgo = new Date(System.currentTimeMillis() - 604800000);
         final Set<Item> feed = new TreeSet<>();
         List<String> friendUserName = ((User) view.getAppStateListener().getLatestAccount())
                 .getFriendlist().getFriendsUserName();
@@ -68,5 +68,4 @@ public class MainFeedHandler {
     public ArrayList<Item> getDataSet() {
         return dataSet;
     }
-
 }

@@ -17,11 +17,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainFeedHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
@@ -38,7 +35,6 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private User                 currentUser;
     private AppStateListener     mListener;
     private ViewObjectUtil       mUtil;
     private MainFeedHandler      handler;
@@ -56,15 +52,14 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param currentUser {@link User} of current user
      * @return A new instance of fragment MainFeedFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainFeedFragment newInstance(User currentUser) {
+    public static MainFeedFragment newInstance() {
         MainFeedFragment fragment = new MainFeedFragment();
-        Bundle args = new Bundle();
-        args.putString(CURRENTUSER_PARAM, new Gson().toJson(currentUser));
-        fragment.setArguments(args);
+        //        Bundle args = new Bundle();
+        //        args.putString(CURRENTUSER_PARAM, new Gson().toJson(currentUser));
+        //        fragment.setArguments(args);
         return fragment;
     }
 
@@ -72,8 +67,9 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
-                    User.class);
+            //            currentUser = new Gson().fromJson(getArguments().getString
+            // (CURRENTUSER_PARAM),
+            //                    User.class);
         }
         handler = new MainFeedHandler(this);
         handler.fetchFeed();
@@ -151,11 +147,6 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
         mAdapter.notifyDataSetChanged();
     }
 
-    @Override
-    public void updateAccount(Account acc) {
-        currentUser = (User) acc;
-    }
-
 
     private void showAddItemInterestDialog() {
         if (addInterestItemDialog == null) {
@@ -172,8 +163,9 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
                 @Override
                 public void onClick(View v) {
                     handler.postItemOfInterest(itemName.getText().toString(),
-                            currentUser.getUserName(), Double.parseDouble(
+                            mListener.getLatestAccount().getUserName(), Double.parseDouble(
                                     itemPrice.getText().toString()));
+                    shownAddInterestItemDialog.dismiss();
                 }
             });
 
@@ -191,9 +183,11 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
                                     shownAddInterestItemDialog.dismiss();
                                 }
                                 handler.postItemOfInterest(itemName.getText().toString(),
-                                        currentUser.getUserName(), Double.parseDouble(
+                                        mListener.getLatestAccount().getUserName(),
+                                        Double.parseDouble(
                                                 itemPrice.getText().toString()));
                                 itemName.setText("");
+                                itemPrice.setText("");
                                 return true;
                             }
                             return false;

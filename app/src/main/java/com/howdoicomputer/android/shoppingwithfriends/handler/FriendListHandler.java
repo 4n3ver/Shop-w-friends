@@ -20,16 +20,18 @@ public class FriendListHandler {
     public FriendListHandler(final FriendListView view) {
         db = Database.getInstace();
         this.view = view;
-        final User current = (User) view.getAppStateListener().getLatestAccount();
-        db.fetchFriendAccountInfo(current.getFriendlist(), new AccountStateListener() {
-            @Override
+        db.fetchFriendAccountInfo(
+                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist(),
+                new AccountStateListener() {
+                    @Override
             public void onError(DatabaseError databaseError) {
                 view.getUiUtil().showErrorDialog(databaseError.toString());
             }
 
             @Override
             public void onAccountChanged(Account acc) {
-                current.getFriendlist().add((User) acc);
+                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist().add(
+                        (User) acc);
                 updateAll();
             }
         });
@@ -43,12 +45,13 @@ public class FriendListHandler {
             db.fetchAccountInfo(userName, new FetchAccountResultListener() {
                 @Override
                 public void onFound(Account account) {
-                    User current = (User) view.getAppStateListener().getLatestAccount();
                     view.getUiUtil().hideProgressDialog();
-                    if (current.compareTo(account) == 0) {
+                    if (((User) view.getAppStateListener().getLatestAccount()).compareTo(account)
+                            == 0) {
                         view.getUiUtil().showErrorDialog("You can't be friend with yourself");
                     } else if (account instanceof User) {
-                        if (current.getFriendlist().add((User) account)) {
+                        if (((User) view.getAppStateListener().getLatestAccount()).getFriendlist()
+                                .add((User) account)) {
                             updateAll();
                         } else {
                             view.getUiUtil().showErrorDialog(
@@ -75,17 +78,17 @@ public class FriendListHandler {
     }
 
     public void remove(User other) {
-        User current = (User) view.getAppStateListener().getLatestAccount();
-        if (current.getFriendlist().isFriendWith(other)) {
-            current.getFriendlist().remove(other);
+        if (((User) view.getAppStateListener().getLatestAccount()).getFriendlist().isFriendWith(
+                other)) {
+            ((User) view.getAppStateListener().getLatestAccount()).getFriendlist().remove(other);
             updateAll();
         }
     }
 
     private void updateAll() {
-        User current = (User) view.getAppStateListener().getLatestAccount();
-        db.updateAccount(current);
-        view.getAppStateListener().onAccountChanged(current);
+        db.updateAccount(((User) view.getAppStateListener().getLatestAccount()));
+        view.getAppStateListener().onAccountChanged(
+                ((User) view.getAppStateListener().getLatestAccount()));
         view.refreshView();
     }
 }
