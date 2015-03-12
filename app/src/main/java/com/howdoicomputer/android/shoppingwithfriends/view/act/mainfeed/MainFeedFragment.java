@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -43,6 +44,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private AlertDialog.Builder addInterestItemDialog;
     private AlertDialog         shownAddInterestItemDialog;
     private View                addItemInterestDialogView;
+    private SwipeRefreshLayout  mSwipeToRefresh;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -106,6 +108,28 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             @Override
             public void onClick(View v) {
                 showAddItemInterestDialog();
+            }
+        });
+
+        mSwipeToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_feed);
+        mSwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+
+            void refreshItems() {
+                handler.fetchFeed();
+                onItemsLoadComplete();
+            }
+
+            void onItemsLoadComplete() {
+                // Update the adapter and notify data set changed
+                // ...
+
+                // Stop refresh animation
+                mSwipeToRefresh.setRefreshing(false);
             }
         });
 
