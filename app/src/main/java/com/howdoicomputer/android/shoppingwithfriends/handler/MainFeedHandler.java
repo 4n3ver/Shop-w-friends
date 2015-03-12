@@ -30,10 +30,18 @@ public class MainFeedHandler {
         dataSet = new ArrayList<>();
     }
 
-    public void postItemOfInterest(String itemName, String posterUsername, double price) {
-        Item newItem = new Item(itemName, posterUsername, price, null, true);
-        db.pushItemPost(newItem);
-        fetchFeed();
+    public void postItemOfInterest(String itemName, String posterUsername, String price) {
+        double parsed_price = -1;
+        try {
+            parsed_price = Double.parseDouble(price);
+        } catch (NumberFormatException e) {
+            // error
+        }
+        if (parsed_price >= 0) {
+            Item newItem = new Item(itemName, posterUsername, parsed_price, null, true);
+            db.pushItemPost(newItem);
+            fetchFeed();
+        }
     }
 
     public void fetchFeed() {
