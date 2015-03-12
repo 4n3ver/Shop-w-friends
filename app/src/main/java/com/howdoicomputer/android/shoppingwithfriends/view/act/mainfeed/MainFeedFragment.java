@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -43,6 +44,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private AlertDialog.Builder addInterestItemDialog;
     private AlertDialog         shownAddInterestItemDialog;
     private View                addItemInterestDialogView;
+    private SwipeRefreshLayout  mSwipeToRefresh;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -109,6 +111,28 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             }
         });
 
+        mSwipeToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_feed);
+        mSwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+
+            void refreshItems() {
+                handler.fetchFeed();
+                onItemsLoadComplete();
+            }
+
+            void onItemsLoadComplete() {
+                // Update the adapter and notify data set changed
+                // ...
+
+                // Stop refresh animation
+                mSwipeToRefresh.setRefreshing(false);
+            }
+        });
+
 
         return rootView;
     }
@@ -150,55 +174,57 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
 
     private void showAddItemInterestDialog() {
         if (addInterestItemDialog == null) {
-            addItemInterestDialogView = getLayoutInflater(null).inflate(
-                    R.layout.dialog_add_interest_item, null);
-            final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemInterestDialogView
-                    .findViewById(R.id.interest_item_name);
-            final EditText itemPrice = (EditText) addItemInterestDialogView.findViewById(
-                    R.id.interest_item_price);
-            ImageButton submit = (ImageButton) addItemInterestDialogView.findViewById(
-                    R.id.interest_submit);
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handler.postItemOfInterest(itemName.getText().toString(),
-                            mListener.getLatestAccount().getUserName(), Double.parseDouble(
-                                    itemPrice.getText().toString()));
-                    shownAddInterestItemDialog.dismiss();
-                }
-            });
-
-            addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle(
-                    "Post item you want...").setView(addItemInterestDialogView).setOnKeyListener(
-                    new DialogInterface.OnKeyListener() {
-
-                        @Override
-                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                            if ((keyCode == KeyEvent.KEYCODE_ENTER
-                                         || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
-                                         || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
-                                    && event.getAction() == KeyEvent.ACTION_DOWN) {
-                                if (shownAddInterestItemDialog != null) {
-                                    shownAddInterestItemDialog.dismiss();
-                                }
-                                handler.postItemOfInterest(itemName.getText().toString(),
-                                        mListener.getLatestAccount().getUserName(),
-                                        Double.parseDouble(
-                                                itemPrice.getText().toString()));
-                                itemName.setText("");
-                                itemPrice.setText("");
-                                return true;
-                            }
-                            return false;
-                        }
-
-                    });
+            createAddItemInterestDialog();
         } else if (addItemInterestDialogView != null
                 && addItemInterestDialogView.getParent() != null) {
             ((ViewGroup) addItemInterestDialogView.getParent()).removeView(
                     addItemInterestDialogView);
         }
         shownAddInterestItemDialog = addInterestItemDialog.show();
+    }
+
+    private void createAddItemInterestDialog() {
+        addItemInterestDialogView = getLayoutInflater(null).inflate(
+                R.layout.dialog_add_interest_item, null);
+        final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemInterestDialogView
+                .findViewById(R.id.interest_item_name);
+        final EditText itemPrice = (EditText) addItemInterestDialogView.findViewById(
+                R.id.interest_item_price);
+        ImageButton submit = (ImageButton) addItemInterestDialogView.findViewById(
+                R.id.interest_submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitInterestItem(itemName, itemPrice);
+            }
+        });
+
+        addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle(
+                "Post item you want...").setView(addItemInterestDialogView).setOnKeyListener(
+                new DialogInterface.OnKeyListener() {
+
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                     || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                     || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                && event.getAction() == KeyEvent.ACTION_DOWN) {
+                            submitInterestItem(itemName, itemPrice);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+    }
+
+    private void submitInterestItem(AutoCompleteTextView itemName, EditText itemPrice) {
+        if (shownAddInterestItemDialog != null) {
+            shownAddInterestItemDialog.dismiss();
+        }
+        handler.postItemOfInterest(itemName.getText().toString(),
+                mListener.getLatestAccount().getUserName(), itemPrice.getText().toString());
+        itemName.setText("");
+        itemPrice.setText("");
     }
 }

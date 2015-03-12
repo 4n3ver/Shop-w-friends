@@ -44,8 +44,8 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
     private View                  containerView;
     private NavigationHandler     handler;
     private AppStateListener      mListener;
-    private FragmentLocation      location;
-    private FragmentLocation      lastLocation;
+    private FragmentLocation mCurrentShownView;
+    private FragmentLocation mLastShownView;
     private MainFeedFragment      mff;
     private FriendListFragment    flf;
 
@@ -126,8 +126,8 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
         mff = MainFeedFragment.newInstance();
         getActivity().getSupportFragmentManager().beginTransaction().add(R.id.mainFragmentContainer,
                 mff).commit();
+        mCurrentShownView = FragmentLocation.MAIN_FEED;
 
-        location = FragmentLocation.MAIN_FEED;
         this.handler = new NavigationHandler();
         this.containerView = getActivity().findViewById(fragmentID);
         this.drawerLayout = drawerLayout;
@@ -179,7 +179,6 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
                 drawerToggle.syncState();
             }
         });
-
     }
 
     private ArrayList<NavDrawerAdapter.MenuResourceHolder> populateNavDrawerMenu() {
@@ -190,9 +189,9 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
 
                     @Override
                     public void onClick(View v) {
-                        if (location != FragmentLocation.MAIN_FEED) {
-                            lastLocation = null;
-                            location = FragmentLocation.MAIN_FEED;
+                        if (mCurrentShownView != FragmentLocation.MAIN_FEED) {
+                            mLastShownView = null;
+                            mCurrentShownView = FragmentLocation.MAIN_FEED;
                             drawerLayout.closeDrawers();
                             new Thread(new Runnable() {
                                 public void run() {
@@ -203,8 +202,6 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
                                     }
                                     transaction.replace(R.id.mainFragmentContainer, mff);
                                     getActivity().getSupportFragmentManager().popBackStack();
-                                    transaction.addToBackStack(
-                                            null);    // let user navigate back to previous fragment
                                     transaction.commit();
                                 }
                             }).start();
@@ -217,9 +214,9 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
 
             @Override
             public void onClick(View v) {
-                if (location != FragmentLocation.FRIEND_LIST) {
-                    lastLocation = location;
-                    location = FragmentLocation.FRIEND_LIST;
+                if (mCurrentShownView != FragmentLocation.FRIEND_LIST) {
+                    mLastShownView = mCurrentShownView;
+                    mCurrentShownView = FragmentLocation.FRIEND_LIST;
                     drawerLayout.closeDrawers();
                     new Thread(new Runnable() {
                         public void run() {
@@ -254,9 +251,10 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
     }
 
     public void onBackPressed() {
-        FragmentLocation temp = lastLocation;
-        lastLocation = location;
-        location = temp;
+        FragmentLocation temp = mLastShownView;
+        mLastShownView = mCurrentShownView;
+        mCurrentShownView = temp;
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override

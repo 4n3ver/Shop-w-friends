@@ -216,9 +216,9 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
     @Override
     public void fetchFriendAccountInfo(final FriendList friendList,
             final AccountStateListener listener) {
-        new Thread(new Runnable() {
-            public void run() {
-                for (User friend : friendList) {
+        for (final User friend : friendList) {
+            new Thread(new Runnable() {
+                public void run() {
                     mAccDatabase.child("userAccount").child(friend.getUserName())
                             .addValueEventListener(new ValueEventListener() {
 
@@ -234,8 +234,8 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
                                 }
                             });
                 }
-            }
-        }).start();
+            }).start();
+        }
     }
 
     @Override

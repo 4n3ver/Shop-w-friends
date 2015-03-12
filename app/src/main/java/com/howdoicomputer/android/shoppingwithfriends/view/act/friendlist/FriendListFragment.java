@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 
-import com.google.gson.Gson;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
@@ -32,7 +31,7 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObj
  */
 public class FriendListFragment extends Fragment implements FriendListView {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String CURRENTUSER_PARAM = "currentUSer";
+    //private static final String CURRENTUSER_PARAM = "currentUSer";
 
     private RecyclerView         mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -57,9 +56,9 @@ public class FriendListFragment extends Fragment implements FriendListView {
     // TODO: Rename and change types and number of parameters
     public static FriendListFragment newInstance() {
         FriendListFragment fragment = new FriendListFragment();
-        Bundle args = new Bundle();
+        //Bundle args = new Bundle();
         //        args.putString(CURRENTUSER_PARAM, new Gson().toJson(currentUser));
-        fragment.setArguments(args);
+        //fragment.setArguments(args);
         return fragment;
     }
 
@@ -89,11 +88,6 @@ public class FriendListFragment extends Fragment implements FriendListView {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        User currentUser = null;
-        if (getArguments() != null) {
-            currentUser = new Gson().fromJson(getArguments().getString(CURRENTUSER_PARAM),
-                    User.class);
-        }
         handler = new FriendListHandler(this);
     }
 

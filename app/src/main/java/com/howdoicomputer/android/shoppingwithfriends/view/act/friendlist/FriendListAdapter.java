@@ -24,7 +24,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     private FriendList        mDataset;
     private FriendListHandler mHandler;
 
-
     /**
      * Creates {@link FriendListAdapter} object.
      *
@@ -54,7 +53,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(final FriendViewHolder holder, int position) {
+    public void onBindViewHolder(final FriendViewHolder holder, final int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         final User friend = mDataset.get(position);
@@ -65,11 +64,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
 
             @Override
             public void onClick(View v) {
-                holder.detailedView.name.setText(friend.getName());
-                holder.detailedView.userName.setText(friend.getUserName());
-                holder.detailedView.email.setText(friend.getEmail());
-                holder.detailedView.rating.setText("" + friend.getRating());
-                holder.detailedView.reportCount.setText("" + friend.getSalesReported());
+                holder.detailedView.name.setText(String.valueOf(friend.getName()));
+                holder.detailedView.userName.setText(String.valueOf(friend.getUserName()));
+                holder.detailedView.email.setText(String.valueOf(friend.getEmail()));
+                holder.detailedView.rating.setText(String.valueOf(friend.getRating()));
+                holder.detailedView.reportCount.setText(String.valueOf(friend.getSalesReported()));
                 holder.detailedView.removeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -142,7 +141,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
              *
              * @param detailedView reference to the layout's {@link View}
              */
-            private DetailedViewHolder(View detailedView) {
+            private DetailedViewHolder(final View detailedView) {
                 layout = detailedView;
                 name = (TextView) detailedView.findViewById(R.id.friend_detailed_name);
                 userName = (TextView) detailedView.findViewById(R.id.friend_detailed_user_name);
