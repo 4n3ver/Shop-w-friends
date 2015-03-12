@@ -24,7 +24,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     private FriendList        mDataset;
     private FriendListHandler mHandler;
 
-
     /**
      * Creates {@link FriendListAdapter} object.
      *

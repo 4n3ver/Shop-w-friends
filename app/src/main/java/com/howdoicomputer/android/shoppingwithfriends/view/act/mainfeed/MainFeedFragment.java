@@ -191,7 +191,6 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
                         }
                         return false;
                     }
-
                 });
     }
 
