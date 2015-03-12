@@ -1,7 +1,8 @@
 package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
-import android.location.Location;
 
+
+import android.location.Location;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,39 +22,58 @@ public class Item implements Comparable<Item> {
     //instance variables
     private int      likes;
     private double   price;
-    private Location location;
     private String   time;
     private Date     date;
-
+    private double latitude;
+    private double longitude;
+    private double altitude;
+    private String address;
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
      *
      * @param price: price of the item
-     * @param loc:   location of the item
      */
-    public Item(String itemName, String opUserName, double price, Location loc,
+    public Item(String itemName, String opUserName, double price, double latitude, double longitude, double altitude,
             boolean isInterest) {
         this.itemName = itemName;
         this.posterUserName = opUserName;
         this.likes = 0;
         this.price = price;
-        location = loc;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.altitude = altitude;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
         time = dateFormat.format(date);
         this.isInterest = isInterest;
+        this.address = address;
     }
 
     /**
-     * Getter for the current location of the item.
+     * Getter for the current latitude of the item.
      *
-     * @return location
+     * @return latitude
      */
-    public Location getLocation() {
-        return location;
+    public double getLatitude() {
+        return latitude;
     }
 
+    /**
+     * Getter for the current longitude of the item.
+     * @return longitude
+     */
+    public double getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * Getter for the current altitude of the item
+     * @return altitude
+     */
+    public double getAltitude() {
+        return altitude;
+    }
     /**
      * Getter for the price of the item
      *

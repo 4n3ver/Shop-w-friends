@@ -38,7 +38,7 @@ public class AppActivity extends ActionBarActivity
     private ProgressDialog      mConnProgressDialog;
     private AlertDialog.Builder mErrorDialog;
     private GoogleApiClient     mGoogleApiClient;
-    private Location            mLastLocation;
+    private static Location            mLastLocation;
     private Toolbar             actionBar;
     private NavDrawerFragment   navigationBar;
 
@@ -203,5 +203,9 @@ public class AppActivity extends ActionBarActivity
     public void onBackPressed() {
         super.onBackPressed();
         navigationBar.onBackPressed();
+    }
+
+    public static Location getmLastLocation() {
+        return mLastLocation;
     }
 }
