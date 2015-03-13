@@ -5,6 +5,7 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,9 +39,9 @@ public class MatchingHandler {
 
     public static Collection<Item> matchByPrice(Collection<Item> collection, Item compare) {
         Collection<Item> toReturn = MatchingHandler.match(collection, compare);
-        for (Item each : toReturn) {
-            if (each.getPrice() > compare.getPrice()) {
-                toReturn.remove(each);
+        for (Iterator<Item> each = toReturn.iterator(); each.hasNext(); ) {
+            if (each.next().getPrice() > compare.getPrice()) {
+                each.remove();
             }
         }
         return toReturn;

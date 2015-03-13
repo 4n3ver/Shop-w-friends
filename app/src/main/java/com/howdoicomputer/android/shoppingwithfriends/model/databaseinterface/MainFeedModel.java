@@ -13,8 +13,7 @@ public interface MainFeedModel extends MainModel {
 
     public void pushItemPost(Item item);
 
-    public void fetchFriendsItemOfInterest(List<String> friendsUsernameList, FeedListener listener);
-
+    public void fetchUserItemPosts(List<String> friendsUsernameList, FeedListener listener);
 
     public interface FeedListener {
 
