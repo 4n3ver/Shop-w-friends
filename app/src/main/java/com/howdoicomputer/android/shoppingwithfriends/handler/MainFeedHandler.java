@@ -56,7 +56,9 @@ public class MainFeedHandler {
             // loc.getLatitude(),
             //                    loc.getLongitude(), loc.getAltitude(), true,
             // possibilities.get(0).toString());
-            Item newItem = new Item(itemName, posterUsername, parsed_price, 0, 0, 0, true, null);
+            Item newItem = new Item(itemName, posterUsername, parsed_price,
+                    view.getAppStateListener().getLocation().getLatitude(),
+                    view.getAppStateListener().getLocation().getLongitude(), 0, true, null);
             db.pushItemPost(newItem);
             fetchFeed();
         }
@@ -145,7 +147,9 @@ public class MainFeedHandler {
             // loc.getLatitude(),
             //                    loc.getLongitude(), loc.getAltitude(), false,
             // possibilities.get(0).toString());
-            Item newItem = new Item(itemName, posterUsername, parsed_price, 0, 0, 0, false, null);
+            Item newItem = new Item(itemName, posterUsername, parsed_price,
+                    view.getAppStateListener().getLocation().getLatitude(),
+                    view.getAppStateListener().getLocation().getLongitude(), 0, false, null);
             db.pushItemPost(newItem);
             fetchFeed();
         }
