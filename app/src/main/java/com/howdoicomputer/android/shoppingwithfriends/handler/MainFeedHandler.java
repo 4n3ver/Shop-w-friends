@@ -2,6 +2,7 @@ package com.howdoicomputer.android.shoppingwithfriends.handler;
 
 import android.location.Address;
 import android.location.Location;
+
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainFeedModel;
@@ -14,8 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -24,8 +25,8 @@ import java.util.TreeSet;
 public class MainFeedHandler {
     private MainFeedModel   db;
     private MainFeedView    view;
-    private Set<Item>       mFeed;
-    private ArrayList<Item> dataSet;
+    private Collection<Item> mFeed;
+    private List<Item>       dataSet;
 
     public MainFeedHandler(MainFeedView view) {
         this.view = view;
@@ -34,18 +35,55 @@ public class MainFeedHandler {
         dataSet = new ArrayList<>();
     }
 
-    public void postItemOfInterest(String itemName, String posterUsername, double price) throws IOException {
-        Location loc = AppActivity.getmLastLocation();
-        List<Address> possibilities = AppActivity.getGeoCoder().getFromLocation(loc.getLatitude(), loc.getLongitude(), 3);
-        Item newItem = new Item(itemName, posterUsername, price, loc.getLatitude(), loc.getLongitude(), loc.getAltitude()
-        , true, possibilities.get(0).toString());
-        db.pushItemPost(newItem);
-        fetchFeed();
+    public void postItemOfInterest(String itemName, String posterUsername, String price) {
+        double parsed_price = -1;
+        try {
+            parsed_price = Double.parseDouble(price);
+        } catch (NumberFormatException e) {
+            // error
+        }
+        if (parsed_price >= 0) {
+            Location loc = AppActivity.getmLastLocation();
+            List<Address> possibilities = null;
+            try {
+                possibilities = AppActivity.getGeoCoder().getFromLocation(loc.getLatitude(),
+                        loc.getLongitude(), 3);
+            } catch (IOException idc) {
+
+            }
+            Item newItem = new Item(itemName, posterUsername, parsed_price, loc.getLatitude(),
+                    loc.getLongitude(), loc.getAltitude(), true, possibilities.get(0).toString());
+            db.pushItemPost(newItem);
+            fetchFeed();
+        }
+    }
+
+    public void postReportedItem(String itemName, String posterUsername, String price) {
+        double parsed_price = -1;
+        try {
+            parsed_price = Double.parseDouble(price);
+        } catch (NumberFormatException e) {
+            // error
+        }
+        if (parsed_price >= 0) {
+            Location loc = AppActivity.getmLastLocation();
+            List<Address> possibilities = null;
+            try {
+                possibilities = AppActivity.getGeoCoder().getFromLocation(loc.getLatitude(),
+                        loc.getLongitude(), 3);
+            } catch (IOException idc) {
+
+            }
+            Item newItem = new Item(itemName, posterUsername, parsed_price, loc.getLatitude(),
+                    loc.getLongitude(), loc.getAltitude(), false, possibilities.get(0).toString());
+            db.pushItemPost(newItem);
+            fetchFeed();
+        }
     }
 
     public void fetchFeed() {
         final Date aWeekAgo = new Date(System.currentTimeMillis() - 604800000);
-        final Set<Item> feed = new TreeSet<>();
+        final Collection<Item> feed = new HashSet<>();
         List<String> friendUserName = ((User) view.getAppStateListener().getLatestAccount())
                 .getFriendlist().getFriendsUserName();
         friendUserName.add(view.getAppStateListener().getLatestAccount().getUserName());
@@ -72,7 +110,9 @@ public class MainFeedHandler {
         });
     }
 
-    public ArrayList<Item> getDataSet() {
+    public List<Item> getDataSet() {
         return dataSet;
     }
+
+    public void postItemOfReport(String s, String userName, String s1) {}
 }

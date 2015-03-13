@@ -17,7 +17,7 @@ import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainFeedHandler;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * {@link MainFeedAdapter} is a class to holds and manages data to be shown on
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * @author Yoel Ivan
  */
 public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFeedViewHolder> {
-    private ArrayList<Item> mDataset;
+    private List<Item> mDataset;
     private MainFeedHandler mHandler;
 
 

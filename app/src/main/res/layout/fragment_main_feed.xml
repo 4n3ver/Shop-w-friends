@@ -11,12 +11,19 @@
     android:orientation="vertical"
     tools:context="com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/mainfeed_list"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_feed"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:scrollbars="vertical"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/mainfeed_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:scrollbars="vertical"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/add_post"

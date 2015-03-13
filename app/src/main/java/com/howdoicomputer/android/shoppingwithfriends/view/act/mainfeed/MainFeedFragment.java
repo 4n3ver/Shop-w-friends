@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -23,6 +24,8 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -39,10 +42,17 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private ViewObjectUtil       mUtil;
     private MainFeedHandler      handler;
     private FloatingActionButton addInterestButton;
+    private FloatingActionButton addReportButton;
 
     private AlertDialog.Builder addInterestItemDialog;
     private AlertDialog         shownAddInterestItemDialog;
     private View                addItemInterestDialogView;
+
+    private AlertDialog.Builder addReportItemDialog;
+    private AlertDialog         shownAddReportItemDialog;
+    private View                addItemReportDialogView;
+
+    private SwipeRefreshLayout  mSwipeToRefresh;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -109,6 +119,36 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             }
         });
 
+        addReportButton = (FloatingActionButton) rootView.findViewById(R.id.add_post_report);
+        addReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddItemReportDialog();
+            }
+        });
+
+        mSwipeToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_feed);
+        mSwipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                refreshItems();
+            }
+
+            void refreshItems() {
+                handler.fetchFeed();
+                onItemsLoadComplete();
+            }
+
+            void onItemsLoadComplete() {
+                // Update the adapter and notify data set changed
+                // ...
+
+                // Stop refresh animation
+                mSwipeToRefresh.setRefreshing(false);
+            }
+        });
+
 
         return rootView;
     }
@@ -150,55 +190,112 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
 
     private void showAddItemInterestDialog() {
         if (addInterestItemDialog == null) {
-            addItemInterestDialogView = getLayoutInflater(null).inflate(
-                    R.layout.dialog_add_interest_item, null);
-            final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemInterestDialogView
-                    .findViewById(R.id.interest_item_name);
-            final EditText itemPrice = (EditText) addItemInterestDialogView.findViewById(
-                    R.id.interest_item_price);
-            ImageButton submit = (ImageButton) addItemInterestDialogView.findViewById(
-                    R.id.interest_submit);
-
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handler.postItemOfInterest(itemName.getText().toString(),
-                            mListener.getLatestAccount().getUserName(), Double.parseDouble(
-                                    itemPrice.getText().toString()));
-                    shownAddInterestItemDialog.dismiss();
-                }
-            });
-
-            addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle(
-                    "Post item you want...").setView(addItemInterestDialogView).setOnKeyListener(
-                    new DialogInterface.OnKeyListener() {
-
-                        @Override
-                        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                            if ((keyCode == KeyEvent.KEYCODE_ENTER
-                                         || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
-                                         || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
-                                    && event.getAction() == KeyEvent.ACTION_DOWN) {
-                                if (shownAddInterestItemDialog != null) {
-                                    shownAddInterestItemDialog.dismiss();
-                                }
-                                handler.postItemOfInterest(itemName.getText().toString(),
-                                        mListener.getLatestAccount().getUserName(),
-                                        Double.parseDouble(
-                                                itemPrice.getText().toString()));
-                                itemName.setText("");
-                                itemPrice.setText("");
-                                return true;
-                            }
-                            return false;
-                        }
-
-                    });
+            createAddItemInterestDialog();
         } else if (addItemInterestDialogView != null
                 && addItemInterestDialogView.getParent() != null) {
             ((ViewGroup) addItemInterestDialogView.getParent()).removeView(
                     addItemInterestDialogView);
         }
         shownAddInterestItemDialog = addInterestItemDialog.show();
+    }
+
+    private void createAddItemInterestDialog() {
+        addItemInterestDialogView = getLayoutInflater(null).inflate(
+                R.layout.dialog_add_interest_item, null);
+        final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemInterestDialogView
+                .findViewById(R.id.interest_item_name);
+        final EditText itemPrice = (EditText) addItemInterestDialogView.findViewById(
+                R.id.interest_item_price);
+        ImageButton submit = (ImageButton) addItemInterestDialogView.findViewById(
+                R.id.interest_submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitInterestItem(itemName, itemPrice);
+            }
+        });
+
+        addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle("Report an item...")
+                .setView(addItemInterestDialogView).setOnKeyListener(
+                new DialogInterface.OnKeyListener() {
+
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                     || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                     || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                && event.getAction() == KeyEvent.ACTION_DOWN) {
+                            submitInterestItem(itemName, itemPrice);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+    }
+
+    private void submitInterestItem(AutoCompleteTextView itemName, EditText itemPrice) {
+        if (shownAddInterestItemDialog != null) {
+            shownAddInterestItemDialog.dismiss();
+        }
+        handler.postItemOfInterest(itemName.getText().toString(),
+                mListener.getLatestAccount().getUserName(), itemPrice.getText().toString());
+        itemName.setText("");
+        itemPrice.setText("");
+    }
+
+    private void showAddItemReportDialog() {
+        if (addReportItemDialog == null) {
+            createAddItemReportDialog();
+        } else if (addItemReportDialogView != null && addItemReportDialogView.getParent() != null) {
+            ((ViewGroup) addItemReportDialogView.getParent()).removeView(addItemReportDialogView);
+        }
+        shownAddReportItemDialog = addReportItemDialog.show();
+    }
+
+    private void createAddItemReportDialog() {
+        addItemReportDialogView = getLayoutInflater(null).inflate(R.layout.dialog_report_sale,
+                null);
+        final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemReportDialogView
+                .findViewById(R.id.report_item_name);
+        final EditText itemPrice = (EditText) addItemReportDialogView.findViewById(
+                R.id.report_item_price);
+        MultiStateToggleButton button;
+        ImageButton submit = (ImageButton) addItemReportDialogView.findViewById(R.id.report_submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitReportItem(itemName, itemPrice);
+            }
+        });
+
+        addReportItemDialog = new AlertDialog.Builder(getActivity()).setTitle("Report an item...")
+                .setView(addItemReportDialogView).setOnKeyListener(
+                        new DialogInterface.OnKeyListener() {
+
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode,
+                                    KeyEvent event) {
+                                if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                             || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                             || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    submitReportItem(itemName, itemPrice);
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+    }
+
+    private void submitReportItem(AutoCompleteTextView itemName, EditText itemPrice) {
+        if (shownAddReportItemDialog != null) {
+            shownAddReportItemDialog.dismiss();
+        }
+        handler.postItemOfReport(itemName.getText().toString(),
+                mListener.getLatestAccount().getUserName(), itemPrice.getText().toString());
+        itemName.setText("");
+        itemPrice.setText("");
     }
 }

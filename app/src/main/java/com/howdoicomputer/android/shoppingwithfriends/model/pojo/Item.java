@@ -1,8 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.model.pojo;
 
 
-
-import android.location.Location;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,22 +18,23 @@ public class Item implements Comparable<Item> {
     private String  itemName;
 
     //instance variables
-    private int      likes;
-    private double   price;
-    private String   time;
-    private Date     date;
+    private int    likes;
+    private double price;
+    private String time;
+    private Date   date;
     private double latitude;
     private double longitude;
     private double altitude;
     private String address;
+
     /**
      * Contructor for the item class, automatically gives time and date
      * it was created.
      *
      * @param price: price of the item
      */
-    public Item(String itemName, String opUserName, double price, double latitude, double longitude, double altitude,
-            boolean isInterest, String address) {
+    public Item(String itemName, String opUserName, double price, double latitude, double longitude,
+            double altitude, boolean isInterest, String address) {
         this.itemName = itemName;
         this.posterUserName = opUserName;
         this.likes = 0;
@@ -61,6 +60,7 @@ public class Item implements Comparable<Item> {
 
     /**
      * Getter for the current longitude of the item.
+     *
      * @return longitude
      */
     public double getLongitude() {
@@ -69,11 +69,13 @@ public class Item implements Comparable<Item> {
 
     /**
      * Getter for the current altitude of the item
+     *
      * @return altitude
      */
     public double getAltitude() {
         return altitude;
     }
+
     /**
      * Getter for the price of the item
      *

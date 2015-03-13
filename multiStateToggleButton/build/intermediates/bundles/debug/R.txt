@@ -1,0 +1,26 @@
+int attr leftText 0x7f010000
+int attr middleText 0x7f010001
+int attr rightText 0x7f010002
+int attr values 0x7f010003
+int drawable button_not_pressed 0x7f020000
+int drawable button_pressed 0x7f020001
+int drawable button_section_shape 0x7f020002
+int drawable button_states 0x7f020003
+int drawable ic_launcher 0x7f020004
+int id mstb_button_view 0x7f060000
+int layout view_center_toggle_button 0x7f030000
+int layout view_left_toggle_button 0x7f030001
+int layout view_multi_state_toggle_button 0x7f030002
+int layout view_right_toggle_button 0x7f030003
+int layout view_single_toggle_button 0x7f030004
+int string app_name 0x7f040000
+int style AppBaseTheme 0x7f050000
+int style AppTheme 0x7f050001
+int style BlackNormalText 0x7f050002
+int style WhiteBoldText 0x7f050003
+int[] styleable MultiStateToggleButton { 0x7f010003 }
+int styleable MultiStateToggleButton_values 0
+int[] styleable ThreeStateToggleButton { 0x7f010000, 0x7f010001, 0x7f010002 }
+int styleable ThreeStateToggleButton_leftText 0
+int styleable ThreeStateToggleButton_middleText 1
+int styleable ThreeStateToggleButton_rightText 2

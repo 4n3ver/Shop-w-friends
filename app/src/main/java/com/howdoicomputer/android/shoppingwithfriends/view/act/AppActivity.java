@@ -37,14 +37,23 @@ public class AppActivity extends ActionBarActivity
         implements MainView, OnMapReadyCallback, AppStateListener, ViewObjectUtil,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static Location mLastLocation;
+    private static Geocoder coder;
     private User                currentUser;
     private ProgressDialog      mConnProgressDialog;
     private AlertDialog.Builder mErrorDialog;
     private GoogleApiClient     mGoogleApiClient;
-    private static Location     mLastLocation;
     private Toolbar             actionBar;
     private NavDrawerFragment   navigationBar;
-    private static Geocoder coder;
+
+    public static Location getmLastLocation() {
+        return mLastLocation;
+    }
+
+    public static Geocoder getGeoCoder() {
+        return coder;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +182,6 @@ public class AppActivity extends ActionBarActivity
 
     }
 
-
     @Override
     public void showErrorDialog(final String message) {
         new Handler().postDelayed(new Runnable() {
@@ -205,13 +213,5 @@ public class AppActivity extends ActionBarActivity
     public void onBackPressed() {
         super.onBackPressed();
         navigationBar.onBackPressed();
-    }
-
-    public static Location getmLastLocation() {
-        return mLastLocation;
-    }
-
-    public static Geocoder getGeoCoder() {
-        return coder;
     }
 }
