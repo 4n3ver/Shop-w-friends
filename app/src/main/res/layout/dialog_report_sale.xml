@@ -4,8 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="#d8337799"
+    android:orientation="vertical"
     android:paddingBottom="24dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
@@ -17,15 +17,15 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/interest_user_image"
+            android:id="@+id/report_user_image"
             android:layout_width="35dp"
             android:layout_height="match_parent"
             android:layout_gravity="left|top"
             android:adjustViewBounds="true"
+            android:clickable="true"
             android:cropToPadding="true"
             android:scaleType="centerCrop"
-            android:clickable="true"
-            android:src="@drawable/ic_plus"/>
+            android:src="@drawable/defmen_black"/>
 
         <LinearLayout
             android:layout_width="1dp"
@@ -35,7 +35,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/interest_name"
+                android:id="@+id/report_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/interest_submit"
+            android:id="@+id/report_submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|right"
@@ -79,7 +79,7 @@
                 android:textStyle="normal"/>
 
             <AutoCompleteTextView
-                android:id="@+id/interest_item_name"
+                android:id="@+id/report_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
@@ -113,7 +113,7 @@
                 android:textStyle="normal"/>
 
             <EditText
-                android:id="@+id/interest_item_price"
+                android:id="@+id/report_item_price"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
@@ -123,31 +123,13 @@
 
         </LinearLayout>
 
-        <LinearLayout
+
+        <org.honorato.multistatetogglebutton.MultiStateToggleButton
+            android:id="@+id/report_item_qty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:gravity="top|left"
-                android:text="Location"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="normal"/>
-
-
-            <EditText
-                android:id="@+id/report_item_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00FFFFFF"
-                android:hint="enter address"
-                android:inputType="number"
-                android:maxLines="1"/>
-
-        </LinearLayout>
+            android:layout_marginTop="10dip"
+            android:entries="@array/report_qty_text"/>
 
     </LinearLayout>
 

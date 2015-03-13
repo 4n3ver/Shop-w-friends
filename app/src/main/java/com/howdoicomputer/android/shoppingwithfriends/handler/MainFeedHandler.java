@@ -90,4 +90,6 @@ public class MainFeedHandler {
     public List<Item> getDataSet() {
         return dataSet;
     }
+
+    public void postItemOfReport(String s, String userName, String s1) {}
 }

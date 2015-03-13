@@ -24,6 +24,8 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
+import org.honorato.multistatetogglebutton.MultiStateToggleButton;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -40,10 +42,16 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private ViewObjectUtil       mUtil;
     private MainFeedHandler      handler;
     private FloatingActionButton addInterestButton;
+    private FloatingActionButton addReportButton;
 
     private AlertDialog.Builder addInterestItemDialog;
     private AlertDialog         shownAddInterestItemDialog;
     private View                addItemInterestDialogView;
+
+    private AlertDialog.Builder addReportItemDialog;
+    private AlertDialog         shownAddReportItemDialog;
+    private View                addItemReportDialogView;
+
     private SwipeRefreshLayout  mSwipeToRefresh;
 
     public MainFeedFragment() {
@@ -108,6 +116,14 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             @Override
             public void onClick(View v) {
                 showAddItemInterestDialog();
+            }
+        });
+
+        addReportButton = (FloatingActionButton) rootView.findViewById(R.id.add_post_report);
+        addReportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAddItemReportDialog();
             }
         });
 
@@ -200,8 +216,8 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             }
         });
 
-        addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle(
-                "Post item you want...").setView(addItemInterestDialogView).setOnKeyListener(
+        addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle("Report an item...")
+                .setView(addItemInterestDialogView).setOnKeyListener(
                 new DialogInterface.OnKeyListener() {
 
                     @Override
@@ -223,6 +239,61 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             shownAddInterestItemDialog.dismiss();
         }
         handler.postItemOfInterest(itemName.getText().toString(),
+                mListener.getLatestAccount().getUserName(), itemPrice.getText().toString());
+        itemName.setText("");
+        itemPrice.setText("");
+    }
+
+    private void showAddItemReportDialog() {
+        if (addReportItemDialog == null) {
+            createAddItemReportDialog();
+        } else if (addItemReportDialogView != null && addItemReportDialogView.getParent() != null) {
+            ((ViewGroup) addItemReportDialogView.getParent()).removeView(addItemReportDialogView);
+        }
+        shownAddReportItemDialog = addReportItemDialog.show();
+    }
+
+    private void createAddItemReportDialog() {
+        addItemReportDialogView = getLayoutInflater(null).inflate(R.layout.dialog_report_sale,
+                null);
+        final AutoCompleteTextView itemName = (AutoCompleteTextView) addItemReportDialogView
+                .findViewById(R.id.report_item_name);
+        final EditText itemPrice = (EditText) addItemReportDialogView.findViewById(
+                R.id.report_item_price);
+        MultiStateToggleButton button;
+        ImageButton submit = (ImageButton) addItemReportDialogView.findViewById(R.id.report_submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitReportItem(itemName, itemPrice);
+            }
+        });
+
+        addReportItemDialog = new AlertDialog.Builder(getActivity()).setTitle("Report an item...")
+                .setView(addItemReportDialogView).setOnKeyListener(
+                        new DialogInterface.OnKeyListener() {
+
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode,
+                                    KeyEvent event) {
+                                if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                             || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                             || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    submitReportItem(itemName, itemPrice);
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+    }
+
+    private void submitReportItem(AutoCompleteTextView itemName, EditText itemPrice) {
+        if (shownAddReportItemDialog != null) {
+            shownAddReportItemDialog.dismiss();
+        }
+        handler.postItemOfReport(itemName.getText().toString(),
                 mListener.getLatestAccount().getUserName(), itemPrice.getText().toString());
         itemName.setText("");
         itemPrice.setText("");
