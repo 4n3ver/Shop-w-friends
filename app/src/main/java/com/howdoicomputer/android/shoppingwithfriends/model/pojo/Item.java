@@ -35,7 +35,7 @@ public class Item implements Comparable<Item> {
      * @param price: price of the item
      */
     public Item(String itemName, String opUserName, double price, double latitude, double longitude, double altitude,
-            boolean isInterest) {
+            boolean isInterest, String address) {
         this.itemName = itemName;
         this.posterUserName = opUserName;
         this.likes = 0;

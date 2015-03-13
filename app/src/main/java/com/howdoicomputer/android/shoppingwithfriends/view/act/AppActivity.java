@@ -2,6 +2,7 @@ package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,8 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
+import java.util.Locale;
+
 
 public class AppActivity extends ActionBarActivity
         implements MainView, OnMapReadyCallback, AppStateListener, ViewObjectUtil,
@@ -38,18 +41,16 @@ public class AppActivity extends ActionBarActivity
     private ProgressDialog      mConnProgressDialog;
     private AlertDialog.Builder mErrorDialog;
     private GoogleApiClient     mGoogleApiClient;
-    private static Location            mLastLocation;
+    private static Location     mLastLocation;
     private Toolbar             actionBar;
     private NavDrawerFragment   navigationBar;
-
+    private static Geocoder coder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
         Firebase.setAndroidContext(getApplicationContext());
-
         currentUser = new Gson().fromJson(getIntent().getExtras().getString("Account"), User.class);
-
         actionBar = (Toolbar) findViewById(R.id.mainActBar);
         setSupportActionBar(actionBar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -150,6 +151,7 @@ public class AppActivity extends ActionBarActivity
     @Override
     public void onConnected(Bundle bundle) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        coder = new Geocoder(this, Locale.US);
     }
 
     /**
@@ -207,5 +209,9 @@ public class AppActivity extends ActionBarActivity
 
     public static Location getmLastLocation() {
         return mLastLocation;
+    }
+
+    public static Geocoder getGeoCoder() {
+        return coder;
     }
 }

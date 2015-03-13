@@ -1,5 +1,6 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
+import android.location.Address;
 import android.location.Location;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
@@ -9,6 +10,7 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.AppActivity;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -32,10 +34,11 @@ public class MainFeedHandler {
         dataSet = new ArrayList<>();
     }
 
-    public void postItemOfInterest(String itemName, String posterUsername, double price) {
+    public void postItemOfInterest(String itemName, String posterUsername, double price) throws IOException {
         Location loc = AppActivity.getmLastLocation();
+        List<Address> possibilities = AppActivity.getGeoCoder().getFromLocation(loc.getLatitude(), loc.getLongitude(), 3);
         Item newItem = new Item(itemName, posterUsername, price, loc.getLatitude(), loc.getLongitude(), loc.getAltitude()
-        , true);
+        , true, possibilities.get(0).toString());
         db.pushItemPost(newItem);
         fetchFeed();
     }
