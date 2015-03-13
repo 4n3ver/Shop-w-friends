@@ -106,12 +106,23 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/interest_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="top|left"
                         android:text="priced lower than "
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="italic"/>
+
+                    <TextView
+                        android:id="@+id/reported_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top|left"
+                        android:text="price "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="italic"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:layout_width="wrap_content"

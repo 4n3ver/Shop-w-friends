@@ -251,33 +251,36 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
     }
 
     @Override
-    public void fetchFriendsItemOfInterest(final List<String> friendsUsernameList,
+    public void fetchUserItemPosts(final List<String> usernameList,
             final FeedListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (String friendUsername : friendsUsernameList) {
-                    mAccDatabase.child("userInterestItem").child(friendUsername)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Map<String, String> snap = (Map<String, String>) dataSnapshot
-                                            .getValue();
-                                    if (snap != null) {
-                                        Collection<String> m = snap.values();
-                                        Collection<Item> set = new HashSet<Item>(m.size());
-                                        for (String item : m) {
-                                            set.add(mGson.fromJson(item, Item.class));
-                                        }
-                                        listener.onListFetched(set);
-                                    }
-                                }
+                ValueEventListener dbListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Map<String, String> snap = (Map<String, String>) dataSnapshot.getValue();
+                        if (snap != null) {
+                            Collection<String> m = snap.values();
+                            Collection<Item> set = new HashSet<Item>(m.size());
+                            for (String item : m) {
+                                set.add(mGson.fromJson(item, Item.class));
+                            }
+                            listener.onListFetched(set);
+                        }
+                    }
 
-                                @Override
-                                public void onCancelled(FirebaseError error) {
-                                    listener.onError(new DatabaseError(error));
-                                }
-                            });
+                    @Override
+                    public void onCancelled(FirebaseError error) {
+                        listener.onError(new DatabaseError(error));
+                    }
+                };
+                for (String friendUsername : usernameList) {
+                    mAccDatabase.child("userInterestItem").child(friendUsername)
+                            .addListenerForSingleValueEvent(dbListener);
+
+                    mAccDatabase.child("userReportedItem").child(friendUsername)
+                            .addListenerForSingleValueEvent(dbListener);
                 }
             }
         }).start();

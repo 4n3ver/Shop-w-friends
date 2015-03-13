@@ -4,11 +4,14 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -35,16 +38,25 @@ import java.util.Locale;
 
 public class AppActivity extends ActionBarActivity
         implements MainView, OnMapReadyCallback, AppStateListener, ViewObjectUtil,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
-    private static Location mLastLocation;
-    private static Geocoder coder;
-    private User                currentUser;
-    private ProgressDialog      mConnProgressDialog;
-    private AlertDialog.Builder mErrorDialog;
-    private GoogleApiClient     mGoogleApiClient;
-    private Toolbar             actionBar;
-    private NavDrawerFragment   navigationBar;
+    private static Location            mLastLocation;
+    private static Geocoder            coder;
+    private        User                currentUser;
+    private        ProgressDialog      mConnProgressDialog;
+    private        AlertDialog.Builder mErrorDialog;
+    private        GoogleApiClient     mGoogleApiClient;
+    private        Toolbar             actionBar;
+    private        NavDrawerFragment   navigationBar;
+
+    private LocationManager locationManager;
+    private boolean         canGetLocation;
+    private boolean         isGPSEnabled;
+    private Location        location;
+    private boolean         isNetworkEnabled;
+    private double          latitude;
+    private double          longitude;
 
     public static Location getmLastLocation() {
         return mLastLocation;
@@ -90,10 +102,51 @@ public class AppActivity extends ActionBarActivity
         coder = new Geocoder(this, Locale.US);
     }
 
+    public Location getLocation() {
+        try {
+            locationManager = (LocationManager) getApplicationContext().getSystemService(
+                    LOCATION_SERVICE);
+
+            // getting GPS status
+            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+            // getting network status
+            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+            if (!isGPSEnabled) {
+
+            } else if (!isGPSEnabled && !isNetworkEnabled) {
+            } else {
+                this.canGetLocation = true;
+
+                if (isGPSEnabled) {
+                    if (location == null) {
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                                50, this);
+                        Log.d("GPS Enabled", "GPS Enabled");
+                        if (locationManager != null) {
+
+                            location = locationManager.getLastKnownLocation(
+                                    LocationManager.GPS_PROVIDER);
+                            if (location != null) {
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            
+        }
+        return location;
+    }
+
+
     /**
      * Creates instance of the google api client to be able to find
      * current location of the user.
      */
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
@@ -161,15 +214,7 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-    }
 
-    /**
-     * returns last known location of application
-     *
-     * @return location
-     */
-    public Location getLocation() {
-        return mLastLocation;
     }
 
     @Override
@@ -213,5 +258,25 @@ public class AppActivity extends ActionBarActivity
     public void onBackPressed() {
         super.onBackPressed();
         navigationBar.onBackPressed();
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

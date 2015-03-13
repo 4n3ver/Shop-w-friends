@@ -62,6 +62,19 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
         holder.name.setText(String.valueOf(post.getPosterUserName()));
         holder.itemName.setText(String.valueOf(post.getItemName()));
         holder.price.setText(String.valueOf(post.getPrice()));
+        if (post.isInterest()) {
+            holder.isReported.setVisibility(View.GONE);
+            holder.isInterest.setVisibility(View.VISIBLE);
+            holder.reportedPrice.setVisibility(View.GONE);
+            holder.interestPrice.setVisibility(View.VISIBLE);
+        } else {
+            holder.isReported.setVisibility(View.VISIBLE);
+            holder.isInterest.setVisibility(View.GONE);
+            holder.reportedPrice.setVisibility(View.VISIBLE);
+            holder.interestPrice.setVisibility(View.GONE);
+        }
+
+
         //        holder.setOnClickListener(new View.OnClickListener() {
         //
         //            @Override
@@ -87,11 +100,15 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public final static class MainFeedViewHolder extends RecyclerView.ViewHolder {
+        TextView reportedPrice;
+        TextView interestPrice;
         ImageView          posterImage;
         ImageView          itemImage;
         TextView           itemName;
         TextView           name;
         TextView           price;
+        TextView isInterest;
+        TextView isReported;
         DetailedViewHolder detailedView;
         private Button clickSpace;
 
@@ -108,6 +125,11 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             itemName = (TextView) itemView.findViewById(R.id.item_name);
             name = (TextView) itemView.findViewById(R.id.poster_name);
             price = (TextView) itemView.findViewById(R.id.posted_price);
+            isInterest = (TextView) itemView.findViewById(R.id.is_interested);
+            isReported = (TextView) itemView.findViewById(R.id.reported);
+            interestPrice = (TextView) itemView.findViewById(R.id.interest_price);
+            reportedPrice = (TextView) itemView.findViewById(R.id.reported_price);
+
 
             //            detailedView = new DetailedViewHolder(LayoutInflater.from(clickSpace
             // .getContext())

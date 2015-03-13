@@ -88,7 +88,7 @@ public class FriendList implements Iterable<User> {
     }
 
     public List<String> getFriendsUserName() {
-        List<String> ret = new ArrayList<>(list.size());
+        List<String> ret = new ArrayList<>(list.size() + 1);
         for (User friend : list) {
             ret.add(friend.getUserName());
         }
