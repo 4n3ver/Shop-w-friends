@@ -77,6 +77,8 @@ public class AppActivity extends ActionBarActivity
                         android.R.drawable.ic_dialog_alert);
 
         buildGoogleApiClient();
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        coder = new Geocoder(this, Locale.US);
     }
 
     /**
@@ -150,8 +152,6 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        coder = new Geocoder(this, Locale.US);
     }
 
     /**
