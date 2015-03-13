@@ -102,6 +102,7 @@ public class AppActivity extends ActionBarActivity
         coder = new Geocoder(this, Locale.US);
     }
 
+    @Override
     public Location getLocation() {
         try {
             locationManager = (LocationManager) getApplicationContext().getSystemService(
@@ -120,7 +121,7 @@ public class AppActivity extends ActionBarActivity
 
                 if (isGPSEnabled) {
                     if (location == null) {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000,
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500000,
                                 50, this);
                         Log.d("GPS Enabled", "GPS Enabled");
                         if (locationManager != null) {
@@ -136,7 +137,7 @@ public class AppActivity extends ActionBarActivity
                 }
             }
         } catch (Exception e) {
-            
+
         }
         return location;
     }

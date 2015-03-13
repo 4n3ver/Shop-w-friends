@@ -1,5 +1,7 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 
+import android.location.Location;
+
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
@@ -24,5 +26,7 @@ public interface AppStateListener {
     public void onLoggedOut();
 
     public Account getLatestAccount();
+
+    public Location getLocation();
 
 }
