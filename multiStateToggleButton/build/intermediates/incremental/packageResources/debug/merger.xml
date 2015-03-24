@@ -5,7 +5,7 @@
         <attr name="rightText"/>
     </declare-styleable><attr format="string" name="middleText"/><attr format="string" name="rightText"/><declare-styleable name="MultiStateToggleButton">
         <attr format="reference" name="values"/>
-    </declare-styleable></file><file path="C:\Users\Yoel Ivan\Dropbox\Documents\University\CS 2340\Assignment\Final Project\Shop-w-friends\multiStateToggleButton\src\main\res\values\strings.xml" qualifiers=""><string name="app_name">MultiStateToggleButton</string></file><file path="C:\Users\Yoel Ivan\Dropbox\Documents\University\CS 2340\Assignment\Final Project\Shop-w-friends\multiStateToggleButton\src\main\res\values\styles.xml" qualifiers=""><style name="WhiteBoldText" parent="@android:style/Widget">
+    </declare-styleable></file><file path="C:\Users\Yoel Ivan\Dropbox\Documents\University\CS 2340\Assignment\Final Project\Shop-w-friends\multiStateToggleButton\src\main\res\values\strings.xml" qualifiers=""><string name="two">2</string><string name="one">1</string><string name="app_name">MultiStateToggleButton</string><string name="three">3</string></file><file path="C:\Users\Yoel Ivan\Dropbox\Documents\University\CS 2340\Assignment\Final Project\Shop-w-friends\multiStateToggleButton\src\main\res\values\styles.xml" qualifiers=""><style name="WhiteBoldText" parent="@android:style/Widget">
         <item name="android:textColor">#fff</item>
         <item name="android:textStyle">bold</item>
     </style><style name="BlackNormalText" parent="@android:style/Widget.TextView">

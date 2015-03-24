@@ -12,5 +12,5 @@
     android:minHeight="7dip"
     android:paddingLeft="2dip"
     android:paddingRight="2dip"
-    android:text="3"/>
+    android:text="@string/three"/>
 <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/src/main/res/layout/view_right_toggle_button.xml --><!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/build/intermediates/bundles/debug/res/layout/view_right_toggle_button.xml -->
