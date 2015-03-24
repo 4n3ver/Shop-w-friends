@@ -1,12 +1,16 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
+import android.location.Address;
+import android.location.Location;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainFeedModel;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+import com.howdoicomputer.android.shoppingwithfriends.view.act.AppActivity;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -43,22 +47,18 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getmLastLocation();
-            //            List<Address> possibilities = null;
-            //            try {
-            //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc
-            // .getLatitude(),
-            //                        loc.getLongitude(), 3);
-            //            } catch (IOException idc) {
-            //
-            //            }
-            //            Item newItem = new Item(itemName, posterUsername, parsed_price,
-            // loc.getLatitude(),
-            //                    loc.getLongitude(), loc.getAltitude(), true,
-            // possibilities.get(0).toString());
-            Item newItem = new Item(itemName, posterUsername, parsed_price,
-                    view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, true, null);
+                       Location loc = view.getAppStateListener().getLocation();
+                        List<Address> possibilities = null;
+                        try {
+                            possibilities = AppActivity.getGeoCoder().getFromLocation(loc
+             .getLatitude(),
+                                    loc.getLongitude(), 3);
+                        } catch (IOException idc) {
+
+                        }
+                        Item newItem = new Item(itemName, posterUsername, parsed_price,
+             loc.getLatitude(), loc.getLongitude(), loc.getAltitude(), true,
+             possibilities.get(0).toString());;
             db.pushItemPost(newItem);
             fetchFeed();
         }
