@@ -26,8 +26,8 @@ import java.util.List;
  * @author Yoel Ivan
  */
 public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFeedViewHolder> {
-    private List<Item> mDataset;
-    private MainFeedHandler mHandler;
+    private final List<Item>      mDataset;
+    private final MainFeedHandler mHandler;
 
 
     /**
@@ -100,17 +100,17 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public final static class MainFeedViewHolder extends RecyclerView.ViewHolder {
-        TextView reportedPrice;
-        TextView interestPrice;
-        ImageView          posterImage;
-        ImageView          itemImage;
-        TextView           itemName;
-        TextView           name;
-        TextView           price;
-        TextView isInterest;
-        TextView isReported;
+        final         TextView  reportedPrice;
+        final         TextView  interestPrice;
+        final         ImageView posterImage;
+        final         ImageView itemImage;
+        final         TextView  itemName;
+        final         TextView  name;
+        final         TextView  price;
+        final         TextView  isInterest;
+        final         TextView  isReported;
+        private final Button    clickSpace;
         DetailedViewHolder detailedView;
-        private Button clickSpace;
 
         /**
          * Create an object to hold the view that display friend's basic data.
@@ -121,7 +121,7 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             super(itemView);
             clickSpace = (Button) itemView.findViewById(R.id.feed_layout_clickspace);
             posterImage = (ImageView) itemView.findViewById(R.id.poster_image);
-            itemImage = (ImageView) itemView.findViewById(R.id.poster_image);
+            itemImage = (ImageView) itemView.findViewById(R.id.post_image);
             itemName = (TextView) itemView.findViewById(R.id.item_name);
             name = (TextView) itemView.findViewById(R.id.poster_name);
             price = (TextView) itemView.findViewById(R.id.posted_price);
@@ -150,15 +150,15 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
          * detailed data.
          */
         private class DetailedViewHolder {
-            TextView name;
-            TextView userName;
-            TextView email;
-            TextView rating;
-            TextView reportCount;
-            Button   removeButton;
-            private View                layout;
-            private AlertDialog.Builder detailedDialog;
-            private AlertDialog         shownDialog;
+            final         TextView            name;
+            final         TextView            userName;
+            final         TextView            email;
+            final         TextView            rating;
+            final         TextView            reportCount;
+            final         Button              removeButton;
+            private final View                layout;
+            private final AlertDialog.Builder detailedDialog;
+            private       AlertDialog         shownDialog;
 
             /**
              * Create an object to hold the detailed view that display friend's detailed data.

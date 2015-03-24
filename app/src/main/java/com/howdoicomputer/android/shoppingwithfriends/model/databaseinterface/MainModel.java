@@ -20,7 +20,7 @@ public interface MainModel {
     public void fetchAccountInfo(String userName, FetchAccountResultListener listener);
 
     /**
-     * @param account
+     * @param account the account to be updated
      */
     public void updateAccount(Account account);
 

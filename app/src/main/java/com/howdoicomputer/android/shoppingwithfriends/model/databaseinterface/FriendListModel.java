@@ -8,8 +8,10 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 public interface FriendListModel extends MainModel {
 
     /**
-     * @param friendList
-     * @param listener
+     * Fetch friend'saccount information
+     *
+     * @param friendList the friendlist
+     * @param listener   the listener
      */
     public void fetchFriendAccountInfo(FriendList friendList, AccountStateListener listener);
 

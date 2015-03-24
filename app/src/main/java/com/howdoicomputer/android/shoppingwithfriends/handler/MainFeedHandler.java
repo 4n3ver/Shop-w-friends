@@ -29,7 +29,7 @@ public class MainFeedHandler {
 
     public MainFeedHandler(MainFeedView view) {
         this.view = view;
-        db = Database.getInstace();
+        db = Database.getInstance();
         mFeed = new TreeSet<>();
         dataSet = new ArrayList<>();
         currentUserInterest = new HashSet<>();
@@ -43,7 +43,7 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getmLastLocation();
+            //            Location loc = AppActivity.getLastLocation();
             //            List<Address> possibilities = null;
             //            try {
             //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc
@@ -134,7 +134,7 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getmLastLocation();
+            //            Location loc = AppActivity.getLastLocation();
             //            List<Address> possibilities = null;
             //            try {
             //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc

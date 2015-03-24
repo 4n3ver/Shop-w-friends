@@ -25,12 +25,12 @@ public class NavDrawerAdapter extends RecyclerView.Adapter<NavDrawerAdapter.NavM
     private ArrayList<MenuResourceHolder> mDataset;
 
     /**
-     * Creates {@link FriendListAdapter} object.
+     * Creates {@link NavDrawerAdapter} object.
      *
-     * @param handler presenter than handles user friend list
+     * @param dataSet presenter than handles user friend list
      */
-    public NavDrawerAdapter(ArrayList<MenuResourceHolder> dataset) {
-        mDataset = dataset;
+    public NavDrawerAdapter(ArrayList<MenuResourceHolder> dataSet) {
+        mDataset = dataSet;
     }
 
     // Create new views (invoked by the layout manager)

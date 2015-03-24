@@ -34,7 +34,6 @@ public interface LoginModel {
      * @param email    {@link String} representation of the email
      * @param password {@link String} representation of the password
      * @param listener object contained information on what to do when certain event triggered
-     * @return <code>Account</code> if the login succeeded or <code>null</code> otherwise
      */
     public void register(String name, String userName, String email, String password,
             final RegisterStateListener listener);

@@ -39,7 +39,7 @@ public class FriendList implements Iterable<User> {
     }
 
     public boolean isFriendWith(User other) {
-        return indexOf(other) >= 0 ? true : false;
+        return indexOf(other) >= 0;
     }
 
     public boolean remove(User other) {
@@ -53,15 +53,17 @@ public class FriendList implements Iterable<User> {
     }
 
     /**
-     * @param index
-     * @return
+     * @param index the index in the list
+     * @return the user in that index
      */
     public User get(int index) {
         return list.get(index);
     }
 
     /**
-     * @return
+     * counts the number of friends
+     *
+     * @return the number of friends
      */
     public int friendCount() {
         return list.size();

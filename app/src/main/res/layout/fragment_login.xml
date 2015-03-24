@@ -19,7 +19,7 @@
         android:background="#3b5998"
         android:drawableLeft="@drawable/ic_fb_swf"
         android:gravity="center_vertical"
-        android:text="Sign In"
+        android:text="@string/Sign_in"
         android:textColor="#fefefe"/>
 
     <LinearLayout
@@ -35,7 +35,7 @@
             android:id="@+id/frag_login_usrName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User name"
+            android:hint="@string/user_name"
             android:imeOptions="actionNext"
             android:maxLines="1"
             android:singleLine="true"
@@ -45,7 +45,7 @@
             android:id="@+id/frag_login_password_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:imeActionLabel="Sign in"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -64,7 +64,7 @@
             android:id="@+id/login_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Sign in"
+            android:hint="@string/sign_in"
             android:maxLines="1"
             android:singleLine="true"/>
 
@@ -72,7 +72,7 @@
             android:id="@+id/cancelLogin_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Cancel"
+            android:hint="@string/cancel"
             android:maxLines="1"
             android:onClick="cancel"
             android:singleLine="true"/>

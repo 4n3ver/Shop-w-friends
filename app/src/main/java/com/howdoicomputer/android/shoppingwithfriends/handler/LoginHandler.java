@@ -15,8 +15,8 @@ import org.apache.commons.validator.routines.EmailValidator;
  * @version %I%, %G%
  */
 public class LoginHandler {
-    private LoginModel  db;
-    private WelcomeView view;
+    private final LoginModel  db;
+    private final WelcomeView view;
 
     /**
      * Construct {@link LoginHandler} object.
@@ -24,7 +24,7 @@ public class LoginHandler {
      * @param view reference to the implementing GUI
      */
     public LoginHandler(WelcomeView view) {
-        db = Database.getInstace();
+        db = Database.getInstance();
         this.view = view;
     }
 

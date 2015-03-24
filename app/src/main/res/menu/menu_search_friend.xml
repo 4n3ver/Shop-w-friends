@@ -5,7 +5,7 @@
         android:id="@+id/searchFriend"
         android:actionViewClass="android.support.v7.widget.SearchView"
         android:icon="@drawable/ic_account_search"
-        android:title="Search friend by username"
+        android:title="@string/Search_friend_by_username"
         app:showAsAction="collapseActionView|ifRoom"/>
 
     <item

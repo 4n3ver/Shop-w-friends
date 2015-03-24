@@ -58,7 +58,7 @@ public class AppActivity extends ActionBarActivity
     private double          latitude;
     private double          longitude;
 
-    public static Location getmLastLocation() {
+    public static Location getLastLocation() {
         return mLastLocation;
     }
 

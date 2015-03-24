@@ -18,6 +18,44 @@
     <string name="hello_world">Hello world!</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="WTF">WHOA!!! WHAT HAPPENED?!!?</string>
+    <string name="notFound">" not found"</string>
+    <string name="isAlreadyYourFriend">" is already your friend"</string>
+    <string name="you_cannot_add_yourself_as_a_friend">You cannot add yourself as a friend!</string>
+    <string name="searching_for">"Searching for "</string>
+    <string name="please_wait">Please wait</string>
+    <string name="user_name">User Name</string>
+    <string name="user">User</string>
+    <string name="item_name">Item Name</string>
+    <string name="anything_i_like">3D Printed Robotic Hand</string>
+    <string name="maximum_price_">Maximum Price</string>
+    <string name="dollarSign">$</string>
+    <string name="ninetyNine">99</string>
+    <string name="enter_the_item_name_here">Enter the item name here</string>
+    <string name="price">Price</string>
+    <string name="cha_ching">cha ching</string>
+    <string name="is_interested_in">is interested in...</string>
+    <string name="_reported">reported...</string>
+    <string name="itemName">ItemName</string>
+    <string name="NAME">NAME</string>
+    <string name="EMAIL">EMAIL</string>
+    <string name="name">name</string>
+    <string name="medium_text">Medium Text</string>
+    <string name="Sign_in">Sign In</string>
+    <string name="Sign_up_with">Sign up with</string>
+    <string name="password">Password</string>
+    <string name="email_address">Email address</string>
+    <string name="rating_">Rating :</string>
+    <string name="cancel">Cancel</string>
+    <string name="tripleNine">999</string>
+    <string name="report_count_">Report Count :</string>
+    <string name="remove">Remove</string>
+    <string name="Search_friend_by_username">Search friend by username</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="friends">Friends</string>
+    <string name="sign_up">Sign up</string>
+    <string name="priced_lower_than_">priced lower than</string>
+    <string name="price_">price</string>
 
 
 </resources>

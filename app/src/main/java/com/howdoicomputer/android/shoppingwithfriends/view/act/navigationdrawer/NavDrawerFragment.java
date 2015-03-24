@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.NavigationHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.friendlist.FriendListFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.act.mainfeed.MainFeedFragment;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
@@ -44,8 +43,8 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
     private View                  containerView;
     private NavigationHandler     handler;
     private AppStateListener      mListener;
-    private FragmentLocation mCurrentShownView;
-    private FragmentLocation mLastShownView;
+    private FragmentLocation      mCurrentShownView;
+    private FragmentLocation      mLastShownView;
     private MainFeedFragment      mff;
     private FriendListFragment    flf;
 
@@ -140,7 +139,7 @@ public class NavDrawerFragment extends Fragment implements NavDrawerView {
                 if (mName == null) {
                     mName = ((TextView) getActivity().findViewById(R.id.helloName));
                 }
-                mName.setText("Hello, " + ((User) mListener.getLatestAccount()).getName());
+                mName.setText("Hello, " + mListener.getLatestAccount().getName());
                 actBar.setAlpha(1 - slideOffset / 2);
             }
 

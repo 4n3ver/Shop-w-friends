@@ -29,4 +29,6 @@ public interface AppStateListener {
 
     public Location getLocation();
 
+    public String getString(int string_res_id);
+
 }

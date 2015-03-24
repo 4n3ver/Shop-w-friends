@@ -34,8 +34,8 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
     /* singleton instance */
     private static Database singletonInstance;
 
-    private Firebase mAccDatabase;
-    private Gson mGson;
+    private final Firebase mAccDatabase;
+    private final Gson     mGson;
 
     private Database() {
         mGson = new Gson();
@@ -47,7 +47,7 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
      *
      * @return instance of this object
      */
-    public static Database getInstace() {
+    public static Database getInstance() {
         if (singletonInstance == null) {
             singletonInstance = new Database();
         }
@@ -251,8 +251,7 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
     }
 
     @Override
-    public void fetchUserItemPosts(final List<String> usernameList,
-            final FeedListener listener) {
+    public void fetchUserItemPosts(final List<String> usernameList, final FeedListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {

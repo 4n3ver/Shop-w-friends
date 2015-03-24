@@ -15,11 +15,9 @@ public class NavigationHandler {
 
     /**
      * Construct {@link NavigationHandler} object.
-     *
-     * @param view reference to the implementing GUI
      */
     public NavigationHandler() {
-        db = Database.getInstace();
+        db = Database.getInstance();
     }
 
     /**

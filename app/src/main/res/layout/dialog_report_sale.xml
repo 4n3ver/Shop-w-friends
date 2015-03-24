@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="User"
+                android:text="@string/user"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"/>
 
@@ -74,7 +74,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="Item Name "
+                android:text="@string/item_name"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="normal"/>
 
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:hint="enter the item name here"
+                android:hint="@string/enter_the_item_name_here"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -100,7 +100,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="Price "
+                android:text="@string/price"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="normal"/>
 
@@ -108,7 +108,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="$ "
+                android:text="@string/dollarSign"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="normal"/>
 
@@ -117,7 +117,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:hint="cha ching"
+                android:hint="@string/cha_ching"
                 android:inputType="number"
                 android:maxLines="1"/>
 

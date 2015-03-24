@@ -91,11 +91,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public final static class FriendViewHolder extends RecyclerView.ViewHolder {
-        TextView           name;
-        TextView           userName;
-        TextView           rating;
-        DetailedViewHolder detailedView;
-        private Button clickSpace;
+        final         TextView           name;
+        final         TextView           userName;
+        final         TextView           rating;
+        final         DetailedViewHolder detailedView;
+        private final Button             clickSpace;
 
         /**
          * Create an object to hold the view that display friend's basic data.
@@ -126,15 +126,15 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
          * detailed data.
          */
         private class DetailedViewHolder {
-            TextView name;
-            TextView userName;
-            TextView email;
-            TextView rating;
-            TextView reportCount;
-            Button   removeButton;
-            private View                layout;
-            private AlertDialog.Builder detailedDialog;
-            private AlertDialog         shownDialog;
+            final         TextView            name;
+            final         TextView            userName;
+            final         TextView            email;
+            final         TextView            rating;
+            final         TextView            reportCount;
+            final         Button              removeButton;
+            private final View                layout;
+            private final AlertDialog.Builder detailedDialog;
+            private       AlertDialog         shownDialog;
 
             /**
              * Create an object to hold the detailed view that display friend's detailed data.
