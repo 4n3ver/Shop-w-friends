@@ -67,6 +67,7 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             holder.isInterest.setVisibility(View.VISIBLE);
             holder.reportedPrice.setVisibility(View.GONE);
             holder.interestPrice.setVisibility(View.VISIBLE);
+            holder.addressSpace.setVisibility(View.GONE);
         } else {
             holder.isReported.setVisibility(View.VISIBLE);
             holder.isInterest.setVisibility(View.GONE);
@@ -117,8 +118,8 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
         final         TextView  price;
         final         TextView  isInterest;
         final         TextView  isReported;
-        final         TextView address;
-        private final View     addressSpace;
+        final         TextView  address;
+        private final View      addressSpace;
         private final Button    clickSpace;
         DetailedViewHolder detailedView;
 
