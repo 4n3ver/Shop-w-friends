@@ -56,6 +56,8 @@
     <string name="sign_up">Sign up</string>
     <string name="priced_lower_than_">priced lower than</string>
     <string name="price_">price</string>
+    <string name="failed_fetch_address">Failed to fetch address!</string>
+    <string name="def_loc">Someplace you don\'t know</string>
 
 
 </resources>

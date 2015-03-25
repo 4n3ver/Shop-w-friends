@@ -44,15 +44,14 @@ public class FriendListHandler {
         if (userName.length() == 0) {
             // ignore if no input
         } else {
-            view.getUiUtil().showProgressDialog(view.getAppStateListener().getString(
-                    R.string.searching_for) + userName, view.getAppStateListener().getString(
-                    R.string.please_wait));
+            view.getUiUtil().showProgressDialog(view.getUiUtil().getString(R.string.searching_for)
+                    + userName, view.getUiUtil().getString(R.string.please_wait));
             db.fetchAccountInfo(userName, new FetchAccountResultListener() {
                 @Override
                 public void onFound(Account account) {
                     view.getUiUtil().hideProgressDialog();
                     if (view.getAppStateListener().getLatestAccount().compareTo(account) == 0) {
-                        view.getUiUtil().showErrorDialog(view.getAppStateListener().getString(
+                        view.getUiUtil().showErrorDialog(view.getUiUtil().getString(
                                 R.string.you_cannot_add_yourself_as_a_friend));
                     } else if (account instanceof User) {
                         if (((User) view.getAppStateListener().getLatestAccount()).getFriendlist()
@@ -60,20 +59,19 @@ public class FriendListHandler {
                             updateAll();
                         } else {
                             view.getUiUtil().showErrorDialog(
-                                    account.getName() + view.getAppStateListener().getString(
+                                    account.getName() + view.getUiUtil().getString(
                                             R.string.isAlreadyYourFriend));
                         }
                     } else {
-                        view.getUiUtil().showErrorDialog(view.getAppStateListener().getString(
-                                R.string.WTF));
+                        view.getUiUtil().showErrorDialog(view.getUiUtil().getString(R.string.WTF));
                     }
                 }
 
                 @Override
                 public void onNotFound() {
                     view.getUiUtil().hideProgressDialog();
-                    view.getUiUtil().showErrorDialog(
-                            userName + view.getAppStateListener().getString(R.string.notFound));
+                    view.getUiUtil().showErrorDialog(userName + view.getUiUtil().getString(
+                            R.string.notFound));
                 }
 
                 @Override

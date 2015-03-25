@@ -143,4 +143,8 @@ public class Item implements Comparable<Item> {
     public int compareTo(Item another) {
         return another.getDate().compareTo(this.getDate());
     }
+
+    public String getAddress() {
+        return address;
+    }
 }

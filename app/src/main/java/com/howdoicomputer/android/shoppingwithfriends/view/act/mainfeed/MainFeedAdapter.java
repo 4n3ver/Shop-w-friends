@@ -72,6 +72,14 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             holder.isInterest.setVisibility(View.GONE);
             holder.reportedPrice.setVisibility(View.VISIBLE);
             holder.interestPrice.setVisibility(View.GONE);
+            holder.address.setText(String.valueOf(post.getAddress()));
+            holder.addressSpace.setVisibility(View.VISIBLE);
+            holder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //TODO: INIT MAP VIEW HERE!!
+                }
+            });
         }
 
 
@@ -93,7 +101,7 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
     @Override
     public int getItemCount() {
         return mDataset.size();
-    } //TODO:CHANGe tHIS
+    }
 
 
     // Provide a reference to the views for each data item
@@ -109,6 +117,8 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
         final         TextView  price;
         final         TextView  isInterest;
         final         TextView  isReported;
+        final         TextView address;
+        private final View     addressSpace;
         private final Button    clickSpace;
         DetailedViewHolder detailedView;
 
@@ -129,6 +139,8 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             isReported = (TextView) itemView.findViewById(R.id.reported);
             interestPrice = (TextView) itemView.findViewById(R.id.interest_price);
             reportedPrice = (TextView) itemView.findViewById(R.id.reported_price);
+            address = (TextView) itemView.findViewById(R.id.feed_address);
+            addressSpace = itemView.findViewById(R.id.feed_loc);
 
 
             //            detailedView = new DetailedViewHolder(LayoutInflater.from(clickSpace

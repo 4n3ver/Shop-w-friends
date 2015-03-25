@@ -21,6 +21,8 @@ import static com.howdoicomputer.android.shoppingwithfriends.handler.MatchingHan
  * Created by Yoel Ivan on 3/2/2015.
  */
 public class MainFeedHandler {
+    public static final int  A_WEEK_IN_MILLIS  = 604800000;
+    public static final long A_MONTH_IN_MILLIS = 2419200000L;
     private MainFeedModel    db;
     private MainFeedView     view;
     private Collection<Item> mFeed;
@@ -43,30 +45,18 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getLastLocation();
-            //            List<Address> possibilities = null;
-            //            try {
-            //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc
-            // .getLatitude(),
-            //                        loc.getLongitude(), 3);
-            //            } catch (IOException idc) {
-            //
-            //            }
-            //            Item newItem = new Item(itemName, posterUsername, parsed_price,
-            // loc.getLatitude(),
-            //                    loc.getLongitude(), loc.getAltitude(), true,
-            // possibilities.get(0).toString());
             Item newItem = new Item(itemName, posterUsername, parsed_price,
                     view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, true, null);
+                    view.getAppStateListener().getLocation().getLongitude(), 0, true,
+                    view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();
         }
     }
 
     public void fetchFeed() {
-        final Date aWeekAgo = new Date(System.currentTimeMillis() - 604800000);
-        final Date aMonthAgo = new Date(System.currentTimeMillis() - 2419200000L);
+        final Date aWeekAgo = new Date(System.currentTimeMillis() - A_WEEK_IN_MILLIS);
+        final Date aMonthAgo = new Date(System.currentTimeMillis() - A_MONTH_IN_MILLIS);
         final Collection<Item> interestFeed = new HashSet<>();
         final Collection<Item> reportedFeed = new HashSet<>();
         List<String> userNameList = new LinkedList<>(
@@ -134,22 +124,10 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getLastLocation();
-            //            List<Address> possibilities = null;
-            //            try {
-            //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc
-            // .getLatitude(),
-            //                        loc.getLongitude(), 3);
-            //            } catch (IOException idc) {
-            //
-            //            }
-            //            Item newItem = new Item(itemName, posterUsername, parsed_price,
-            // loc.getLatitude(),
-            //                    loc.getLongitude(), loc.getAltitude(), false,
-            // possibilities.get(0).toString());
             Item newItem = new Item(itemName, posterUsername, parsed_price,
                     view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, false, null);
+                    view.getAppStateListener().getLocation().getLongitude(), 0, false,
+                    view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();
         }

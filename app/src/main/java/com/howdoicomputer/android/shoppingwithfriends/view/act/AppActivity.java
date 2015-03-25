@@ -2,6 +2,7 @@ package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -33,6 +34,7 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
+import java.io.IOException;
 import java.util.Locale;
 
 
@@ -99,7 +101,7 @@ public class AppActivity extends ActionBarActivity
 
         buildGoogleApiClient();
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        coder = new Geocoder(this, Locale.US);
+        coder = new Geocoder(this, Locale.getDefault());
     }
 
     @Override
@@ -140,6 +142,19 @@ public class AppActivity extends ActionBarActivity
 
         }
         return location;
+    }
+
+    @Override
+    public String getAddress() {
+        String addr = "N/A";
+        try {
+            Address addsrc = getGeoCoder().getFromLocation(getLocation().getLatitude(),
+                    getLocation().getLongitude(), 1).get(0);
+            addr = addsrc.getAddressLine(0);
+        } catch (IOException e) {
+            getUiUtil().showErrorDialog(getString(R.string.failed_fetch_address));
+        }
+        return addr;
     }
 
 

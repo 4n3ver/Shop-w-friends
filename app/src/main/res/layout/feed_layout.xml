@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:orientation="vertical">
 
@@ -49,7 +49,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal">
@@ -85,9 +85,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -101,8 +102,9 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
@@ -142,6 +144,42 @@
                         android:textStyle="bold"/>
 
                 </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/feed_loc"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:textAlignment="textStart"
+                android:touchscreenBlocksFocus="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:gravity="top|left"
+                    android:src="@drawable/ic_map_marker"/>
+
+                <TextView
+                    android:id="@+id/feed_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/def_loc"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/abc_search_url_text"/>
+
             </LinearLayout>
 
 
