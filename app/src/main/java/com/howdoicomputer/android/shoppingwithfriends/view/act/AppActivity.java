@@ -2,6 +2,7 @@ package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -192,6 +193,9 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onLoggedOut() {
+        Intent mainApp = new Intent();
+        mainApp.setClass(getApplicationContext(), WelcomeAct.class);
+        startActivity(mainApp);
         finish();
     }
 

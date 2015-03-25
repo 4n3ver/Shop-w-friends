@@ -3,6 +3,7 @@ package com.howdoicomputer.android.shoppingwithfriends.handler;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainFeedModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -59,9 +59,8 @@ public class MainFeedHandler {
         final Date aMonthAgo = new Date(System.currentTimeMillis() - A_MONTH_IN_MILLIS);
         final Collection<Item> interestFeed = new HashSet<>();
         final Collection<Item> reportedFeed = new HashSet<>();
-        List<String> userNameList = new LinkedList<>(
-                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist()
-                        .getFriendsUserName());
+        FriendList userNameList = new FriendList(
+                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist());
         userNameList.add(view.getAppStateListener().getLatestAccount().getUserName());
         db.fetchUserItemPosts(userNameList, new MainFeedModel.FeedListener() {
             @Override
@@ -107,7 +106,7 @@ public class MainFeedHandler {
 
             @Override
             public void onError(DatabaseError databaseError) {
-
+                view.getUiUtil().showErrorDialog(databaseError.getMessage());
             }
         });
     }

@@ -18,7 +18,6 @@ import android.widget.AutoCompleteTextView;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.FriendListView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
@@ -78,8 +77,7 @@ public class FriendListFragment extends Fragment implements FriendListView {
         mRecyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter
-        mAdapter = new FriendListAdapter(((User) mListener.getLatestAccount()).getFriendlist(),
-                handler);
+        mAdapter = new FriendListAdapter(handler);
         mRecyclerView.setAdapter(mAdapter);
 
     }
@@ -96,7 +94,7 @@ public class FriendListFragment extends Fragment implements FriendListView {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
-
+        handler.fetchFriendList();
         return rootView;
     }
 
