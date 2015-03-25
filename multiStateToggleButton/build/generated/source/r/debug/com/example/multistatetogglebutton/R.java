@@ -57,6 +57,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class string {
         public static int app_name=0x7f040000;
+        public static int one=0x7f040001;
+        public static int three=0x7f040002;
+        public static int two=0x7f040003;
     }
     public static final class style {
         /** 

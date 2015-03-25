@@ -10,6 +10,9 @@
     <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">MultiStateToggleButton</string>
+    <string name="one">1</string>
+    <string name="three">3</string>
+    <string name="two">2</string>
     <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
