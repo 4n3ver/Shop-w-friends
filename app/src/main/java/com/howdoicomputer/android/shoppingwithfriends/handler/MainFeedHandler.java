@@ -46,8 +46,8 @@ public class MainFeedHandler {
         }
         if (parsed_price >= 0) {
             Item newItem = new Item(itemName, posterUsername, parsed_price,
-                    view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, true,
+                    view.getAppStateListener().getLocation()[0],
+                    view.getAppStateListener().getLocation()[1], true,
                     view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();
@@ -125,8 +125,8 @@ public class MainFeedHandler {
         }
         if (parsed_price >= 0) {
             Item newItem = new Item(itemName, posterUsername, parsed_price,
-                    view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, false,
+                    view.getAppStateListener().getLocation()[0],
+                    view.getAppStateListener().getLocation()[1], false,
                     view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();

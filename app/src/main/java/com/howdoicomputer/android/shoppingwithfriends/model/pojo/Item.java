@@ -24,7 +24,6 @@ public class Item implements Comparable<Item> {
     private Date   date;
     private double latitude;
     private double longitude;
-    private double altitude;
     private String address;
 
     /**
@@ -34,14 +33,13 @@ public class Item implements Comparable<Item> {
      * @param price: price of the item
      */
     public Item(String itemName, String opUserName, double price, double latitude, double longitude,
-            double altitude, boolean isInterest, String address) {
+            boolean isInterest, String address) {
         this.itemName = itemName;
         this.posterUserName = opUserName;
         this.likes = 0;
         this.price = price;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.altitude = altitude;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         date = new Date();
         time = dateFormat.format(date);
@@ -65,15 +63,6 @@ public class Item implements Comparable<Item> {
      */
     public double getLongitude() {
         return longitude;
-    }
-
-    /**
-     * Getter for the current altitude of the item
-     *
-     * @return altitude
-     */
-    public double getAltitude() {
-        return altitude;
     }
 
     /**

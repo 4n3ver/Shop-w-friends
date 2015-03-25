@@ -34,7 +34,6 @@ import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStat
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainView;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.ViewObjectUtil;
 
-import java.io.IOException;
 import java.util.Locale;
 
 
@@ -57,8 +56,6 @@ public class AppActivity extends ActionBarActivity
     private boolean         isGPSEnabled;
     private Location        location;
     private boolean         isNetworkEnabled;
-    private double          latitude;
-    private double          longitude;
 
     public static Location getLastLocation() {
         return mLastLocation;
@@ -105,7 +102,8 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
-    public Location getLocation() {
+    public double[] getLocation() {
+        double[] coord = new double[2];
         try {
             locationManager = (LocationManager) getApplicationContext().getSystemService(
                     LOCATION_SERVICE);
@@ -116,43 +114,42 @@ public class AppActivity extends ActionBarActivity
             // getting network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!isGPSEnabled) {
-
+                //TODO: PLEASE SOMEONE HANDLE ask user to activate gps or stab the user in the eye!
             } else if (!isGPSEnabled && !isNetworkEnabled) {
+                //TODO: PLEASE SOMEONE HANDLE ask user to activate gps or stab the user in the eye!
             } else {
                 this.canGetLocation = true;
-
                 if (isGPSEnabled) {
                     if (location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500000,
                                 50, this);
                         Log.d("GPS Enabled", "GPS Enabled");
                         if (locationManager != null) {
-
                             location = locationManager.getLastKnownLocation(
                                     LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
                         }
                     }
                 }
             }
         } catch (Exception e) {
-
+            getUiUtil().showErrorDialog(e.getLocalizedMessage());
         }
-        return location;
+        if (location != null) {
+            coord[0] = location.getLatitude();
+            coord[1] = location.getLongitude();
+        }
+        return coord;
     }
 
     @Override
     public String getAddress() {
         String addr = "N/A";
         try {
-            Address addsrc = getGeoCoder().getFromLocation(getLocation().getLatitude(),
-                    getLocation().getLongitude(), 1).get(0);
+            Address addsrc = getGeoCoder().getFromLocation(getLocation()[0], getLocation()[1], 1)
+                    .get(0);
             addr = addsrc.getAddressLine(0);
-        } catch (IOException e) {
-            getUiUtil().showErrorDialog(getString(R.string.failed_fetch_address));
+        } catch (Exception e) {
+            getUiUtil().showErrorDialog(e.getLocalizedMessage());
         }
         return addr;
     }
