@@ -54,7 +54,7 @@ public class MultiStateToggleButton extends ToggleButton {
      * If multiple choice is enabled, the user can select multiple
      * values simultaneously.
      *
-     * @param enable
+     * @param enable whether enables/disabled
      */
     public void enableMultipleChoice(boolean enable) {
         this.mMultipleChoice = enable;

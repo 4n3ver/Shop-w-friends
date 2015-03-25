@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/src/main/res/values/attrs.xml -->
+    <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/src/main/res/values/attrs.xml -->
     <eat-comment/>
     <attr format="string" name="leftText"/>
     <attr format="string" name="middleText"/>
     <attr format="string" name="rightText"/>
     <declare-styleable name="MultiStateToggleButton"><attr format="reference" name="values"/></declare-styleable>
     <declare-styleable name="ThreeStateToggleButton"><attr name="leftText"/><attr name="middleText"/><attr name="rightText"/></declare-styleable>
-    <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">MultiStateToggleButton</string>
-    <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/src/main/res/values/styles.xml -->
+    <string name="one">1</string>
+    <string name="three">3</string>
+    <string name="two">2</string>
+    <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--

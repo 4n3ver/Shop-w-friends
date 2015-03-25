@@ -2,6 +2,8 @@ package com.howdoicomputer.android.shoppingwithfriends.view.act;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -55,10 +57,8 @@ public class AppActivity extends ActionBarActivity
     private boolean         isGPSEnabled;
     private Location        location;
     private boolean         isNetworkEnabled;
-    private double          latitude;
-    private double          longitude;
 
-    public static Location getmLastLocation() {
+    public static Location getLastLocation() {
         return mLastLocation;
     }
 
@@ -99,11 +99,12 @@ public class AppActivity extends ActionBarActivity
 
         buildGoogleApiClient();
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        coder = new Geocoder(this, Locale.US);
+        coder = new Geocoder(this, Locale.getDefault());
     }
 
     @Override
-    public Location getLocation() {
+    public double[] getLocation() {
+        double[] coord = new double[2];
         try {
             locationManager = (LocationManager) getApplicationContext().getSystemService(
                     LOCATION_SERVICE);
@@ -114,32 +115,44 @@ public class AppActivity extends ActionBarActivity
             // getting network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             if (!isGPSEnabled) {
-
+                //TODO: PLEASE SOMEONE HANDLE ask user to activate gps or stab the user in the eye!
             } else if (!isGPSEnabled && !isNetworkEnabled) {
+                //TODO: PLEASE SOMEONE HANDLE ask user to activate gps or stab the user in the eye!
             } else {
                 this.canGetLocation = true;
-
                 if (isGPSEnabled) {
                     if (location == null) {
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500000,
                                 50, this);
                         Log.d("GPS Enabled", "GPS Enabled");
                         if (locationManager != null) {
-
                             location = locationManager.getLastKnownLocation(
                                     LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
                         }
                     }
                 }
             }
         } catch (Exception e) {
-
+            getUiUtil().showErrorDialog(e.getLocalizedMessage());
         }
-        return location;
+        if (location != null) {
+            coord[0] = location.getLatitude();
+            coord[1] = location.getLongitude();
+        }
+        return coord;
+    }
+
+    @Override
+    public String getAddress() {
+        String addr = "N/A";
+        try {
+            Address addsrc = getGeoCoder().getFromLocation(getLocation()[0], getLocation()[1], 1)
+                    .get(0);
+            addr = addsrc.getAddressLine(0);
+        } catch (Exception e) {
+            getUiUtil().showErrorDialog(e.getLocalizedMessage());
+        }
+        return addr;
     }
 
 
@@ -180,6 +193,9 @@ public class AppActivity extends ActionBarActivity
 
     @Override
     public void onLoggedOut() {
+        Intent mainApp = new Intent();
+        mainApp.setClass(getApplicationContext(), WelcomeAct.class);
+        startActivity(mainApp);
         finish();
     }
 

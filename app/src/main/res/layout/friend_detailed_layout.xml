@@ -91,7 +91,7 @@
                         android:id="@+id/isFriend"
                         android:layout_width="202dp"
                         android:layout_height="fill_parent"
-                        android:text="Friends"/>
+                        android:text="@string/friends"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -128,7 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/friend_detailed_email"
-                android:text="Rating : "
+                android:text="@string/rating_"
                 tools:text="Rating : "/>
 
             <TextView
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/id_rating"
-                android:text="Report Count : "
+                android:text="@string/report_count_"
                 tools:text="Report Count : "/>
 
 
@@ -163,7 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:text="Remove"/>
+                android:text="@string/remove"/>
 
 
         </RelativeLayout>

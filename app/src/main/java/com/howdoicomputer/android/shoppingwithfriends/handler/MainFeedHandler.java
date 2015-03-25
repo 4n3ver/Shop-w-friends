@@ -1,21 +1,17 @@
 package com.howdoicomputer.android.shoppingwithfriends.handler;
 
-import android.location.Address;
-import android.location.Location;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.Database;
 import com.howdoicomputer.android.shoppingwithfriends.model.database.DatabaseError;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.MainFeedModel;
+import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Item;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
-import com.howdoicomputer.android.shoppingwithfriends.view.act.AppActivity;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.MainFeedView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
 
@@ -25,6 +21,8 @@ import static com.howdoicomputer.android.shoppingwithfriends.handler.MatchingHan
  * Created by Yoel Ivan on 3/2/2015.
  */
 public class MainFeedHandler {
+    public static final int  A_WEEK_IN_MILLIS  = 604800000;
+    public static final long A_MONTH_IN_MILLIS = 2419200000L;
     private MainFeedModel    db;
     private MainFeedView     view;
     private Collection<Item> mFeed;
@@ -33,7 +31,7 @@ public class MainFeedHandler {
 
     public MainFeedHandler(MainFeedView view) {
         this.view = view;
-        db = Database.getInstace();
+        db = Database.getInstance();
         mFeed = new TreeSet<>();
         dataSet = new ArrayList<>();
         currentUserInterest = new HashSet<>();
@@ -47,31 +45,22 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-                       Location loc = view.getAppStateListener().getLocation();
-                        List<Address> possibilities = null;
-                        try {
-                            possibilities = AppActivity.getGeoCoder().getFromLocation(loc
-             .getLatitude(),
-                                    loc.getLongitude(), 3);
-                        } catch (IOException idc) {
-
-                        }
-                        Item newItem = new Item(itemName, posterUsername, parsed_price,
-             loc.getLatitude(), loc.getLongitude(), loc.getAltitude(), true,
-             possibilities.get(0).toString());;
+            Item newItem = new Item(itemName, posterUsername, parsed_price,
+                    view.getAppStateListener().getLocation()[0],
+                    view.getAppStateListener().getLocation()[1], true,
+                    view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();
         }
     }
 
     public void fetchFeed() {
-        final Date aWeekAgo = new Date(System.currentTimeMillis() - 604800000);
-        final Date aMonthAgo = new Date(System.currentTimeMillis() - 2419200000L);
+        final Date aWeekAgo = new Date(System.currentTimeMillis() - A_WEEK_IN_MILLIS);
+        final Date aMonthAgo = new Date(System.currentTimeMillis() - A_MONTH_IN_MILLIS);
         final Collection<Item> interestFeed = new HashSet<>();
         final Collection<Item> reportedFeed = new HashSet<>();
-        List<String> userNameList = new LinkedList<>(
-                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist()
-                        .getFriendsUserName());
+        FriendList userNameList = new FriendList(
+                ((User) view.getAppStateListener().getLatestAccount()).getFriendlist());
         userNameList.add(view.getAppStateListener().getLatestAccount().getUserName());
         db.fetchUserItemPosts(userNameList, new MainFeedModel.FeedListener() {
             @Override
@@ -117,7 +106,7 @@ public class MainFeedHandler {
 
             @Override
             public void onError(DatabaseError databaseError) {
-
+                view.getUiUtil().showErrorDialog(databaseError.getMessage());
             }
         });
     }
@@ -134,22 +123,10 @@ public class MainFeedHandler {
             // error
         }
         if (parsed_price >= 0) {
-            //            Location loc = AppActivity.getmLastLocation();
-            //            List<Address> possibilities = null;
-            //            try {
-            //                possibilities = AppActivity.getGeoCoder().getFromLocation(loc
-            // .getLatitude(),
-            //                        loc.getLongitude(), 3);
-            //            } catch (IOException idc) {
-            //
-            //            }
-            //            Item newItem = new Item(itemName, posterUsername, parsed_price,
-            // loc.getLatitude(),
-            //                    loc.getLongitude(), loc.getAltitude(), false,
-            // possibilities.get(0).toString());
             Item newItem = new Item(itemName, posterUsername, parsed_price,
-                    view.getAppStateListener().getLocation().getLatitude(),
-                    view.getAppStateListener().getLocation().getLongitude(), 0, false, null);
+                    view.getAppStateListener().getLocation()[0],
+                    view.getAppStateListener().getLocation()[1], false,
+                    view.getAppStateListener().getAddress());
             db.pushItemPost(newItem);
             fetchFeed();
         }

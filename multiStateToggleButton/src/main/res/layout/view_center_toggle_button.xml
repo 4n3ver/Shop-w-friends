@@ -11,4 +11,4 @@
     android:minHeight="7dip"
     android:paddingLeft="2dip"
     android:paddingRight="2dip"
-    android:text="2"/>
+    android:text="@string/two"/>

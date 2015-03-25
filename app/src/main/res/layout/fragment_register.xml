@@ -18,7 +18,7 @@
         android:layout_margin="15dp"
         android:background="#3b5998"
         android:drawableRight="@drawable/ic_fb_swf"
-        android:text="Sign up with"
+        android:text="@string/Sign_up_with"
         android:textColor="#fefefe"/>
 
     <LinearLayout
@@ -34,7 +34,7 @@
             android:id="@+id/frag_reg_name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"
+            android:hint="@string/name"
             android:imeOptions="actionNext"
             android:maxLines="1"
             android:singleLine="true"
@@ -44,7 +44,7 @@
             android:id="@+id/frag_reg_usrName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User name"
+            android:hint="@string/user_name"
             android:imeOptions="actionNext"
             android:maxLines="1"
             android:singleLine="true"
@@ -54,7 +54,7 @@
             android:id="@+id/frag_reg_email_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email address"
+            android:hint="@string/email_address"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
@@ -65,7 +65,7 @@
             android:id="@+id/frag_reg_pass1_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:imeOptions="actionNext"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -76,7 +76,7 @@
             android:id="@+id/frag_reg_pass2_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Confirm password"
+            android:hint="@string/confirm_password"
             android:imeActionLabel="Sign up"
             android:inputType="textPassword"
             android:maxLines="1"
@@ -95,7 +95,7 @@
             android:id="@+id/reg_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Sign up"
+            android:hint="@string/sign_up"
             android:maxLines="1"
             android:singleLine="true"/>
 
@@ -103,7 +103,7 @@
             android:id="@+id/cancelRegister_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Cancel"
+            android:hint="@string/cancel"
             android:maxLines="1"
             android:onClick="cancel"
             android:singleLine="true"/>

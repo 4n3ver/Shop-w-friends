@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="left|center_vertical"
             android:singleLine="true"
-            android:text="Medium Text"
+            android:text="@string/medium_text"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#000000"
             android:textSize="14sp"/>

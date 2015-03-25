@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="User"
+                android:text="@string/user"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold"/>
 
@@ -72,7 +72,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="Item Name "
+                android:text="@string/item_name"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="normal"/>
 
@@ -81,7 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:hint="3D Printed Robotic Hand"
+                android:hint="@string/anything_i_like"
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:singleLine="true"/>
@@ -98,7 +98,7 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="Maximum price "
+                android:text="@string/maximum_price_"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="normal"/>
 
@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="top|left"
-                android:text="$"
+                android:text="@string/dollarSign"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textStyle="normal"/>
 
@@ -115,7 +115,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
-                android:hint="99"
+                android:hint="@string/ninetyNine"
                 android:inputType="number"
                 android:maxLines="1"/>
 

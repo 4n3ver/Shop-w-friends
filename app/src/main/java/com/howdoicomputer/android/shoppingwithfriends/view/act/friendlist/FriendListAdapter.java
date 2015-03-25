@@ -10,8 +10,9 @@ import android.widget.TextView;
 
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.FriendListHandler;
-import com.howdoicomputer.android.shoppingwithfriends.model.pojo.FriendList;
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
+
+import java.util.List;
 
 /**
  * {@link FriendListAdapter} is a class to holds and manages data to be shown on
@@ -21,20 +22,16 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
  * @version 1.5
  */
 public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.FriendViewHolder> {
-    private FriendList        mDataset;
+    private List<User>        mDataset;
     private FriendListHandler mHandler;
 
     /**
      * Creates {@link FriendListAdapter} object.
      *
-     * @param dataSet set of data to be shown on the {@link RecyclerView}
      * @param handler presenter than handles user friend list
      */
-    public FriendListAdapter(FriendList dataSet, FriendListHandler handler) {
-        if (dataSet == null) {
-            throw new IllegalArgumentException("data set is null");
-        }
-        mDataset = dataSet;
+    public FriendListAdapter(FriendListHandler handler) {
+        mDataset = handler.getDataSet();
         mHandler = handler;
     }
 
@@ -84,18 +81,18 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return mDataset.friendCount();
+        return mDataset.size();
     }
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public final static class FriendViewHolder extends RecyclerView.ViewHolder {
-        TextView           name;
-        TextView           userName;
-        TextView           rating;
-        DetailedViewHolder detailedView;
-        private Button clickSpace;
+        final         TextView           name;
+        final         TextView           userName;
+        final         TextView           rating;
+        final         DetailedViewHolder detailedView;
+        private final Button             clickSpace;
 
         /**
          * Create an object to hold the view that display friend's basic data.
@@ -126,15 +123,15 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
          * detailed data.
          */
         private class DetailedViewHolder {
-            TextView name;
-            TextView userName;
-            TextView email;
-            TextView rating;
-            TextView reportCount;
-            Button   removeButton;
-            private View                layout;
-            private AlertDialog.Builder detailedDialog;
-            private AlertDialog         shownDialog;
+            final         TextView            name;
+            final         TextView            userName;
+            final         TextView            email;
+            final         TextView            rating;
+            final         TextView            reportCount;
+            final         Button              removeButton;
+            private final View                layout;
+            private final AlertDialog.Builder detailedDialog;
+            private       AlertDialog         shownDialog;
 
             /**
              * Create an object to hold the detailed view that display friend's detailed data.

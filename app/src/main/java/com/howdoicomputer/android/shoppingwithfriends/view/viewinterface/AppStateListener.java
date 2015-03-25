@@ -1,12 +1,10 @@
 package com.howdoicomputer.android.shoppingwithfriends.view.viewinterface;
 
-import android.location.Location;
-
 import com.howdoicomputer.android.shoppingwithfriends.model.pojo.Account;
 
 /**
  * {@link AppStateListener} is an interface to communicate changes made in the fragment back to
- * containing activity.
+ * containing activity and accessing common information.
  *
  * @author Yoel Ivan (yivan3@gatech.edu)
  * @version 1.0
@@ -25,8 +23,26 @@ public interface AppStateListener {
      */
     public void onLoggedOut();
 
+    /**
+     * Get the most recent updated {@link Account} object.
+     *
+     * @return latest {@link Account} object.
+     */
     public Account getLatestAccount();
 
-    public Location getLocation();
+    /**
+     * Get latitude and longitude based on device GPS.
+     *
+     * @return array of double of length 2, index 0 represent latitude and index 1 represent
+     * longitude
+     */
+    public double[] getLocation();
+
+    /**
+     * Get the address according to current location from the device GPS.
+     *
+     * @return {@link String} representation of the address.
+     */
+    public String getAddress();
 
 }
