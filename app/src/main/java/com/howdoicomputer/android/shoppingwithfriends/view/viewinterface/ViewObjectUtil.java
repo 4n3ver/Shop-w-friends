@@ -23,4 +23,6 @@ public interface ViewObjectUtil {
      * Hide progress dialog if any
      */
     public void hideProgressDialog();
+
+    public String getString(int string_res_id);
 }

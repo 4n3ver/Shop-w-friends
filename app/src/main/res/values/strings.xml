@@ -29,13 +29,13 @@
     <string name="item_name">Item Name</string>
     <string name="anything_i_like">3D Printed Robotic Hand</string>
     <string name="maximum_price_">Maximum Price</string>
-    <string name="dollarSign">$</string>
+    <string name="dollarSign">" $"</string>
     <string name="ninetyNine">99</string>
     <string name="enter_the_item_name_here">Enter the item name here</string>
     <string name="price">Price</string>
     <string name="cha_ching">cha ching</string>
-    <string name="is_interested_in">is interested in...</string>
-    <string name="_reported">reported...</string>
+    <string name="is_interested_in">" is interested in..."</string>
+    <string name="_reported">" reported..."</string>
     <string name="itemName">ItemName</string>
     <string name="NAME">NAME</string>
     <string name="EMAIL">EMAIL</string>
@@ -56,6 +56,8 @@
     <string name="sign_up">Sign up</string>
     <string name="priced_lower_than_">priced lower than</string>
     <string name="price_">price</string>
+    <string name="failed_fetch_address">Failed to fetch address!</string>
+    <string name="def_loc">Someplace you don\'t know</string>
 
 
 </resources>

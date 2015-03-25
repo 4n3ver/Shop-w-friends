@@ -23,7 +23,7 @@ public class NavigationHandler {
     /**
      * Contact database to end current session on this client.
      */
-    public void logout() {
+    public static void logout() {
         db.logout();
         Database.destroyInstance();
     }

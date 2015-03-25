@@ -52,7 +52,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private AlertDialog         shownAddReportItemDialog;
     private View                addItemReportDialogView;
 
-    private SwipeRefreshLayout  mSwipeToRefresh;
+    private SwipeRefreshLayout mSwipeToRefresh;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -82,7 +82,6 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             //                    User.class);
         }
         handler = new MainFeedHandler(this);
-        handler.fetchFeed();
     }
 
     @Override
@@ -149,7 +148,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             }
         });
 
-
+        handler.fetchFeed();
         return rootView;
     }
 
@@ -218,20 +217,21 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
 
         addInterestItemDialog = new AlertDialog.Builder(getActivity()).setTitle("Report an item...")
                 .setView(addItemInterestDialogView).setOnKeyListener(
-                new DialogInterface.OnKeyListener() {
+                        new DialogInterface.OnKeyListener() {
 
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if ((keyCode == KeyEvent.KEYCODE_ENTER
-                                     || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
-                                     || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
-                                && event.getAction() == KeyEvent.ACTION_DOWN) {
-                            submitInterestItem(itemName, itemPrice);
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode,
+                                    KeyEvent event) {
+                                if ((keyCode == KeyEvent.KEYCODE_ENTER
+                                             || keyCode == KeyEvent.KEYCODE_NUMPAD_ENTER
+                                             || event.getKeyCode() == KeyEvent.FLAG_EDITOR_ACTION)
+                                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    submitInterestItem(itemName, itemPrice);
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
     }
 
     private void submitInterestItem(AutoCompleteTextView itemName, EditText itemPrice) {

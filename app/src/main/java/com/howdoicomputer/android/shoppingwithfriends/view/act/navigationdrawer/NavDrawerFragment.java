@@ -34,6 +34,7 @@ import java.util.ArrayList;
 public class NavDrawerFragment extends Fragment implements NavDrawerView {
     private static final String PREF_FILE_NAME              = "navDrawerAware";
     private static final String KEY_USER_IS_AWARE_OF_DRAWER = "key_navDrawerAware";
+
     private TextView              mName;
     private RecyclerView          mRecyclerView;
     private ActionBarDrawerToggle drawerToggle;

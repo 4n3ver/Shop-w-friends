@@ -6,7 +6,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.google.gson.Gson;
-import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.AccountStateListener;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface
         .FetchAccountResultListener;
 import com.howdoicomputer.android.shoppingwithfriends.model.databaseinterface.FriendListModel;
@@ -20,7 +19,6 @@ import com.howdoicomputer.android.shoppingwithfriends.model.pojo.User;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,15 +29,20 @@ import java.util.Map;
  */
 public class Database implements LoginModel, MainModel, FriendListModel, MainFeedModel {
 
+    private static final String USER_ACCOUNT       = "userAccount";
+    private static final String USER_INTEREST_ITEM = "userInterestItem";
+    private static final String USER_REPORTED_ITEM = "userReportedItem";
+    private static final String FIREBASE_URL       = "https://crackling-heat-6364.firebaseio.com/";
+
     /* singleton instance */
     private static Database singletonInstance;
+    private static Gson     mGson;
 
     private final Firebase mAccDatabase;
-    private final Gson     mGson;
 
     private Database() {
         mGson = new Gson();
-        mAccDatabase = new Firebase("https://crackling-heat-6364.firebaseio.com/");
+        mAccDatabase = new Firebase(FIREBASE_URL);
     }
 
     /**
@@ -189,53 +192,34 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
 
     @Override
     public void fetchAccountInfo(final String userName, final FetchAccountResultListener listener) {
-        mAccDatabase.child("userAccount").addListenerForSingleValueEvent(new ValueEventListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.hasChild(userName)) {
-                    listener.onFound(mGson.fromJson(snapshot.child(userName).getValue(String.class),
-                            User.class));
-                } else {
-                    listener.onNotFound();
-                }
-            }
+            public void run() {
+                mAccDatabase.child("userAccount").addListenerForSingleValueEvent(
+                        new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot snapshot) {
+                                if (snapshot.hasChild(userName)) {
+                                    listener.onFound(mGson.fromJson(snapshot.child(userName)
+                                            .getValue(String.class), User.class));
+                                } else {
+                                    listener.onNotFound();
+                                }
+                            }
 
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                listener.onError(new DatabaseError(firebaseError));
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+                                listener.onError(new DatabaseError(firebaseError));
+                            }
+                        });
             }
-        });
+        }).start();
     }
 
     @Override
     public void updateAccount(Account account) {
-        mAccDatabase.child("userAccount").child(account.getUserName()).setValue(mGson.toJson(
-                account, User.class));
-    }
-
-    @Override
-    public void fetchFriendAccountInfo(final FriendList friendList,
-            final AccountStateListener listener) {
-        for (final User friend : friendList) {
-            new Thread(new Runnable() {
-                public void run() {
-                    mAccDatabase.child("userAccount").child(friend.getUserName())
-                            .addValueEventListener(new ValueEventListener() {
-
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    listener.onAccountChanged(mGson.fromJson(dataSnapshot.getValue(
-                                            String.class), User.class));
-                                }
-
-                                @Override
-                                public void onCancelled(FirebaseError error) {
-                                    listener.onError(new DatabaseError(error));
-                                }
-                            });
-                }
-            }).start();
-        }
+        mAccDatabase.child(USER_ACCOUNT).child(account.getUserName()).setValue(mGson.toJson(account,
+                User.class));
     }
 
     @Override
@@ -251,7 +235,7 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
     }
 
     @Override
-    public void fetchUserItemPosts(final List<String> usernameList, final FeedListener listener) {
+    public void fetchUserItemPosts(final FriendList usernameList, final FeedListener listener) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -275,10 +259,10 @@ public class Database implements LoginModel, MainModel, FriendListModel, MainFee
                     }
                 };
                 for (String friendUsername : usernameList) {
-                    mAccDatabase.child("userInterestItem").child(friendUsername)
+                    mAccDatabase.child(USER_INTEREST_ITEM).child(friendUsername)
                             .addListenerForSingleValueEvent(dbListener);
 
-                    mAccDatabase.child("userReportedItem").child(friendUsername)
+                    mAccDatabase.child(USER_REPORTED_ITEM).child(friendUsername)
                             .addListenerForSingleValueEvent(dbListener);
                 }
             }
