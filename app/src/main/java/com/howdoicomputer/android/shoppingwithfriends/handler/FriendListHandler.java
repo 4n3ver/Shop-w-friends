@@ -23,10 +23,11 @@ import java.util.TreeSet;
  * @author Yoel Ivan
  */
 public class FriendListHandler {
-    private final FriendListModel  db;
-    private final FriendListView   view;
-    private       List<User>       dataSet;
-    private       Comparator<User> comparatorByName;
+    private static FriendListModel  db;
+    private static Comparator<User> comparatorByName;
+
+    private final FriendListView view;
+    private final List<User>     dataSet;
 
     public FriendListHandler(final FriendListView view) {
         db = Database.getInstance();

@@ -23,11 +23,13 @@ import static com.howdoicomputer.android.shoppingwithfriends.handler.MatchingHan
 public class MainFeedHandler {
     public static final int  A_WEEK_IN_MILLIS  = 604800000;
     public static final long A_MONTH_IN_MILLIS = 2419200000L;
-    private MainFeedModel    db;
-    private MainFeedView     view;
-    private Collection<Item> mFeed;
-    private List<Item>       dataSet;
-    private Collection<Item> currentUserInterest;
+
+    private static MainFeedModel db;
+
+    private final List<Item>       dataSet;
+    private final MainFeedView     view;
+    private       Collection<Item> mFeed;
+    private       Collection<Item> currentUserInterest;
 
     public MainFeedHandler(MainFeedView view) {
         this.view = view;

@@ -29,18 +29,20 @@ import java.util.Map;
  */
 public class Database implements LoginModel, MainModel, FriendListModel, MainFeedModel {
 
-    public static final String USER_ACCOUNT       = "userAccount";
-    public static final String USER_INTEREST_ITEM = "userInterestItem";
-    public static final String USER_REPORTED_ITEM = "userReportedItem";
+    private static final String USER_ACCOUNT       = "userAccount";
+    private static final String USER_INTEREST_ITEM = "userInterestItem";
+    private static final String USER_REPORTED_ITEM = "userReportedItem";
+    private static final String FIREBASE_URL       = "https://crackling-heat-6364.firebaseio.com/";
+
     /* singleton instance */
     private static Database singletonInstance;
+    private static Gson     mGson;
 
     private final Firebase mAccDatabase;
-    private final Gson     mGson;
 
     private Database() {
         mGson = new Gson();
-        mAccDatabase = new Firebase("https://crackling-heat-6364.firebaseio.com/");
+        mAccDatabase = new Firebase(FIREBASE_URL);
     }
 
     /**

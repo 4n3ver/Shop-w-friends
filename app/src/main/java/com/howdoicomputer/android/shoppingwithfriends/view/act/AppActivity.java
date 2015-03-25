@@ -45,18 +45,17 @@ public class AppActivity extends ActionBarActivity
 
     private static Location            mLastLocation;
     private static Geocoder            coder;
+    private static Location            location;
     private        User                currentUser;
     private        ProgressDialog      mConnProgressDialog;
     private        AlertDialog.Builder mErrorDialog;
     private        GoogleApiClient     mGoogleApiClient;
     private        Toolbar             actionBar;
     private        NavDrawerFragment   navigationBar;
-
-    private LocationManager locationManager;
-    private boolean         canGetLocation;
-    private boolean         isGPSEnabled;
-    private Location        location;
-    private boolean         isNetworkEnabled;
+    private        LocationManager     locationManager;
+    private        boolean             canGetLocation;
+    private        boolean             isGPSEnabled;
+    private        boolean             isNetworkEnabled;
 
     public static Location getLastLocation() {
         return mLastLocation;

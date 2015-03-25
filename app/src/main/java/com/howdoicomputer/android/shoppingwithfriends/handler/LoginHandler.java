@@ -15,7 +15,8 @@ import org.apache.commons.validator.routines.EmailValidator;
  * @version %I%, %G%
  */
 public class LoginHandler {
-    private final LoginModel  db;
+    private static LoginModel db;
+
     private final WelcomeView view;
 
     /**
