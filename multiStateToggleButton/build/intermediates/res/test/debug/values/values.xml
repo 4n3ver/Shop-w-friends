@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="leftText"/>
     <attr format="string" name="middleText"/>
@@ -8,6 +8,9 @@
     <declare-styleable name="MultiStateToggleButton"><attr format="reference" name="values"/></declare-styleable>
     <declare-styleable name="ThreeStateToggleButton"><attr name="leftText"/><attr name="middleText"/><attr name="rightText"/></declare-styleable>
     <string name="app_name">MultiStateToggleButton</string>
+    <string name="one">1</string>
+    <string name="three">3</string>
+    <string name="two">2</string>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
             Theme customizations available in newer API levels can go in

@@ -199,6 +199,15 @@ public class AppActivity extends ActionBarActivity
     }
 
     @Override
+    public void randomMethod(double latitude, double longitude) {
+        Intent mainApp = new Intent();
+        mainApp.putExtra("Latitude", latitude);
+        mainApp.putExtra("Longitude", longitude);
+        mainApp.setClass(getApplicationContext(), MapperActivity.class);
+        startActivity(mainApp);
+
+    }
+    @Override
     public Account getLatestAccount() {
         return currentUser;
     }

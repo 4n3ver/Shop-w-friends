@@ -45,4 +45,6 @@ public interface AppStateListener {
      */
     public String getAddress();
 
+    public void randomMethod(double latitude, double longitude);
+
 }
