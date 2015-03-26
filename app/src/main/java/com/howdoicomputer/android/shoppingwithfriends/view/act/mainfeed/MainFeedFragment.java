@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.howdoicomputer.android.shoppingwithfriends.R;
 import com.howdoicomputer.android.shoppingwithfriends.handler.MainFeedHandler;
 import com.howdoicomputer.android.shoppingwithfriends.view.viewinterface.AppStateListener;
@@ -41,6 +42,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private AppStateListener     mListener;
     private ViewObjectUtil       mUtil;
     private MainFeedHandler      handler;
+    private FloatingActionsMenu addPost;
     private FloatingActionButton addInterestButton;
     private FloatingActionButton addReportButton;
 
@@ -53,6 +55,7 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
     private View                addItemReportDialogView;
 
     private SwipeRefreshLayout mSwipeToRefresh;
+    private LinearLayoutManager mLinearLayoutManager;
 
     public MainFeedFragment() {
         // Required empty public constructor
@@ -95,13 +98,43 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         // specify an adapter
         mAdapter = new MainFeedAdapter(handler);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            int mLastFirstVisibleItem = 0;
+            boolean nextUp = false;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int currentFirstVisibleItem = mLinearLayoutManager
+                        .findFirstVisibleItemPosition();
+
+                if (currentFirstVisibleItem > this.mLastFirstVisibleItem && !nextUp) {
+                    addPost.animate().cancel();
+                    addPost.animate().translationYBy(350);
+                    nextUp = true;
+                } else if (currentFirstVisibleItem < this.mLastFirstVisibleItem && nextUp) {
+                    addPost.animate().cancel();
+                    addPost.animate().translationYBy(-350);
+                    nextUp = false;
+                }
+
+                this.mLastFirstVisibleItem = currentFirstVisibleItem;
+            }
+        });
+
+
     }
 
     @Override
@@ -109,6 +142,8 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_main_feed, container, false);
+
+        addPost = (FloatingActionsMenu) rootView.findViewById(R.id.add_post);
 
         addInterestButton = (FloatingActionButton) rootView.findViewById(R.id.add_post_interest);
         addInterestButton.setOnClickListener(new View.OnClickListener() {
