@@ -110,7 +110,9 @@ public class MainFeedHandler {
             }
         });
     }
-
+    public void startMapActivity(double latitude, double longitude) {
+        view.getAppStateListener().randomMethod(latitude,longitude);
+    }
     public List<Item> getDataSet() {
         return dataSet;
     }
