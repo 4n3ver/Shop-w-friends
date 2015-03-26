@@ -61,6 +61,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
 
             @Override
             public void onClick(View v) {
+                if (holder.detailedView == null) {
+                    holder.detailedView = new FriendViewHolder.DetailedViewHolder(
+                            LayoutInflater.from(holder.clickSpace.getContext()).inflate(
+                                    R.layout.friend_detailed_layout, null));
+                }
                 holder.detailedView.name.setText(String.valueOf(friend.getName()));
                 holder.detailedView.userName.setText(String.valueOf(friend.getUserName()));
                 holder.detailedView.email.setText(String.valueOf(friend.getEmail()));
@@ -88,11 +93,11 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public final static class FriendViewHolder extends RecyclerView.ViewHolder {
-        final         TextView           name;
-        final         TextView           userName;
-        final         TextView           rating;
-        final         DetailedViewHolder detailedView;
-        private final Button             clickSpace;
+        final         TextView name;
+        final         TextView userName;
+        final         TextView rating;
+        private final Button   clickSpace;
+        DetailedViewHolder detailedView;
 
         /**
          * Create an object to hold the view that display friend's basic data.
@@ -105,8 +110,6 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
             name = (TextView) itemView.findViewById(R.id.friend_name);
             userName = (TextView) itemView.findViewById(R.id.friend_userName);
             rating = (TextView) itemView.findViewById(R.id.friend_rating);
-            detailedView = new DetailedViewHolder(LayoutInflater.from(clickSpace.getContext())
-                    .inflate(R.layout.friend_detailed_layout, null));
         }
 
         /**
@@ -122,7 +125,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
          * {@link DetailedViewHolder} is an object to hold detailed view that display friend's
          * detailed data.
          */
-        private class DetailedViewHolder {
+        public static class DetailedViewHolder {
             final         TextView            name;
             final         TextView            userName;
             final         TextView            email;
@@ -138,7 +141,7 @@ public class FriendListAdapter extends RecyclerView.Adapter<FriendListAdapter.Fr
              *
              * @param detailedView reference to the layout's {@link View}
              */
-            private DetailedViewHolder(final View detailedView) {
+            public DetailedViewHolder(final View detailedView) {
                 layout = detailedView;
                 name = (TextView) detailedView.findViewById(R.id.friend_detailed_name);
                 userName = (TextView) detailedView.findViewById(R.id.friend_detailed_user_name);

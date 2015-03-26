@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -183,7 +184,13 @@ public class MainFeedFragment extends Fragment implements MainFeedView {
             }
         });
 
-        handler.fetchFeed();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.fetchFeed();
+            }
+        }, 250);
+
         return rootView;
     }
 
