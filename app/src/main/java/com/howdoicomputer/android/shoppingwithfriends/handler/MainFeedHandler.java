@@ -21,12 +21,12 @@ import static com.howdoicomputer.android.shoppingwithfriends.handler.MatchingHan
  * Created by Yoel Ivan on 3/2/2015.
  */
 public class MainFeedHandler {
-    public static final int  A_WEEK_IN_MILLIS  = 604800000;
+    public static final int A_WEEK_IN_MILLIS = 604800000;
     public static final long A_MONTH_IN_MILLIS = 2419200000L;
-    private MainFeedModel    db;
-    private MainFeedView     view;
+    private MainFeedModel db;
+    private MainFeedView view;
     private Collection<Item> mFeed;
-    private List<Item>       dataSet;
+    private List<Item> dataSet;
     private Collection<Item> currentUserInterest;
 
     public MainFeedHandler(MainFeedView view) {
@@ -124,11 +124,13 @@ public class MainFeedHandler {
      * @param longitude - longitude of the sale item
      */
     public void startMapActivity(double latitude, double longitude) {
-        view.getAppStateListener().randomMethod(latitude,longitude);
+        view.getAppStateListener().randomMethod(latitude, longitude);
     }
+
     public List<Item> getDataSet() {
         return dataSet;
     }
+
     /* method that handle the reporting of item on sale
      * @param itemName - name of item
      * @param posterUsername - name of the user who report sale

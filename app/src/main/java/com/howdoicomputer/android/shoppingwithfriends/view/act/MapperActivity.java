@@ -16,6 +16,8 @@ import com.howdoicomputer.android.shoppingwithfriends.R;
 public class MapperActivity extends Activity implements OnMapReadyCallback {
     private double latitude;
     private double longitude;
+    private String title;
+    private String description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,8 @@ public class MapperActivity extends Activity implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(item, 13));
 
         map.addMarker(new MarkerOptions()
-                .title("Sydney")
-                .snippet("The most populous city in Australia.")
+                .title("Item 1")
+                .snippet("Item 1 description")
                 .position(item));
     }
 }
