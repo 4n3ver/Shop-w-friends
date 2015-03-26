@@ -37,6 +37,11 @@ public class MainFeedHandler {
         currentUserInterest = new HashSet<>();
     }
 
+    /* method that handle the adding of item of interest
+     * @param itemName - name of the item
+     * @param posterUsername - name of the user who post the interest
+     * @param price - the threshold price desired by the user
+     */
     public void postItemOfInterest(String itemName, String posterUsername, String price) {
         double parsed_price = -1;
         try {
@@ -54,6 +59,9 @@ public class MainFeedHandler {
         }
     }
 
+    /*method to fetch the main feed page from data base
+     *
+     */
     public void fetchFeed() {
         final Date aWeekAgo = new Date(System.currentTimeMillis() - A_WEEK_IN_MILLIS);
         final Date aMonthAgo = new Date(System.currentTimeMillis() - A_MONTH_IN_MILLIS);
@@ -110,13 +118,22 @@ public class MainFeedHandler {
             }
         });
     }
+
+    /* Method to start new map activity
+     * @param latitude - latitude of the sale item
+     * @param longitude - longitude of the sale item
+     */
     public void startMapActivity(double latitude, double longitude) {
         view.getAppStateListener().randomMethod(latitude,longitude);
     }
     public List<Item> getDataSet() {
         return dataSet;
     }
-
+    /* method that handle the reporting of item on sale
+     * @param itemName - name of item
+     * @param posterUsername - name of the user who report sale
+     * @param price - price of the item on sale
+     */
     public void postItemOfReport(String itemName, String posterUsername, String price) {
         double parsed_price = -1;
         try {
