@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -94,7 +95,12 @@ public class FriendListFragment extends Fragment implements FriendListView {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_friend_list, container, false);
-        handler.fetchFriendList();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.fetchFriendList();
+            }
+        }, 250);
         return rootView;
     }
 

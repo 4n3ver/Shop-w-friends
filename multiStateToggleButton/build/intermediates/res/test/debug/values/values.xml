@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/Yoel%20Ivan/Dropbox/Documents/University/CS%202340/Assignment/Final%20Project/Shop-w-friends/multiStateToggleButton/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/C:/Users/Ricardomacias/Documents/GitHub/Shop-w-friends/multiStateToggleButton/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="leftText"/>
     <attr format="string" name="middleText"/>

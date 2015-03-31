@@ -78,7 +78,7 @@ public class MainFeedAdapter extends RecyclerView.Adapter<MainFeedAdapter.MainFe
             holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //TODO: INIT MAP VIEW HERE!!
+                    mHandler.startMapActivity(post.getLatitude(), post.getLongitude());
                 }
             });
         }
